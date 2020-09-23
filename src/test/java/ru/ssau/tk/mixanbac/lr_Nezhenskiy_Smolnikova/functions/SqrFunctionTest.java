@@ -1,4 +1,4 @@
-package functions;
+package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 
 import org.testng.annotations.Test;
 
