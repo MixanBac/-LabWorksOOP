@@ -10,7 +10,11 @@ public class SqrFunctionTest {
 
     @Test
     public void testApply() {
-        MathFunction function = new SqrFunction(1);
-        assertEquals( 1.0E-5, DELTA);
+        assertEquals(java.lang.Math.pow(1, 2),1.0 ,DELTA);
+        assertNotEquals(java.lang.Math.pow(1, 2),10.0, DELTA);
+        assertEquals(java.lang.Math.pow(2, 2),4.0 ,DELTA);
+        assertNotEquals(java.lang.Math.pow(2, 2),2.0, DELTA);
+        assertEquals(java.lang.Math.pow(3, 2),9.0 ,DELTA);
+        assertNotEquals(java.lang.Math.pow(3, 2),8.0 ,DELTA);
     }
 }

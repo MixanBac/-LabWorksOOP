@@ -7,7 +7,7 @@ public class SqrFunction implements MathFunction{
 
     @Override
     public MathFunction apply(double x) {
-        return new SqrFunction (Math.pow(x,2));
+        return new SqrFunction (java.lang.Math.pow(x,2));
     }
 
 }
