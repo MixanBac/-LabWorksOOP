@@ -10,11 +10,12 @@ public class SqrFunctionTest {
 
     @Test
     public void testApply() {
-        assertEquals(java.lang.Math.pow(1, 2),1.0 ,DELTA);
-        assertNotEquals(java.lang.Math.pow(1, 2),10.0, DELTA);
-        assertEquals(java.lang.Math.pow(2, 2),4.0 ,DELTA);
-        assertNotEquals(java.lang.Math.pow(2, 2),2.0, DELTA);
-        assertEquals(java.lang.Math.pow(3, 2),9.0 ,DELTA);
-        assertNotEquals(java.lang.Math.pow(3, 2),8.0 ,DELTA);
+        SqrFunction testFunction = new SqrFunction();
+        assertEquals(testFunction.apply(1),1.0 ,DELTA);
+        assertNotEquals(testFunction.apply(1),10.0, DELTA);
+        assertEquals(testFunction.apply(2),4.0 ,DELTA);
+        assertNotEquals(testFunction.apply(2),2.0, DELTA);
+        assertEquals(testFunction.apply(3),9.0 ,DELTA);
+        assertNotEquals(testFunction.apply(3),8.0 ,DELTA);
     }
 }

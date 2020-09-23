@@ -2,12 +2,9 @@ package functions;
 
 public class SqrFunction implements MathFunction{
 
-    public SqrFunction(double x){
-    }
-
     @Override
-    public MathFunction apply(double x) {
-        return new SqrFunction (java.lang.Math.pow(x,2));
+    public double apply(double x) {
+        return java.lang.Math.pow(x,2);
     }
 
 }
