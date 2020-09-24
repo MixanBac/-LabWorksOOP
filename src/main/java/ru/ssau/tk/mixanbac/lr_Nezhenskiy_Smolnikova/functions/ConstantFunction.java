@@ -1,18 +1,18 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 
 public class ConstantFunction implements MathFunction {
-    private final double constanta;
+    private final double constant;
 
-    public ConstantFunction(double constanta) {
-        this.constanta = constanta;
+    public ConstantFunction(double constant) {
+        this.constant = constant;
     }
 
     @Override
     public double apply(double x) {
-        return constanta;
+        return constant;
     }
 
-    public double getConstanta() {
-        return constanta;
+    public double getConstant() {
+        return constant;
     }
 }

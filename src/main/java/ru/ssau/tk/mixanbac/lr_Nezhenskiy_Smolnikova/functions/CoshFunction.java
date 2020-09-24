@@ -4,7 +4,7 @@ public class CoshFunction implements MathFunction{
 
     @Override
     public double apply(double x) {
-        return java.lang.Math.cosh(x);
+        return Math.cosh(x);
     }
 
 }

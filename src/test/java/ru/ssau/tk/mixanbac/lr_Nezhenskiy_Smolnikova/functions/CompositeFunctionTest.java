@@ -11,13 +11,13 @@ public class CompositeFunctionTest {
     @Test
     public void testApply() {
         MathFunction functionH = new IdentityFunction();
-        MathFunction functionG = new Reverse();
+        MathFunction functionG = new ReverseFunction();
         MathFunction functionF = new CompositeFunction(functionH, functionG);
-        assertEquals(functionF.apply(36), 0.02777777777, DELTA);
+        assertEquals(functionF.apply(36), 0.02777, DELTA);
         MathFunction cosh = new CoshFunction();
-        MathFunction rev = new Reverse();
+        MathFunction rev = new ReverseFunction();
         MathFunction sqr = new SqrFunction();
-        MathFunction composite = cosh.andThen(rev).andThen(sqr);
-        double result = rev.andThen(cosh).andThen(sqr).apply(3.14);
+        assertEquals(rev.andThen(cosh).andThen(sqr).apply(Math.PI), 1.104789, DELTA);
+
     }
 }
