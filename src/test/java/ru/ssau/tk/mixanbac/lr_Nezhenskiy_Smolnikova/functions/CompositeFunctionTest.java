@@ -5,14 +5,19 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class CompositeFunctionTest {
-    private final static double DELTA = 0.01;
+
+    private final static double DELTA = 0.00001;
+
     @Test
     public void testApply() {
-        MathFunction x = new Reverse();
-        MathFunction y = new IdentityFunction();
-        MathFunction a = new CompositeFunction(y,x);
-        MathFunction b = new CompositeFunction(a,x);
-        assertEquals(b.apply(8),8 , DELTA);
-
+        MathFunction functionH = new IdentityFunction();
+        MathFunction functionG = new Reverse();
+        MathFunction functionF = new CompositeFunction(functionH, functionG);
+        assertEquals(functionF.apply(36), 0.02777777777, DELTA);
+        MathFunction cosh = new CoshFunction();
+        MathFunction rev = new Reverse();
+        MathFunction sqr = new SqrFunction();
+        MathFunction composite = cosh.andThen(rev).andThen(sqr);
+        double result = rev.andThen(cosh).andThen(sqr).apply(3.14);
     }
 }
