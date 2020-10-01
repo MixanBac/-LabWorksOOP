@@ -4,6 +4,8 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     private int count;
 
+
+
     @Override
     public int getCount() {
         return count;
