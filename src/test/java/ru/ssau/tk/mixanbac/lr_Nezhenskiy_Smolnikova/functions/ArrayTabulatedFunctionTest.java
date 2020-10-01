@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-public class ArrayTabulatedFunctionTest {
+public class ArrayTabulatedFunctionTest {//Заготовочка
 
     @Test
     public void testFloorIndexOfX() {
