@@ -1,6 +1,6 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 
-public class AbstractTabulatedFunction implements TabulatedFunction {
+public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     private int count;
 
