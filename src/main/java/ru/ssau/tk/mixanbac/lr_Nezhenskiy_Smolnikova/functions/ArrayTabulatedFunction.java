@@ -18,36 +18,34 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
         this.count = count;
         xValues = new double[count];
         yValues = new double[count];
-        xValues[0] = xFrom;
-        xValues[count - 1] = xTo;
-        for (int i = 1; i < count - 1; i++) {
-            xValues[i] = i * (xTo - xFrom) / count;
-        }
+
+        double step = (xTo - xFrom) / (count - 1);
+        double xMomentValue = xFrom;
+
         for (int i = 0; i < count; i++) {
-            yValues[i] = source.apply(xValues[i]);
+            xValues[i] = xMomentValue;
+            yValues[i] = source.apply(xMomentValue);
+            xMomentValue += step;
         }
     }
 
     @Override
     protected int floorIndexOfX(double x) {
-        for (int i = 0; i < count; i++) {
-            if (x == xValues[i]) {
+        if (x < xValues[0]) {
+            return 0;
+        }
+        for (int i = 0; i + 1 < count; i++) {
+            if (xValues[i + 1] > x) {
                 return i;
             }
         }
-        int i = 0;
-        int j = 0;
-        while (x > xValues[i]) {
-            j = i;
-            i++;
-        }
-        return j;
+        return count;
     }
 
     @Override
     public double extrapolateLeft(double x) {
         if (count == 1) {
-            return yValues[1];
+            return x;
         }
         return interpolate(x, xValues[0], xValues[1], yValues[0], yValues[1]);
     }
@@ -62,7 +60,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        return yValues[floorIndex] + (yValues[floorIndex + 1] - yValues[floorIndex]) * (x - xValues[floorIndex]) / (xValues[floorIndex + 1] - xValues[floorIndex]);
+        if (count == 1) {
+            return x;
+        }
+        return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     public int indexOfX(double x) {
         for (int i = 0; i < count; i++) {
-            if (x == xValues[i]) {
+            if (xValues[i] == x) {
                 return i;
             }
         }
@@ -98,7 +99,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     public int indexOfY(double y) {
         for (int i = 0; i < count; i++) {
-            if (y == yValues[i]) {
+            if (yValues[i]== y) {
                 return i;
             }
         }
