@@ -150,6 +150,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getArrayListFunction().andThen(getAnotherListFunction()).andThen(sqr).apply(22), 279911.213538, ACCURACY);
         assertNotEquals(sqr.andThen(getAnotherListFunction()).andThen(getArrayListFunction()).apply(10), Double.NaN, ACCURACY);
     }
+    @Test
     public void testApply() {
         LinkedListTabulatedFunction testingApply = new LinkedListTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
@@ -157,9 +158,9 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingApply.apply(1.56), 2.56, delta);
         assertEquals(testingApply.apply(1.22), 2.22, delta);
         assertNotEquals(testingApply.apply(1.22), 1.23, delta);
-        assertEquals(listFunction.apply(-3.2), -20, delta);
-        assertEquals(listFunction.apply(21), 401, delta);
-        assertEquals(listFunction.apply(7.25), 53.25, delta);
+        assertEquals(listFunction.apply(-3.2), -11.6000, delta);
+        assertEquals(listFunction.apply(21), 169.0, delta);
+        assertEquals(listFunction.apply(7.25), 45.25, delta);
         assertNotEquals(listFunction.apply(7.25), 59.25, delta);
     }
 
