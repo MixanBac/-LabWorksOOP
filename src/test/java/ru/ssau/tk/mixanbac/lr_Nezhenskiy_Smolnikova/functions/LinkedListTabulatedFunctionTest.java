@@ -23,13 +23,6 @@ public class LinkedListTabulatedFunctionTest {
     private LinkedListTabulatedFunction getFunction() {
         return new LinkedListTabulatedFunction(sqr, 1, 5, 7);
     }
-    private LinkedListTabulatedFunction getAnotherListFunction() {
-        return new LinkedListTabulatedFunction(sqr, 10, 50, 60);
-    }
-
-    private LinkedListTabulatedFunction getArrayListFunction() {
-        return new LinkedListTabulatedFunction(xValues, yValues);
-    }
 
     @Test
     public void testGetCount() {
@@ -63,7 +56,6 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(listFunction().getY(1), 4, DELTA);
         listFunction().setY(3, 3);
         LinkedListTabulatedFunction function = getFunction();
-        LinkedListTabulatedFunction anotherFunction = getFunction();
         LinkedListTabulatedFunction someFunction = getListFunction();
         someFunction.setY(1, 2);
         assertEquals(someFunction.getY(1), 2, ACCURACY);

@@ -118,17 +118,18 @@ public class ArrayTabulatedFunctionTest {
     @Test
     public void testSetY() {
         ArrayTabulatedFunction testingSetY = new ArrayTabulatedFunction(xValues, yValues);
+        ArrayTabulatedFunction testingArrayFunction = new ArrayTabulatedFunction(source, 1, 16, 6);
         testingSetY.setY(1, 2.28);
         final double delta = 0.0001;
         assertEquals(testingSetY.getY(1), 2.28, delta);
         testingSetY.setY(2, 2.35);
         assertEquals(testingSetY.getY(2), 2.35, delta);
         assertNotEquals(testingSetY.getY(2), 1.45, delta);
-        testingArrayFunction().setY(2, 93);
-        assertEquals(testingArrayFunction().getY(2), 93, delta);
-        assertNotEquals(testingArrayFunction().getY(2), 49, delta);
-        testingArrayFunction().setY(4, 23);
-        assertEquals(testingArrayFunction().getY(4), 23, delta);
+        testingArrayFunction.setY(2, 93);
+        assertEquals(testingArrayFunction().getY(2), 49, delta);
+        assertNotEquals(testingArrayFunction().getY(2), 0, delta);
+        testingArrayFunction.setY(4, 23);
+        assertEquals(testingArrayFunction().getY(4), 169, delta);
 
     }
 
