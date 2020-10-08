@@ -129,7 +129,7 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingArrayFunction.getY(2), 49, delta);
         assertNotEquals(testingArrayFunction.getY(2), 0, delta);
         testingArrayFunction.setY(4, 23);
-        assertEquals(testingArrayFunction().getY(4), 169, delta);
+        assertEquals(testingArrayFunction.getY(4), 169, delta);
 
     }
 
