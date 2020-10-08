@@ -10,6 +10,8 @@ public class LinkedListTabulatedFunctionTest {
     private final static double DELTA = 0.001;
     private final MathFunction sqr = new SqrFunction();
     private final static double ACCURACY = 0.001;
+    private final double[] xValues = new double[]{1.0, 1.1, 1.2, 1.3, 1.4};
+    private final double[] yValues = new double[]{2.0, 2.1, 2.2, 2.3, 2.4};
 
     private LinkedListTabulatedFunction getListFunction() {
         return new LinkedListTabulatedFunction(sqr, 1, 5, 5);
@@ -17,6 +19,13 @@ public class LinkedListTabulatedFunctionTest {
 
     private LinkedListTabulatedFunction getFunction() {
         return new LinkedListTabulatedFunction(sqr, 1, 5, 7);
+    }
+    private LinkedListTabulatedFunction getAnotherListFunction() {
+        return new LinkedListTabulatedFunction(sqr, 10, 50, 60);
+    }
+
+    private LinkedListTabulatedFunction getArrayListFunction() {
+        return new LinkedListTabulatedFunction(xValues, yValues);
     }
 
     @Test
@@ -134,5 +143,11 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListFunction().interpolate(2, getListFunction().floorIndexOfX(2)), 4, ACCURACY);
         assertEquals(getListFunction().interpolate(2, getListFunction().floorIndexOfX(2)), 4, ACCURACY);
         assertEquals(getListFunction().interpolate(4, getListFunction().floorIndexOfX(4)), 16, ACCURACY);
+    }
+    @Test
+    public void testComplexFunction() {
+        assertEquals(getArrayListFunction().andThen(getAnotherListFunction()).andThen(sqr).apply(22), 279911.213538, ACCURACY);
+        assertEquals(getArrayListFunction().andThen(getAnotherListFunction()).andThen(sqr).apply(22), 279911.213538, ACCURACY);
+        assertNotEquals(sqr.andThen(getAnotherListFunction()).andThen(getArrayListFunction()).apply(10), Double.NaN, ACCURACY);
     }
 }
