@@ -2,7 +2,7 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
-    private int count;
+    protected int count;
 
 
 
