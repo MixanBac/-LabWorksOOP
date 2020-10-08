@@ -154,7 +154,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testApply() {
         LinkedListTabulatedFunction testingApply = new LinkedListTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
-        assertEquals(testingApply.apply(1.0), 2.0, delta);
+        assertEquals(testingApply.apply(0.9), 1.9, delta);
         assertEquals(testingApply.apply(1.56), 2.56, delta);
         assertEquals(testingApply.apply(1.22), 2.22, delta);
         assertNotEquals(testingApply.apply(1.22), 1.23, delta);
