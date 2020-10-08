@@ -3,6 +3,7 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
+
 public class LinkedListTabulatedFunctionTest {
     private final MathFunction source = new SqrFunction();
     private final LinkedListTabulatedFunction listFunction = new LinkedListTabulatedFunction(source, 1, 5, 5);
