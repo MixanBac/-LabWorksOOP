@@ -3,6 +3,8 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 import org.testng.annotations.Test;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InterpolationException;
 
+import java.util.Iterator;
+
 import static org.testng.Assert.*;
 
 public class ArrayTabulatedFunctionTest {
@@ -193,5 +195,49 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingArrayFunction().rightBound(), 16, delta);
         assertNotEquals(testingArrayFunction().rightBound(), 19, delta);
         assertNotEquals(testingArrayFunction().rightBound(), 27, delta);
+    }
+
+    @Test
+    public void testIteratorWhile() {
+        final double delta = 0.0001;
+        ArrayTabulatedFunction testingIteratorWhileA = new ArrayTabulatedFunction(xValues, yValues);
+        Iterator<Point> myIterator = testingIteratorWhileA.iterator();
+        int i = 0;
+        while (myIterator.hasNext()) {
+            Point myPoint = myIterator.next();
+            assertEquals(testingIteratorWhileA.getX(i), myPoint.x, delta);
+            assertEquals(testingIteratorWhileA.getY(i++), myPoint.y, delta);
+        }
+        assertEquals(testingIteratorWhileA.getCount(), i);
+
+        ArrayTabulatedFunction testingIteratorWhileB = testingArrayFunction();
+        myIterator = testingIteratorWhileB.iterator();
+        i = 0;
+        while (myIterator.hasNext()) {
+            Point myPoint = myIterator.next();
+            assertEquals(testingIteratorWhileB.getX(i), myPoint.x, delta);
+            assertEquals(testingIteratorWhileB.getY(i++), myPoint.y, delta);
+        }
+        assertEquals(testingIteratorWhileB.getCount(), i);
+    }
+
+    @Test
+    public void testIteratorForEach() {
+        final double delta = 0.0001;
+        ArrayTabulatedFunction testingIteratorWhileA = new ArrayTabulatedFunction(xValues, yValues);
+        int i = 0;
+        for (Point myPoint : testingIteratorWhileA) {
+            assertEquals(myPoint.x, testingIteratorWhileA.getX(i), delta);
+            assertEquals(myPoint.y, testingIteratorWhileA.getY(i++), delta);
+        }
+        assertEquals(testingIteratorWhileA.getCount(), i);
+
+        ArrayTabulatedFunction testingIteratorWhileB = testingArrayFunction();
+        i = 0;
+        for (Point myPoint : testingIteratorWhileB) {
+                assertEquals(myPoint.x, testingIteratorWhileB.getX(i), delta);
+            assertEquals(myPoint.y, testingIteratorWhileB.getY(i++), delta);
+        }
+        assertEquals(testingIteratorWhileB.getCount(), i);
     }
 }

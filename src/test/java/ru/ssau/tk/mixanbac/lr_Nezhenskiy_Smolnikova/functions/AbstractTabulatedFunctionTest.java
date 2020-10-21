@@ -40,7 +40,7 @@ public class AbstractTabulatedFunctionTest {
     @Test
     public void testCheckSorted() {
         assertThrows(ArrayIsNotSortedException.class, () -> {
-            double[] valuesX = new double[]{-80, -100, 5, 18, 90};
+            double[] valuesX = new double[]{-80, -100, 5, 18, 0};
             AbstractTabulatedFunction.checkSorted(valuesX);
         });
     }
