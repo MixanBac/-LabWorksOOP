@@ -3,6 +3,7 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InterpolationException;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
 
@@ -103,7 +104,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     public int indexOfY(double y) {
         for (int i = 0; i < count; i++) {
-            if (yValues[i]== y) {
+            if (yValues[i] == y) {
                 return i;
             }
         }
@@ -118,5 +119,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     public double rightBound() {
         return xValues[count - 1];
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
     }
 }
