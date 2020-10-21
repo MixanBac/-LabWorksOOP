@@ -1,6 +1,7 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 
 import org.testng.annotations.Test;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InterpolationException;
 
 import static org.testng.Assert.*;
 
@@ -138,6 +139,8 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListFunction().interpolate(2, getListFunction().floorIndexOfX(2)), 4, ACCURACY);
         assertEquals(getListFunction().interpolate(2, getListFunction().floorIndexOfX(2)), 4, ACCURACY);
         assertEquals(getListFunction().interpolate(4, getListFunction().floorIndexOfX(4)), 16, ACCURACY);
+        assertThrows(InterpolationException.class, () -> listFunction().interpolate(2, 2));
+        assertThrows(InterpolationException.class, () -> getListFunction().interpolate(4, 4));
     }
 
     @Test

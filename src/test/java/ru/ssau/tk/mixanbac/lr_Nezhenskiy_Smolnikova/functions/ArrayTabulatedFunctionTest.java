@@ -1,6 +1,7 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 
 import org.testng.annotations.Test;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InterpolationException;
 
 import static org.testng.Assert.*;
 
@@ -86,6 +87,8 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingArrayFunction().interpolate(15, 3), 215, delta);
         assertEquals(testingArrayFunction().interpolate(19, 3), 307, delta);
         assertNotEquals(testingArrayFunction().interpolate(11, 3), 121, delta);
+        assertThrows(InterpolationException.class, () -> testingArrayFunction().interpolate(1, 80));
+        assertThrows(InterpolationException.class, () -> testingArrayFunction().interpolate(8, 7));
 
     }
 
