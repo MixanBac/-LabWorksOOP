@@ -3,17 +3,47 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InterpolationException;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private Node head;
+    protected class Node {
+        public Node next;
+        public Node prev;
+        public double x;
+        public double y;
+    }
+
 
 
     @Override
     public Iterator<Point> iterator() {
-        return null;
-    }
+
+        return new Iterator<>() {
+            Node node = head;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+        @Override
+        public Point next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Point point = new Point(node.x, node.y);
+            if (node == head.prev) {
+                node = null;
+            } else {
+                node = node.next;
+            }
+            return point;
+        }
+    };
+}
+
 
     @Override
     public void forEach(Consumer<? super Point> action) {
@@ -22,6 +52,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public Spliterator<Point> spliterator() {
+
         return null;
     }
 
@@ -115,19 +146,18 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     protected double interpolate(double x, int floorIndex) {
             Node leftNode = getNode(floorIndex);
             Node rightNode = leftNode.next;
+        if (x < leftNode.x || x > rightNode.x) {
+            throw new InterpolationException("X находится за пределами ");
+        }
             return interpolate(x, leftNode.x, rightNode.x, leftNode.y, rightNode.y);
         }
+
 
     public int getCount () {
         return count;
     }
 
-    protected class Node {
-        public Node next;
-        public Node prev;
-        public double x;
-        public double y;
-    }
+
     private Node getNode ( int index){
         checkIndex(index);
         Node indexNode;
@@ -153,7 +183,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     private void checkIndex(int index) {
         if (index < 0 || index > count - 1) {
-            throw new ArrayIndexOutOfBoundsException("Index out of bounds of array");
+            throw new ArrayIndexOutOfBoundsException("индекс за пределами массива");
         }
     }
 
@@ -192,7 +222,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         if ((xFrom >= xTo) || (xFrom < 0) | (xTo < 0)) {
             if ((xFrom >= xTo)) {
-                throw new IllegalArgumentException("Incorrect parameter values");
+                throw new IllegalArgumentException("писать допустимые значения");
             }
             this.count = count;
             final double step = (xTo - xFrom) / (count - 1);

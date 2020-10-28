@@ -63,6 +63,7 @@ public class LinkedListTabulatedFunctionTest {
         function.setY(2, 2);
         assertEquals(function.getY(2), 2, ACCURACY);
 
+
     }
 
     @Test
@@ -157,4 +158,5 @@ public class LinkedListTabulatedFunctionTest {
         assertNotEquals(listFunction().apply(7.25), 59.25, delta);
     }
 
-}
+    }
+
