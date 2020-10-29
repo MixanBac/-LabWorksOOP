@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InterpolationException;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.testng.Assert.*;
 
@@ -16,6 +17,10 @@ public class ArrayTabulatedFunctionTest {
     private ArrayTabulatedFunction testingArrayFunction() {
         return new ArrayTabulatedFunction(source, 1, 16, 6);
     }
+
+
+
+
 
     @Test
     public void testGetCount() {
@@ -240,4 +245,8 @@ public class ArrayTabulatedFunctionTest {
         }
         assertEquals(testingIteratorWhileB.getCount(), i);
     }
+
+
+
+
 }

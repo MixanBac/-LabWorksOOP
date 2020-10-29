@@ -62,21 +62,26 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     @Override
-    public double getX(int index) {
-            checkIndex(index);
-            return getNode(index).x;
+    public double getX(int index) throws IllegalArgumentException {
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException("пиши индекс правильный");
         }
+        return getNode(index).x;
+    }
+
 
     @Override
-    public double getY(int index) {
-            checkIndex(index);
+    public double getY(int index) throws IllegalArgumentException {
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException("Index is out of bounds");
+        }
             return getNode(index).y;
         }
 
     @Override
-    public void setY(int index, double value) {
-
-        checkIndex(index);
+    public void setY(int index, double value) throws IllegalArgumentException {
+        if (index < 0 || index >= count) {
+            throw new IllegalArgumentException("Index is out of bounds");}
         getNode(index).y = value;
     }
 
@@ -158,8 +163,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
 
-    private Node getNode ( int index){
-        checkIndex(index);
+    private Node getNode ( int index) throws IllegalArgumentException {
         Node indexNode;
         if (index <= (count / 2)) {
             indexNode = head;
@@ -178,14 +182,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
                 indexNode = indexNode.prev;
             }
         }
-        throw new UnsupportedOperationException("");
+        throw new IllegalArgumentException();
     }
 
-    private void checkIndex(int index) {
-        if (index < 0 || index > count - 1) {
-            throw new ArrayIndexOutOfBoundsException("индекс за пределами массива");
-        }
-    }
 
     //addNode добавляет новый узел в конец списка,если список  пустой то головой списка становится узел
     private void addNode(double x, double y) {
@@ -219,10 +218,13 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
+
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        if ((xFrom >= xTo) || (xFrom < 0) | (xTo < 0)) {
-            if ((xFrom >= xTo)) {
-                throw new IllegalArgumentException("писать допустимые значения");
+        if (count < 2) {
+            throw new IllegalArgumentException("колличество точек меньше 2 ");
+        }
+        if ((xFrom >= xTo) ) {
+            throw new IllegalArgumentException("писать допустимые значения");
             }
             this.count = count;
             final double step = (xTo - xFrom) / (count - 1);
@@ -233,7 +235,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             }
         }
     }
-}
+
 
 
 
