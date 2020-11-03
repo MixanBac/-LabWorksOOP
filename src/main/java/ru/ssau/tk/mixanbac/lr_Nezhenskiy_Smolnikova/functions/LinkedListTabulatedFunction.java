@@ -213,7 +213,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if ((xFrom >= xTo)) {
             throw new IllegalArgumentException("писать допустимые значения");
         }
-        this.count = count;
         final double step = (xTo - xFrom) / (count - 1);
         double a = xFrom;
         for (int i = 0; i < count; i++) {
