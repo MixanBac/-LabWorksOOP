@@ -54,8 +54,6 @@ public class ArrayTabulatedFunctionTest {
         assertNotEquals(testingFloorIndexOfX.floorIndexOfX(1.43), 4);
         assertEquals(testingArrayFunction().floorIndexOfX(8.93), 2);
         assertEquals(testingArrayFunction().floorIndexOfX(66.67), 6);
-        assertNotEquals(testingArrayFunction().floorIndexOfX(66.67), 4);
-
     }
 
     @Test
@@ -109,6 +107,8 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingArrayFunction().getX(1), 4, delta);
         assertEquals(testingArrayFunction().getX(3), 10, delta);
         assertNotEquals(testingArrayFunction().getX(3), 16, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> testingGetX.getX(-1));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> testingArrayFunction().getX(-1));
 
     }
 
@@ -122,6 +122,8 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingArrayFunction().getY(1), 16, delta);
         assertEquals(testingArrayFunction().getY(3), 100, delta);
         assertNotEquals(testingArrayFunction().getY(3), 162, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> testingGetY.getY(-1));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> testingArrayFunction().getY(-1));
 
     }
 
@@ -140,6 +142,8 @@ public class ArrayTabulatedFunctionTest {
         assertNotEquals(testingArrayFunction.getY(2), 0, delta);
         testingArrayFunction.setY(4, 23);
         assertEquals(testingArrayFunction.getY(4), 23, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> testingSetY.setY(-1, 0));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> testingArrayFunction.setY(-1, 0));
 
     }
 
