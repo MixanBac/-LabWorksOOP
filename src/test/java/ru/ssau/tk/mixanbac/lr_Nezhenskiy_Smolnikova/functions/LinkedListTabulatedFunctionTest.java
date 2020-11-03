@@ -54,10 +54,10 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testGetCount() {
-        assertEquals(getListOfArray().getCount(), 5, DELTA);
-        assertEquals(getListOfMathFunction().getCount(), 202, DELTA);
+        assertEquals(getListOfArray().getCount(), 5);
+        assertNotEquals(getListOfArray().getCount(), 1);
         assertNotEquals(getListOfArray().getCount(), 14);
-        assertNotEquals(getListOfMathFunction().getCount(), 1);
+
     }
 
     @Test

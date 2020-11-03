@@ -93,15 +93,11 @@ public class ArrayTabulatedFunctionTest {
     @Test
     public void testInterpolate() {
         ArrayTabulatedFunction testingInterpolate = new ArrayTabulatedFunction(xValues, yValues);
-        final double delta = 0.00001;
-        assertEquals(testingInterpolate.interpolate(7.478, 1), 8.478, delta);
-        assertEquals(testingInterpolate.interpolate(7.473, 1), 8.473, delta);
-        assertNotEquals(testingInterpolate.interpolate(68.247, 1), 4.237, delta);
-        assertEquals(testingArrayFunction().interpolate(15, 3), 215, delta);
-        assertEquals(testingArrayFunction().interpolate(19, 3), 307, delta);
-        assertNotEquals(testingArrayFunction().interpolate(11, 3), 121, delta);
-        assertThrows(InterpolationException.class, () -> testingArrayFunction().interpolate(1, 80));
-        assertThrows(InterpolationException.class, () -> testingArrayFunction().interpolate(8, 7));
+        final double delta = 0.001;
+        assertEquals(testingInterpolate.interpolate(1.5, testingInterpolate.floorIndexOfX(1)), 2, delta);
+        assertNotEquals(testingInterpolate.interpolate(68.247, testingInterpolate.floorIndexOfX(1)), 4.237, delta);
+
+
 
     }
 
