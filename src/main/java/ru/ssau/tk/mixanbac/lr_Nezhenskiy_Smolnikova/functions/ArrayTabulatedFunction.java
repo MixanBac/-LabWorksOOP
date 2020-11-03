@@ -13,7 +13,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     protected double[] yValues;
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
-        if (xValues.length<2) {
+        if (xValues.length < 2) {
             throw new IllegalArgumentException("Length less than 2 points");
         }
         checkLengthIsTheSame(xValues, yValues);
@@ -76,7 +76,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     @Override
-    public int getCount() { return count;
+    public int getCount() {
+        return count;
     }
 
     @Override
@@ -148,6 +149,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
             }
         };
     }
+
     private void checkIndex(int index) {
         if (index < 0 || index > count - 1) {
             throw new ArrayIndexOutOfBoundsException("Index out of bounds of array");

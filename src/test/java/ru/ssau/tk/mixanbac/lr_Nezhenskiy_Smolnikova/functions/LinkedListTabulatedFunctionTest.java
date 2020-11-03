@@ -32,6 +32,7 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(sqr, -4, -80, -2));
         assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(sqr, 4, -8, 5));
     }
+
     @Test
     public void testIterator() {
         Iterator<Point> iterator = getListOfArray().iterator();
@@ -50,6 +51,7 @@ public class LinkedListTabulatedFunctionTest {
         System.out.println(i);
         assertThrows(NoSuchElementException.class, iterator::next);
     }
+
     @Test
     public void testGetCount() {
         assertEquals(getListOfArray().getCount(), 5, DELTA);
@@ -70,6 +72,7 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> getListOfMathFunction().getX(-1));
 
     }
+
     @Test
     public void testGetY() {
         assertEquals(getListOfArray().getY(1), 2.1, DELTA);
@@ -81,6 +84,7 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> getListOfArray().getY(-1));
         assertThrows(IllegalArgumentException.class, () -> getListOfMathFunction().getY(-1));
     }
+
     @Test
     public void testSetY() {
 
@@ -102,23 +106,25 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> getListOfMathFunction().setY(-1, 0));
         assertThrows(IllegalArgumentException.class, () -> getListOfArray().setY(-1, 0));
     }
+
     @Test
     public void testIndexOfX() {
         assertEquals(getListOfArray().indexOfX(3), -1., DELTA);
         assertEquals(getListOfArray().indexOfX(2), -1., DELTA);
-        assertEquals(getListOfMathFunction().indexOfX(0), 0,DELTA);
-        assertEquals(getListOfMathFunction().indexOfX(5), -1,DELTA);
-        assertEquals(getListOfMathFunction().indexOfX(-5), -1,DELTA);
+        assertEquals(getListOfMathFunction().indexOfX(0), 0, DELTA);
+        assertEquals(getListOfMathFunction().indexOfX(5), -1, DELTA);
+        assertEquals(getListOfMathFunction().indexOfX(-5), -1, DELTA);
     }
 
     @Test
     public void testIndexOfY() {
         assertEquals(getListOfArray().indexOfY(25), -1, DELTA);
         assertEquals(getListOfArray().indexOfY(23), -1, DELTA);
-        assertEquals(getListOfMathFunction().indexOfY(1), -1,DELTA);
-        assertEquals(getListOfMathFunction().indexOfY(2), -1,DELTA);
-        assertEquals(getListOfMathFunction().indexOfY(-2), -1,DELTA);
+        assertEquals(getListOfMathFunction().indexOfY(1), -1, DELTA);
+        assertEquals(getListOfMathFunction().indexOfY(2), -1, DELTA);
+        assertEquals(getListOfMathFunction().indexOfY(-2), -1, DELTA);
     }
+
     @Test
     public void testLeftBound() {
         assertEquals(getListOfArray().leftBound(), 1, DELTA);
@@ -131,7 +137,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testRightBound() {
         assertEquals(getListOfArray().rightBound(), 1.4, DELTA);
         assertNotEquals(getListOfArray().rightBound(), 1., DELTA);
-        assertNotEquals(getListOfMathFunction().rightBound(), Double.NaN,DELTA);
+        assertNotEquals(getListOfMathFunction().rightBound(), Double.NaN, DELTA);
         assertEquals(getListOfMathFunction().rightBound(), 9.9999, DELTA);
     }
 
@@ -144,6 +150,7 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> getListOfArray().floorIndexOfX(-10));
         assertThrows(IllegalArgumentException.class, () -> getListOfMathFunction().floorIndexOfX(-10));
     }
+
     @Test
     public void testExtrapolateLeft() {
         assertEquals(getListOfArray().extrapolateLeft(0), 1, DELTA);
@@ -151,13 +158,15 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListOfMathFunction().extrapolateLeft(0), 0, DELTA);
         assertNotEquals(getListOfMathFunction().extrapolateLeft(0), 9, DELTA);
     }
+
     @Test
     public void testExtrapolateRight() {
         assertEquals(getListOfArray().extrapolateRight(4), 5., DELTA);
         assertNotEquals(getListOfArray().extrapolateRight(4), 50., DELTA);
-        assertEquals(getListOfMathFunction().extrapolateRight(40), 697.,DELTA);
-        assertNotEquals(getListOfMathFunction().extrapolateRight(40), 767.,DELTA);
+        assertEquals(getListOfMathFunction().extrapolateRight(40), 697., DELTA);
+        assertNotEquals(getListOfMathFunction().extrapolateRight(40), 767., DELTA);
     }
+
     @Test
     public void testApply() {
         assertEquals(getListOfArray().apply(0.9), 1.9, DELTA);

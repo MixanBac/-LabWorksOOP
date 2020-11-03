@@ -9,13 +9,13 @@ import java.util.function.Consumer;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private Node head;
+
     protected class Node {
         public Node next;
         public Node prev;
         public double x;
         public double y;
     }
-
 
 
     @Override
@@ -28,21 +28,22 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             public boolean hasNext() {
                 return node != null;
             }
-        @Override
-        public Point next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Point point = new Point(node.x, node.y);
+                if (node == head.prev) {
+                    node = null;
+                } else {
+                    node = node.next;
+                }
+                return point;
             }
-            Point point = new Point(node.x, node.y);
-            if (node == head.prev) {
-                node = null;
-            } else {
-                node = node.next;
-            }
-            return point;
-        }
-    };
-}
+        };
+    }
 
 
     @Override
@@ -59,18 +60,20 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index is out of bounds");
         }
-            return getNode(index).y;
-        }
+        return getNode(index).y;
+    }
 
     @Override
     public void setY(int index, double value) throws IllegalArgumentException {
         if (index < 0 || index >= count) {
-            throw new IllegalArgumentException("Index is out of bounds");}
+            throw new IllegalArgumentException("Index is out of bounds");
+        }
         getNode(index).y = value;
     }
 
     @Override
-    public int indexOfX(double x) {  Node indexNode = head;
+    public int indexOfX(double x) {
+        Node indexNode = head;
         for (int i = 0; i < count; i++) {
             if (indexNode.x == x) {
                 return i;
@@ -82,72 +85,72 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public int indexOfY(double y) {
-            Node indexNode = head;
-            for (int i = 0; i < count; i++) {
-                if (indexNode.y == y) {
-                    return i;
-                }
-                indexNode = indexNode.next;
+        Node indexNode = head;
+        for (int i = 0; i < count; i++) {
+            if (indexNode.y == y) {
+                return i;
             }
-            return -1;
+            indexNode = indexNode.next;
         }
+        return -1;
+    }
 
-        @Override
+    @Override
     public double leftBound() {
-            return head.x;
-        }
+        return head.x;
+    }
 
     @Override
     public double rightBound() {
-            return head.prev.x;
-        }
+        return head.prev.x;
+    }
 
     @Override
     protected int floorIndexOfX(double x) {
-            if (x < head.x) {
-                throw new IllegalArgumentException("X находится за левой границей");
-            }
-            Node indexNode = head;
-            for (int i = 0; i < count; i++) {
-                if (indexNode.x < x) {
-                    indexNode = indexNode.next;
-                } else {
-                    if (i == 0) {
-                        return 0;
-                    }
-                    return i - 1;
-                }
-            }
-            return getCount();
+        if (x < head.x) {
+            throw new IllegalArgumentException("X находится за левой границей");
         }
+        Node indexNode = head;
+        for (int i = 0; i < count; i++) {
+            if (indexNode.x < x) {
+                indexNode = indexNode.next;
+            } else {
+                if (i == 0) {
+                    return 0;
+                }
+                return i - 1;
+            }
+        }
+        return getCount();
+    }
 
     @Override
     protected double extrapolateLeft(double x) {
-            return interpolate(x, head.x, head.next.x, head.y, head.next.y);
-        }
+        return interpolate(x, head.x, head.next.x, head.y, head.next.y);
+    }
 
     @Override
     protected double extrapolateRight(double x) {
-            return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
-        }
+        return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
+    }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-            Node leftNode = getNode(floorIndex);
-            Node rightNode = leftNode.next;
+        Node leftNode = getNode(floorIndex);
+        Node rightNode = leftNode.next;
         if (x < leftNode.x || x > rightNode.x) {
             throw new InterpolationException("X находится за пределами ");
         }
-            return interpolate(x, leftNode.x, rightNode.x, leftNode.y, rightNode.y);
-        }
+        return interpolate(x, leftNode.x, rightNode.x, leftNode.y, rightNode.y);
+    }
 
 
-    public int getCount () {
+    public int getCount() {
         return count;
     }
 
 
-    private Node getNode ( int index) throws IllegalArgumentException {
+    private Node getNode(int index) throws IllegalArgumentException {
         Node indexNode;
         if (index <= (count / 2)) {
             indexNode = head;
@@ -207,18 +210,18 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (count < 2) {
             throw new IllegalArgumentException("колличество точек меньше 2 ");
         }
-        if ((xFrom >= xTo) ) {
+        if ((xFrom >= xTo)) {
             throw new IllegalArgumentException("писать допустимые значения");
-            }
-            this.count = count;
-            final double step = (xTo - xFrom) / (count - 1);
-            double a = xFrom;
-            for (int i = 0; i < count; i++) {
-                this.addNode(a, source.apply(a));
-                a += step;
-            }
+        }
+        this.count = count;
+        final double step = (xTo - xFrom) / (count - 1);
+        double a = xFrom;
+        for (int i = 0; i < count; i++) {
+            this.addNode(a, source.apply(a));
+            a += step;
         }
     }
+}
 
 
 

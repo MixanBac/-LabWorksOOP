@@ -19,7 +19,6 @@ public class ArrayTabulatedFunctionTest {
     }
 
 
-
     @Test
     public void testArrayTabulatedFunction() {
         double[] xValues = {4.1};
@@ -253,13 +252,31 @@ public class ArrayTabulatedFunctionTest {
         ArrayTabulatedFunction testingIteratorWhileB = testingArrayFunction();
         i = 0;
         for (Point myPoint : testingIteratorWhileB) {
-                assertEquals(myPoint.x, testingIteratorWhileB.getX(i), delta);
+            assertEquals(myPoint.x, testingIteratorWhileB.getX(i), delta);
             assertEquals(myPoint.y, testingIteratorWhileB.getY(i++), delta);
         }
         assertEquals(testingIteratorWhileB.getCount(), i);
     }
 
-
+    @Test
+    public void testIterator() {
+        final double DELTA = 0.001;
+        Iterator<Point> iterator = testingArrayFunction().iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(point.x, testingArrayFunction().getX(i), DELTA);
+            assertEquals(point.y, testingArrayFunction().getY(i++), DELTA);
+        }
+        System.out.println(i);
+        i = 0;
+        for (Point point : testingArrayFunction()) {
+            assertEquals(point.x, testingArrayFunction().getX(i), DELTA);
+            assertEquals(point.y, testingArrayFunction().getY(i++), DELTA);
+        }
+        System.out.println(i);
+        assertThrows(NoSuchElementException.class, iterator::next);
+    }
 
 
 }
