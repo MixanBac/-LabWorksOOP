@@ -46,22 +46,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
 
     @Override
-    public void forEach(Consumer<? super Point> action) {
-
-    }
-
-    @Override
-    public Spliterator<Point> spliterator() {
-
-        return null;
-    }
-
-    @Override
-    public CompositeFunction andThen(MathFunction afterFunction) {
-        return null;
-    }
-
-    @Override
     public double getX(int index) throws IllegalArgumentException {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("пиши индекс правильный");
