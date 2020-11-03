@@ -27,7 +27,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
         if (count<2) {
             throw new IllegalArgumentException("Length less than 2 points");
         }
-        if ((xFrom >= xTo) || (xFrom < 0) | (xTo < 0)) {
+        if (xFrom >= xTo) {
             throw new IllegalArgumentException("Incorrect parameter values");
         }
         this.count = count;
