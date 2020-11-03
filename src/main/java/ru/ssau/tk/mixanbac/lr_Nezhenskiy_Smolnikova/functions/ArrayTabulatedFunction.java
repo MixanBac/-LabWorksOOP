@@ -24,9 +24,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        if (count<2) {
-            throw new IllegalArgumentException("Length less than 2 points");
-        }
+
         if (xFrom >= xTo) {
             throw new IllegalArgumentException("Incorrect parameter values");
         }
@@ -59,19 +57,15 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public double extrapolateLeft(double x) {
-        if (count == 1) {
-            return x;
-        }
         return interpolate(x, xValues[0], xValues[1], yValues[0], yValues[1]);
     }
 
     @Override
     public double extrapolateRight(double x) {
-        if (count == 1) {
-            return yValues[1];
-        }
+
         return interpolate(x, xValues[count - 2], xValues[count - 1], yValues[count - 2], yValues[count - 1]);
     }
+
 
     @Override
     protected double interpolate(double x, int floorIndex) {
