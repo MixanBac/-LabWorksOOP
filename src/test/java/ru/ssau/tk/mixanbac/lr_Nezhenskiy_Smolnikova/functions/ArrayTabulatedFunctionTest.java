@@ -20,7 +20,16 @@ public class ArrayTabulatedFunctionTest {
 
 
 
-
+    @Test
+    public void testArrayTabulatedFunction() {
+        double[] xValues = {4.1};
+        double[] yValues = {6.2};
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(source, -100, -37, 2));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(source, -5, -15, -1));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(source, -4, -80, -2));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(source, 4, -8, 5));
+    }
 
     @Test
     public void testGetCount() {
