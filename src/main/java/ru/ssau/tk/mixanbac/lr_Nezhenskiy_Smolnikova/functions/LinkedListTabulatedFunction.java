@@ -47,7 +47,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
 
     @Override
-    public double getX(int index) throws IllegalArgumentException {
+    public double getX(int index)  {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("пиши индекс правильный");
         }
@@ -56,7 +56,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
 
     @Override
-    public double getY(int index) throws IllegalArgumentException {
+    public double getY(int index)  {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index is out of bounds");
         }
@@ -64,7 +64,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     @Override
-    public void setY(int index, double value) throws IllegalArgumentException {
+    public void setY(int index, double value)  {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index is out of bounds");
         }
@@ -150,7 +150,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
 
-    private Node getNode(int index) throws IllegalArgumentException {
+    private Node getNode(int index) {
         Node indexNode;
         if (index <= (count / 2)) {
             indexNode = head;
