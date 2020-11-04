@@ -5,6 +5,7 @@ import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabul
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.LinkedListTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations.TabulatedFunctionOperationService;
 import org.testng.annotations.Test;
+
 import static org.testng.Assert.*;
 
 public class TabulatedFunctionOperationServiceTest {
@@ -57,19 +58,18 @@ public class TabulatedFunctionOperationServiceTest {
 
     @Test
     public void testSum() {
-        ArrayTabulatedFunction testArrayFunction = getTestArray();
-        LinkedListTabulatedFunction testListFunction = getTestList();
+        TabulatedFunction testArrayFunction = getTestArray();
+        TabulatedFunction testListFunction = getTestList();
 
-        final double[] errorX1 = new double[]{0, 1, 2};
-        final double[] errorY1 = new double[]{0, 1, 2};
+        final double[] errorX = new double[]{0, 1, 2};
+        final double[] errorY = new double[]{0, 1, 2};
+        TabulatedFunction errorTest = new ArrayTabulatedFunction(errorX, errorY);
+        assertThrows(InconsistentFunctionsException.class, () -> service.sum(testListFunction, errorTest));
+
+        final double[] errorX1 = new double[]{-15, -10, -1, 0, 1, 10, 15};
+        final double[] errorY1 = new double[]{-3, -2, -1, -0, 1, 2, 3};
         TabulatedFunction errorTest1 = new ArrayTabulatedFunction(errorX1, errorY1);
         assertThrows(InconsistentFunctionsException.class, () -> service.sum(testListFunction, errorTest1));
-
-        final double[] errorX2 = new double[]{-81, -16, -1, 0, 1, 16, 81};
-        final double[] errorY2 = new double[]{-21, -14, -7, 0, 7, 14, 21};
-        TabulatedFunction errorTest2 = new ArrayTabulatedFunction(errorX2, errorY2);
-        assertThrows(InconsistentFunctionsException.class, () -> service.sum(testListFunction, errorTest2));
-
 
         TabulatedFunction testSumOfArrays = service.sum(testArrayFunction, testArrayFunction);
         int i = 0;
@@ -91,6 +91,7 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, valuesX[i]);
             assertEquals(point.y, valuesYForArray[i] + valuesYForList[i++]);
         }
+
     }
 
     @Test
@@ -117,6 +118,60 @@ public class TabulatedFunctionOperationServiceTest {
         for (Point point : testSubtractOfArrayAndList) {
             assertEquals(point.x, valuesX[i]);
             assertEquals(point.y, valuesYForArray[i] - valuesYForList[i++]);
+        }
+    }
+
+    @Test
+    public void testMultiply() {
+        ArrayTabulatedFunction testArrayFunction = getTestArray();
+        LinkedListTabulatedFunction testListFunction = getTestList();
+
+        TabulatedFunction testMultiplyOfArrays = service.multiply(testArrayFunction, testArrayFunction);
+        int i = 0;
+        for (Point point : testMultiplyOfArrays) {
+            assertEquals(point.x, valuesX[i]);
+            assertEquals(point.y, valuesYForArray[i] * valuesYForArray[i++]);
+        }
+
+        TabulatedFunction testMultiplyOfLists = service.multiply(testListFunction, testListFunction);
+        i = 0;
+        for (Point point : testMultiplyOfLists) {
+            assertEquals(point.x, valuesX[i]);
+            assertEquals(point.y, valuesYForList[i] * valuesYForList[i++]);
+        }
+
+        TabulatedFunction testMultiplyOfArrayAndList = service.multiply(testArrayFunction, testListFunction);
+        i = 0;
+        for (Point point : testMultiplyOfArrayAndList) {
+            assertEquals(point.x, valuesX[i]);
+            assertEquals(point.y, valuesYForArray[i] * valuesYForList[i++]);
+        }
+    }
+
+    @Test
+    public void testDivide() {
+        ArrayTabulatedFunction testArrayFunction = getTestArray();
+        LinkedListTabulatedFunction testListFunction = getTestList();
+
+        TabulatedFunction testDivideOfArrays = service.divide(testArrayFunction, testArrayFunction);
+        int i = 0;
+        for (Point point : testDivideOfArrays) {
+            assertEquals(point.x, valuesX[i]);
+            assertEquals(point.y, valuesYForArray[i] / valuesYForArray[i++]);
+        }
+
+        TabulatedFunction testDivideOfLists = service.divide(testListFunction, testListFunction);
+        i = 0;
+        for (Point point : testDivideOfLists) {
+            assertEquals(point.x, valuesX[i]);
+            assertEquals(point.y, valuesYForList[i] / valuesYForList[i++]);
+        }
+
+        TabulatedFunction testDivideOfArrayAndList = service.divide(testArrayFunction, testListFunction);
+        i = 0;
+        for (Point point : testDivideOfArrayAndList) {
+            assertEquals(point.x, valuesX[i]);
+            assertEquals(point.y, valuesYForArray[i] / valuesYForList[i++]);
         }
     }
 }
