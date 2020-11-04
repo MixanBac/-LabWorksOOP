@@ -119,5 +119,4 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.y, valuesYForArray[i] - valuesYForList[i++]);
         }
     }
-
 }
