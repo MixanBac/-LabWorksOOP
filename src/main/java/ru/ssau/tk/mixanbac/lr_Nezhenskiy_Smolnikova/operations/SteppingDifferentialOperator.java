@@ -3,7 +3,7 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.MathFunction;
 
 public abstract class SteppingDifferentialOperator implements DifferentialOperator<MathFunction> {
-    protected double step;
+    protected  double step;
 
     public SteppingDifferentialOperator(double step) {
         if (step <= 0 || Double.isInfinite(step) || Double.isNaN(step)) {
