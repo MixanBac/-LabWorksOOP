@@ -12,5 +12,4 @@ public class TabulatedFunctionOperationService {
         }
         return points;
     }
-
 }

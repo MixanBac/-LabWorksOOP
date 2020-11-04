@@ -177,6 +177,18 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListOfMathFunction().apply(7.25), 52.565, DELTA);
     }
 
+    @Test
+    public void testInterpolate() {
+        final double delta = 0.001;
+        assertEquals(getListOfArray().interpolate(1.23, getListOfArray().floorIndexOfX(1.23)), 2.23, delta);
+        assertEquals(getListOfArray().interpolate(1.15, getListOfArray().floorIndexOfX(1.15)), 2.15, delta);
+        assertNotEquals(getListOfArray().interpolate(1.33, getListOfArray().floorIndexOfX(1.33)), 8.43, delta);
+        assertEquals(getListOfMathFunction().interpolate(1.41, getListOfMathFunction().floorIndexOfX(1.41)), 1.988, delta);
+        assertEquals(getListOfMathFunction().interpolate(1.35, getListOfMathFunction().floorIndexOfX(1.35)), 1.825, delta);
+        assertNotEquals(getListOfMathFunction().interpolate(1.33, getListOfMathFunction().floorIndexOfX(1.33)), 8.43, delta);
+        assertThrows(InterpolationException.class, () -> getListOfArray().interpolate(0.5, 2));
+        assertThrows(InterpolationException.class, () -> getListOfMathFunction().interpolate(7.5, 3));
+    }
 
 }
 
