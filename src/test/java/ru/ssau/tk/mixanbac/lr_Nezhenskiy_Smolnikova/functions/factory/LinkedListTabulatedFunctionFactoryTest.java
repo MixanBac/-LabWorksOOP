@@ -15,7 +15,7 @@ public class LinkedListTabulatedFunctionFactoryTest {
     @Test
     public void testCreate() {
         var testListFunction1 = new LinkedListTabulatedFunctionFactory().create(valuesX, valuesY);
-        var testListFunction2 = new LinkedListTabulatedFunctionFactory().create(sqrFunction,25,50,25);
+        var testListFunction2 = new LinkedListTabulatedFunctionFactory().create(sqrFunction, 25, 50, 25);
         assertTrue(testListFunction1 instanceof LinkedListTabulatedFunction);
         assertTrue(testListFunction2 instanceof LinkedListTabulatedFunction);
     }

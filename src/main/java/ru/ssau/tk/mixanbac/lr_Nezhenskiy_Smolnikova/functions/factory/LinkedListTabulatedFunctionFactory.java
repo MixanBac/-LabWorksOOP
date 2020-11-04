@@ -13,6 +13,6 @@ public class LinkedListTabulatedFunctionFactory implements TabulatedFunctionFact
 
     @Override
     public TabulatedFunction create(MathFunction source, double xFrom, double xTo, int count) {
-        return new LinkedListTabulatedFunction( source,  xFrom,  xTo, count);
+        return new LinkedListTabulatedFunction(source, xFrom, xTo, count);
     }
 }
