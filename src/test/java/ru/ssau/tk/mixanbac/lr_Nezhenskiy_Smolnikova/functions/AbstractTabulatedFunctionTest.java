@@ -35,6 +35,9 @@ public class AbstractTabulatedFunctionTest {
             double[] valuesY = new double[]{13, 14,-3};
             AbstractTabulatedFunction.checkLengthIsTheSame(valuesX, valuesY);
         });
+        double[] valuesX = new double[]{8, 78};
+        double[] valuesY = new double[]{13, 14};
+        AbstractTabulatedFunction.checkLengthIsTheSame(valuesX, valuesY);
     }
 
     @Test
@@ -43,6 +46,8 @@ public class AbstractTabulatedFunctionTest {
             double[] valuesX = new double[]{-80, -100, 5, 18, 0};
             AbstractTabulatedFunction.checkSorted(valuesX);
         });
+        double[] valuesX = new double[]{-80, 5, 18};
+        AbstractTabulatedFunction.checkSorted(valuesX);
     }
     @Test
     public void testTestToString() {
