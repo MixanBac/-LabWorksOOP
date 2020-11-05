@@ -11,10 +11,10 @@ public class AbstractTabulatedFunctionTest {
     public void testInterpolate() {
         AbstractTabulatedFunction mockedInterpolate = new MockTabulatedFunction();
 
-        final double delta = 0.0001;
-        assertEquals(mockedInterpolate.interpolate(1.4, 1.0, 2.0, 3.0, 4.0), 3.4, delta);
-        assertEquals(mockedInterpolate.interpolate(1.5, 1.0, 2.0, 3.0, 4.0), 3.5, delta);
-        assertEquals(mockedInterpolate.interpolate(1.6, 1.0, 2.0, 3.0, 4.0), 3.6, delta);
+        final double DELTA = 0.0001;
+        assertEquals(mockedInterpolate.interpolate(1.4, 1.0, 2.0, 3.0, 4.0), 3.4, DELTA);
+        assertEquals(mockedInterpolate.interpolate(1.5, 1.0, 2.0, 3.0, 4.0), 3.5, DELTA);
+        assertEquals(mockedInterpolate.interpolate(1.6, 1.0, 2.0, 3.0, 4.0), 3.6, DELTA);
         assertNotEquals(mockedInterpolate.interpolate(1.5, 1.0, 2.0, 3.0, 4.0), 8.1);
     }
 
@@ -22,9 +22,9 @@ public class AbstractTabulatedFunctionTest {
     public void testApply() {
         AbstractTabulatedFunction mockedApply = new MockTabulatedFunction();
 
-        final double delta = 0.0001;
-        assertEquals(mockedApply.apply(1.3), 4.0, delta);
-        assertEquals(mockedApply.apply(4.0), 4.0, delta);
+        final double DELTA = 0.0001;
+        assertEquals(mockedApply.apply(1.3), 4.0, DELTA);
+        assertEquals(mockedApply.apply(4.0), 4.0, DELTA);
         assertNotEquals(mockedApply.apply(1.3), 5.2);
     }
 
@@ -32,7 +32,7 @@ public class AbstractTabulatedFunctionTest {
     public void testCheckLengthIsTheSame() {
         assertThrows(DifferentLengthOfArraysException.class, () -> {
             double[] valuesX = new double[]{8, 78};
-            double[] valuesY = new double[]{13, 14,-3};
+            double[] valuesY = new double[]{13, 14, -3};
             AbstractTabulatedFunction.checkLengthIsTheSame(valuesX, valuesY);
         });
         double[] valuesX = new double[]{8, 78};
@@ -49,6 +49,7 @@ public class AbstractTabulatedFunctionTest {
         double[] valuesX = new double[]{-80, 5, 18};
         AbstractTabulatedFunction.checkSorted(valuesX);
     }
+
     @Test
     public void testTestToString() {
         double[] x = {0, 5, 10};

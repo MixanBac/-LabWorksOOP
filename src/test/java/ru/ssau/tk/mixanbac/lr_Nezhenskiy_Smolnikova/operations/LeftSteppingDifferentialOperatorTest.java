@@ -8,7 +8,8 @@ import static ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations.TabulatedD
 
 public class LeftSteppingDifferentialOperatorTest {
 
-    private final static double STEP=0.01;
+    private final static double STEP = 0.01;
+
     @Test
     public void testDerive() {
         SteppingDifferentialOperator differentialOperator = new LeftSteppingDifferentialOperator(STEP);

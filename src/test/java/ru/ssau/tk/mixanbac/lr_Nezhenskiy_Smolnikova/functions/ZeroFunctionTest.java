@@ -4,11 +4,10 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
+import static ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations.TabulatedDifferentialOperatorTest.DELTA;
 
 public class ZeroFunctionTest {
     private final ZeroFunction testFunction = new ZeroFunction();
-
-    private final static double DELTA = 0.00001;
 
     @Test
     public void testApply() {

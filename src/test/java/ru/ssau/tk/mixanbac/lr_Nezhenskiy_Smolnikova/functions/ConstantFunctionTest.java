@@ -3,10 +3,9 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
+import static ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations.TabulatedDifferentialOperatorTest.DELTA;
 
 public class ConstantFunctionTest {
-
-    private final static double DELTA = 0.00001;
 
     ConstantFunction testFunction = new ConstantFunction(Math.PI);
 

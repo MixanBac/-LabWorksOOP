@@ -3,10 +3,9 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
+import static ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations.TabulatedDifferentialOperatorTest.DELTA;
 
 public class CompositeFunctionTest {
-
-    private final static double DELTA = 0.00001;
 
     private final double[] xValues1 = new double[]{1, 2, 3, 4, 5};
     private final double[] yValues1 = new double[]{6, 7, 8, 9, 10};
