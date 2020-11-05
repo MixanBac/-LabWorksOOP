@@ -82,19 +82,16 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public double getX(int index) {
-        checkIndex(index);
         return xValues[index];
     }
 
     @Override
     public double getY(int index) {
-        checkIndex(index);
         return yValues[index];
     }
 
     @Override
     public void setY(int index, double value) {
-        checkIndex(index);
         yValues[index] = value;
     }
 
@@ -148,11 +145,5 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
                 return point;
             }
         };
-    }
-
-    private void checkIndex(int index) {
-        if (index < 0 || index > count - 1) {
-            throw new ArrayIndexOutOfBoundsException("Index out of bounds of array");
-        }
     }
 }
