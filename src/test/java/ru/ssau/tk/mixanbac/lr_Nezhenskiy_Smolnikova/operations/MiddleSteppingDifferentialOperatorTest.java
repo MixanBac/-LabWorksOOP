@@ -12,9 +12,9 @@ public class MiddleSteppingDifferentialOperatorTest {
 
     @Test
     public void testDerive() {
-        SteppingDifferentialOperator differentialOperator = new RightSteppingDifferentialOperator(STEP);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(1), 2.010, DELTA);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(3), 6.0099, DELTA);
+        SteppingDifferentialOperator differentialOperator = new MiddleSteppingDifferentialOperator(STEP);
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(3), 5.9999, DELTA);
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(6), 11.9999, DELTA);
     }
 
 }
