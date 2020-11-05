@@ -29,7 +29,7 @@ public class TabulatedFunctionOperationServiceTest {
 
     @Test
     public void testAsPoints() {
-        ArrayTabulatedFunction testArrayFunction = getTestArray();
+        TabulatedFunction testArrayFunction = getTestArray();
         Point[] Points = TabulatedFunctionOperationService.asPoints(testArrayFunction);
         int i = 0;
         for (Point myPoint : Points) {
@@ -38,7 +38,7 @@ public class TabulatedFunctionOperationServiceTest {
         }
         assertEquals(testArrayFunction.getCount(), i);
 
-        LinkedListTabulatedFunction testListFunction = getTestList();
+        TabulatedFunction testListFunction = getTestList();
         Points = TabulatedFunctionOperationService.asPoints(testListFunction);
         i = 0;
         for (Point myPoint : Points) {
@@ -100,8 +100,8 @@ public class TabulatedFunctionOperationServiceTest {
 
     @Test
     public void testSubtract() {
-        ArrayTabulatedFunction testArrayFunction = getTestArray();
-        LinkedListTabulatedFunction testListFunction = getTestList();
+        TabulatedFunction testArrayFunction = getTestArray();
+        TabulatedFunction testListFunction = getTestList();
 
         TabulatedFunction testSubtractOfArrays = service.subtract(testArrayFunction, testArrayFunction);
         int i = 0;
@@ -127,8 +127,8 @@ public class TabulatedFunctionOperationServiceTest {
 
     @Test
     public void testMultiply() {
-        ArrayTabulatedFunction testArrayFunction = getTestArray();
-        LinkedListTabulatedFunction testListFunction = getTestList();
+        TabulatedFunction testArrayFunction = getTestArray();
+        TabulatedFunction testListFunction = getTestList();
 
         TabulatedFunction testMultiplyOfArrays = service.multiply(testArrayFunction, testArrayFunction);
         int i = 0;
@@ -154,8 +154,8 @@ public class TabulatedFunctionOperationServiceTest {
 
     @Test
     public void testDivide() {
-        ArrayTabulatedFunction testArrayFunction = getTestArray();
-        LinkedListTabulatedFunction testListFunction = getTestList();
+        TabulatedFunction testArrayFunction = getTestArray();
+        TabulatedFunction testListFunction = getTestList();
 
         TabulatedFunction testDivideOfArrays = service.divide(testArrayFunction, testArrayFunction);
         int i = 0;
