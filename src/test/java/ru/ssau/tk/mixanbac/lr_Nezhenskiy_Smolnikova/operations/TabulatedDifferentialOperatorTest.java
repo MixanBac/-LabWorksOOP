@@ -19,6 +19,7 @@ public class TabulatedDifferentialOperatorTest {
         TabulatedFunction testFunction = new LinkedListTabulatedFunction(xValues, yValues);
         TabulatedDifferentialOperator differentialListOperator = new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory());
         TabulatedFunction diffFunction = differentialListOperator.derive(testFunction);
+        assertTrue(diffFunction instanceof LinkedListTabulatedFunction);
         assertEquals(diffFunction.getX(0), 1, DELTA);
         assertEquals(diffFunction.getX(1), 2, DELTA);
         assertEquals(diffFunction.getX(2), 3, DELTA);
@@ -29,6 +30,7 @@ public class TabulatedDifferentialOperatorTest {
         TabulatedFunction testArray = new ArrayTabulatedFunction(xValues, yValues);
         TabulatedDifferentialOperator differentialArrayOperator = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
         TabulatedFunction diffFunctionA = differentialArrayOperator.derive(testArray);
+        assertTrue(diffFunctionA instanceof ArrayTabulatedFunction);
         assertEquals(diffFunctionA.getX(3), 4, DELTA);
         assertEquals(diffFunctionA.getX(4), 5, DELTA);
         assertEquals(diffFunctionA.getX(2), 3, DELTA);
