@@ -60,7 +60,7 @@ public class TabulatedFunctionOperationService {
         return factory.create(xValues, yValues);
     }
 
-    public TabulatedFunction sum(TabulatedFunction a, TabulatedFunction b) {
+    public TabulatedFunction sum(TabulatedFunctionOperationService a, TabulatedFunction b) {
         return doOperation(a, b, (u, v) -> u + v);
     }
 
