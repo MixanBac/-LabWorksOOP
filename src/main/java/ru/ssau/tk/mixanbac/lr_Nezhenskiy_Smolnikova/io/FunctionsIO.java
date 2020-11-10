@@ -10,7 +10,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-public class FunctionsIO {
+public final class FunctionsIO {
     private FunctionsIO() {
         throw new UnsupportedOperationException();
     }
@@ -48,6 +48,17 @@ public class FunctionsIO {
             } catch (ParseException eParse) {
                 throw new IOException(eParse);
             }
+        }
+        return factory.create(xValues, yValues);
+    }
+    public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
+        DataInputStream in = new DataInputStream(inputStream);
+        int count = in.readInt();
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
+        for (int i = 0; i < count; i++) {
+            xValues[i] = in.readDouble();
+            yValues[i] = in.readDouble();
         }
         return factory.create(xValues, yValues);
     }
