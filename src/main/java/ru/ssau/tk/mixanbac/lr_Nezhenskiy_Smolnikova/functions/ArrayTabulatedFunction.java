@@ -2,12 +2,14 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InterpolationException;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Serializable {
 
+    private static final long serialVersionUID = 4144394263944414402L;
     protected int count;
     protected double[] xValues;
     protected double[] yValues;
