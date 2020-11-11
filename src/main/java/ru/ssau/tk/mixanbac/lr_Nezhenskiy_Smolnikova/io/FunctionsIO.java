@@ -34,12 +34,12 @@ public final class FunctionsIO {
         out.flush();
     }
     public static TabulatedFunction readTabulatedFunction(BufferedReader reader, TabulatedFunctionFactory factory) throws IOException {
-        int сount = Integer.parseInt(reader.readLine());
+        int count = Integer.parseInt(reader.readLine());
 
-        double[] xValues = new double[сount];
-        double[] yValues = new double[сount];
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.forLanguageTag("ru"));
-        for (int i = 0; i < сount; i++) {
+        for (int i = 0; i < count; i++) {
             String line = reader.readLine();
             String[] splitLine = line.split(" ");
             try {
@@ -53,10 +53,10 @@ public final class FunctionsIO {
     }
     public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
         DataInputStream in = new DataInputStream(inputStream);
-        int сount = in.readInt();
-        double[] xValues = new double[сount];
-        double[] yValues = new double[сount];
-        for (int i = 0; i < сount; i++) {
+        int count = in.readInt();
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
+        for (int i = 0; i < count; i++) {
             xValues[i] = in.readDouble();
             yValues[i] = in.readDouble();
         }
