@@ -9,7 +9,7 @@ import java.io.*;
 public class TabulatedFunctionFileOutputStream {
     public static void main(String[] args) {
         try (BufferedOutputStream listOut = new BufferedOutputStream(new FileOutputStream("output/linked list function.bin"));
-             BufferedOutputStream arrayOut = new BufferedOutputStream(new FileOutputStream("output/array function.bin"))) {
+             BufferedOutputStream arrayOut = new BufferedOutputStream(new FileOutputStream("output/binary function.bin"))) {
             double[] xValues = new double[]{1., 2., 3., 4., 5.,6.,7.};
             double[] yValues = new double[]{6., 7., 8., 9., 10., 11., 12.};
             ArrayTabulatedFunctionFactory arrayFactory = new ArrayTabulatedFunctionFactory();
