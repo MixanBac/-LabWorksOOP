@@ -9,30 +9,30 @@ import java.io.*;
 
 public class LinkedListTabulatedFunctionSerialization {
     public static void main(String[] args) {
-        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream("output/serialized linked list functions.bin"))) {
-            final double[] x = {1, 2, 3, 4, 5};
-            final double[] y = {6, 7, 8, 9, 10};
-            final TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory());
-            TabulatedFunction newFunction = new LinkedListTabulatedFunction(x, y);
-            TabulatedFunction onceDerivedFunction = operator.derive(newFunction);
-            TabulatedFunction twiceDerivedFunction = operator.derive(onceDerivedFunction);
-            FunctionsIO.serialize(out, newFunction);
-            FunctionsIO.serialize(out, onceDerivedFunction);
-            FunctionsIO.serialize(out, twiceDerivedFunction);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        File outList = new File("output/serialized linked list functions.bin");
+        double[] x = {1, 2, 3, 4, 5};
+        double[] y = {6, 7, 8, 9, 10};
 
-        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream("output/serialized linked list functions.bin"))) {
+        TabulatedDifferentialOperator differentialOperator = new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory());
+        TabulatedFunction listFunction = new LinkedListTabulatedFunction(x, y);
+        TabulatedFunction listFunction1 = differentialOperator.derive(listFunction);
+        TabulatedFunction listFunction2 = differentialOperator.derive(listFunction1);
+        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outList));
+             BufferedInputStream in = new BufferedInputStream(new FileInputStream(outList))) {
 
-            TabulatedFunction function = FunctionsIO.deserialize(in);
-            TabulatedFunction onceDerivedFunction = FunctionsIO.deserialize(in);
-            TabulatedFunction twiceDerivedFunction = FunctionsIO.deserialize(in);
-            System.out.println(function.toString());
-            System.out.println(onceDerivedFunction.toString());
-            System.out.println(twiceDerivedFunction.toString());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            FunctionsIO.serialize(out, listFunction);
+            FunctionsIO.serialize(out, listFunction1);
+            FunctionsIO.serialize(out, listFunction2);
+
+            TabulatedFunction resultList = FunctionsIO.deserialize(in);
+            TabulatedFunction resultList1 = FunctionsIO.deserialize(in);
+            TabulatedFunction resultList2 = FunctionsIO.deserialize(in);
+
+            System.out.println(resultList.toString());
+            System.out.println(resultList1.toString());
+            System.out.println(resultList2.toString());
+        } catch (IOException | ClassNotFoundException err) {
+            err.printStackTrace();
         }
     }
 }
