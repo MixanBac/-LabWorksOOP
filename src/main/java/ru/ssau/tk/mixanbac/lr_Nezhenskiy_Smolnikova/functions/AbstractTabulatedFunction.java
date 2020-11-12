@@ -3,8 +3,11 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.DifferentLengthOfArraysException;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction {
+import java.io.Serializable;
 
+public abstract class AbstractTabulatedFunction implements TabulatedFunction, Serializable {
+
+    private static final long serialVersionUID = 6474675077052623339L;
     protected int count;
 
 

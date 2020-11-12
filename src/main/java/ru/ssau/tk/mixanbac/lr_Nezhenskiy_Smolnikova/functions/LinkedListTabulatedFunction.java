@@ -12,7 +12,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     private static final long serialVersionUID = -7586757294847649471L;
     private Node head;
 
-    protected class Node {
+    protected class Node implements Serializable {
+        private static final long serialVersionUID = -5659942879517986295L;
         public Node next;
         public Node prev;
         public double x;
