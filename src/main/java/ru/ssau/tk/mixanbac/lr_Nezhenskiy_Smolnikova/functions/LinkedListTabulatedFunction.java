@@ -50,7 +50,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
 
     @Override
-    public double getX(int index)  {
+    public double getX(int index) {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("пиши индекс правильный");
         }
@@ -59,7 +59,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
 
     @Override
-    public double getY(int index)  {
+    public double getY(int index) {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index is out of bounds");
         }
@@ -67,7 +67,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     @Override
-    public void setY(int index, double value)  {
+    public void setY(int index, double value) {
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Index is out of bounds");
         }

@@ -56,6 +56,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction, Se
             }
         }
     }
+
     public String toString() {
         StringBuilder str = new StringBuilder();
         str.append(getClass().getSimpleName()).append(" size = ").append(this.getCount()).append("\n");

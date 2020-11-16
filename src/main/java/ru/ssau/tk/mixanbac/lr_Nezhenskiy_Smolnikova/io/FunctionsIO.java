@@ -14,6 +14,7 @@ public final class FunctionsIO {
     private FunctionsIO() {
         throw new UnsupportedOperationException();
     }
+
     public static void writeTabulatedFunction(BufferedWriter writer, TabulatedFunction function) {
         PrintWriter printWriter = new PrintWriter(writer);
         printWriter.println(function.getCount());
@@ -24,15 +25,17 @@ public final class FunctionsIO {
         printWriter.flush();
 
     }
+
     public static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
         DataOutputStream out = new DataOutputStream(outputStream);
         out.writeInt(function.getCount());
-        for (Point currentPoint : TabulatedFunctionOperationService.asPoints(function)) {
+        for (Point currentPoint : function) {
             out.writeDouble(currentPoint.x);
             out.writeDouble(currentPoint.y);
         }
         out.flush();
     }
+
     public static TabulatedFunction readTabulatedFunction(BufferedReader reader, TabulatedFunctionFactory factory) throws IOException {
         int count = Integer.parseInt(reader.readLine());
 
@@ -51,6 +54,7 @@ public final class FunctionsIO {
         }
         return factory.create(xValues, yValues);
     }
+
     public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
         DataInputStream in = new DataInputStream(inputStream);
         int count = in.readInt();

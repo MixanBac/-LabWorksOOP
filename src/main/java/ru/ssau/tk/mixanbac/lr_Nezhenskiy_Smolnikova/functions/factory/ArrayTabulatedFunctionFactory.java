@@ -13,6 +13,6 @@ public class ArrayTabulatedFunctionFactory implements TabulatedFunctionFactory {
 
     @Override
     public TabulatedFunction create(MathFunction source, double xFrom, double xTo, int count) {
-        return new ArrayTabulatedFunction ( source,  xFrom,  xTo,  count);
+        return new ArrayTabulatedFunction(source, xFrom, xTo, count);
     }
 }
