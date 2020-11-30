@@ -3,11 +3,16 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.concurrent;
 import org.testng.annotations.Test;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.Point;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ZeroFunction;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.testng.Assert.*;
 
-public class SynchronizedTabulatedFunctionTest { public static final double DELTA = 0.0001;
+public class SynchronizedTabulatedFunctionTest {
+    public static final double DELTA = 0.0001;
     private final double[] xValues = {1.1, 1.2, 1.3, 1.4, 1.5};
     private final double[] yValues = {2.1, 2.2, 2.3, 2.4, 2.5};
     private final Object mutex = new Object();
@@ -100,7 +105,27 @@ public class SynchronizedTabulatedFunctionTest { public static final double DELT
     }
 
     @Test
-    public void testIterator() {
+    public void testIteratorWhile() {
+        Iterator<Point> it1 = getSynchronizedArray().iterator();
+        int i = 0;
+        while (it1.hasNext()) {
+            Point a = it1.next();
+            assertEquals(getSynchronizedArray().getX(i), a.x);
+            assertEquals(getSynchronizedArray().getY(i++), a.y);
+        }
+        assertEquals(getSynchronizedArray().getCount(), i);
+        assertThrows(NoSuchElementException.class, it1::next);
+
+    }
+
+    @Test
+    public void testIteratorForEach() {
+        int i = 0;
+        for (Point a : getSynchronizedList()) {
+            assertEquals(a.x, getSynchronizedList().getX(i));
+            assertEquals(a.y, getSynchronizedList().getY(i++));
+        }
+        assertEquals(getSynchronizedList().getCount(), i);
     }
 
     @Test
