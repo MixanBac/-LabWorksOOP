@@ -137,4 +137,13 @@ public class SynchronizedTabulatedFunctionTest {
         assertEquals(getSynchronizedArray().apply(8), 9);
         assertEquals(getSynchronizedArray().apply(10), 11);
     }
+
+    @Test
+    public void testDoSynchronously() {
+        SynchronizedTabulatedFunction synchronizedTabulatedFunction = getSynchronizedList();
+        assertEquals((int) synchronizedTabulatedFunction.doSynchronously(SynchronizedTabulatedFunction::getCount), 5);
+        assertEquals((double) synchronizedTabulatedFunction.doSynchronously(SynchronizedTabulatedFunction::leftBound), 1.1);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations;
 
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.concurrent.SynchronizedTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.Point;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
@@ -40,5 +41,15 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
         yValues[length - 1] = yValues[length - 2];
 
         return factory.create(xValues, yValues);
+    }
+
+    public TabulatedFunction deriveSynchronously(TabulatedFunction function) {
+        Object mu = new Object();
+
+        if (function instanceof SynchronizedTabulatedFunction) {
+            return ((SynchronizedTabulatedFunction) function).doSynchronously(this::derive);
+        }
+        SynchronizedTabulatedFunction syncFunc = new SynchronizedTabulatedFunction(function, mu);
+        return syncFunc.doSynchronously(this::derive);
     }
 }

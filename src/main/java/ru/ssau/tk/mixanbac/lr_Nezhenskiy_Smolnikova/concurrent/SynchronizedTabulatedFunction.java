@@ -9,12 +9,22 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SynchronizedTabulatedFunction implements TabulatedFunction {
-    TabulatedFunction tabulatedFunction;
-    final Object mutex;
+    private final TabulatedFunction tabulatedFunction;
+    private final Object mutex;
 
     public SynchronizedTabulatedFunction(TabulatedFunction tabulatedFunction, Object mutex) {
         this.tabulatedFunction = tabulatedFunction;
         this.mutex = Objects.requireNonNull(mutex);
+    }
+
+    public interface Operation<T> {
+        T apply(SynchronizedTabulatedFunction synchronizedTabulatedFunction);
+    }
+
+    public <T> T doSynchronously(Operation<? extends T> operation) {
+        synchronized (mutex) {
+            return operation.apply(this);
+        }
     }
 
     @Override
@@ -77,7 +87,7 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
     public Iterator<Point> iterator() {
         synchronized (mutex) {
             Point[] points = TabulatedFunctionOperationService.asPoints(tabulatedFunction);
-            return new Iterator<Point>() {
+            return new Iterator<>() {
                 int i = 0;
 
                 @Override
