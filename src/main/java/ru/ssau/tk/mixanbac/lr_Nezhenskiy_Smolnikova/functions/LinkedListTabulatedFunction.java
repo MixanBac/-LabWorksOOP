@@ -18,7 +18,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         public double x;
         public double y;
     }
+    public LinkedListTabulatedFunction() {
 
+    }
 
     @Override
     public Iterator<Point> iterator() {
