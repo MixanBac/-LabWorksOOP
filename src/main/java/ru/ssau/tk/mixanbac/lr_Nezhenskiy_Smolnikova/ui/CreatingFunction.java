@@ -18,6 +18,7 @@ import java.util.List;
 import static java.lang.module.ModuleFinder.compose;
 
 public class CreatingFunction extends JFrame {
+
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
     private JLabel label = new JLabel("Введите колличество точек:");
