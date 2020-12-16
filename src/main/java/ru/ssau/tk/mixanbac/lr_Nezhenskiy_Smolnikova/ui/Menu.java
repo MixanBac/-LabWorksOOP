@@ -1,11 +1,16 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
+
 import javax.swing.*;
 
 public class Menu extends JFrame {
     private JFrame frame;
-    private JButton okButton = new JButton("Start");
-    private JButton inputButton = new JButton("OneOkno");
+    private JButton inputButton = new JButton("Create the table");
+    private JButton inputButtonFactory = new JButton("Choose factory");
+    private JButton inputButtonMath = new JButton("Choose Math function");
+    private TabulatedFunctionFactory factory;
 
     public Menu() {
         setTitle("Menu");
@@ -13,22 +18,33 @@ public class Menu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
         compose();
-
+        this.factory = new ArrayTabulatedFunctionFactory();
     }
 
     public static void main(String[] args) {
         Menu window = new Menu();
         window.setVisible(true);
+
     }
 
 
     public void actionPerformed() {
         inputButton.addActionListener(event -> {
-                    MyFrame mainWindow = new MyFrame(frame);
-                    mainWindow.setVisible(true);
-                    frame.setVisible(false);
+                    try {
+                        MyFrame.main(factory);
+                        frame.setVisible(false);
+                    } catch (Exception e) {
+                        new Error(this, e);
+                    }
                 }
         );
+        inputButtonMath.addActionListener(event -> {
+            try {
+                MathFunctionWindow.main(factory);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
     }
 
     void compose() {
@@ -38,13 +54,15 @@ public class Menu extends JFrame {
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(okButton)
                         .addComponent(inputButton))
+                        .addComponent(inputButtonFactory)
+                        .addComponent(inputButtonMath)
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(okButton)
                         .addComponent(inputButton))
+                        .addComponent(inputButtonFactory)
+                        .addComponent(inputButtonMath)
         );
     }
 }

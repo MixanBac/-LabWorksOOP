@@ -1,13 +1,14 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.*;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MathFunctionWindow extends JFrame {
+public class MathFunctionWindow extends JDialog {
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JLabel fromLabel = new JLabel("from:");
     private JLabel toLabel = new JLabel("to:");
@@ -17,24 +18,24 @@ public class MathFunctionWindow extends JFrame {
     private JTextField toField = new JTextField();
     private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
-    private TabulatedFunction factory;
+    TabulatedFunctionFactory factory;
 
-    public static void main(String[] args) {
-        MathFunctionWindow app = new MathFunctionWindow();
-        app.setVisible(true);
-    }
-
-    public MathFunctionWindow() {
-        super("Window");
-        this.setBounds(500, 200, 500, 200);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public MathFunctionWindow(TabulatedFunctionFactory factory) {
+        setModal(true);
+        this.factory = factory;
+        this.setBounds(300, 200, 500, 150);
         fillMap();
         compose();
         addButtonListeners();
     }
 
+    public static void main(TabulatedFunctionFactory factory) {
+        MathFunctionWindow app = new MathFunctionWindow(factory);
+        app.setVisible(true);
+    }
+
     public void fillMap() {
-        nameFuncMap.put("cosh", new CoshFunction ());
+        nameFuncMap.put("cosh", new CoshFunction());
         nameFuncMap.put("reverse", new ReverseFunction());
         nameFuncMap.put("sqr", new SqrFunction());
         nameFuncMap.put("unit", new UnitFunction());
@@ -88,7 +89,7 @@ public class MathFunctionWindow extends JFrame {
                 double from = Double.parseDouble(fromField.getText());
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
-                TabulatedFunction result = new ArrayTabulatedFunction(selectedFunction, from, to, count);
+                TabulatedFunction result = factory.create(selectedFunction, from, to, count);
             } catch (Exception e) {
                 Error myError = new Error(this, e);
                 myError.showError(this, e);

@@ -2,6 +2,8 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -10,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFrame extends JFrame {
+public class MyFrame extends JDialog {
     private static final int SPACING_SIZE = 10;
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
@@ -20,15 +22,18 @@ public class MyFrame extends JFrame {
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Input");
     private JButton commitButton = new JButton("Commit");
+    TabulatedFunctionFactory factory;
+    TabulatedFunction function;
 
-    public static void main(String[] args) {
-        MyFrame app = new MyFrame();
+    public static void main(TabulatedFunctionFactory factory) {
+        MyFrame app = new MyFrame(factory);
         app.setVisible(true);
     }
 
-    public MyFrame() {
-        super("Ну чё, мы сдали?");
+    public MyFrame(TabulatedFunctionFactory factory) {
+        setModal(true);
         this.setBounds(500, 500, 500, 500);
+        this.factory = factory;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
         compose();
@@ -36,6 +41,7 @@ public class MyFrame extends JFrame {
         commitButton.setEnabled(false);
 
     }
+
     public MyFrame(JFrame parent) {
     }
 
