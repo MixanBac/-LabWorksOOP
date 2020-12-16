@@ -29,7 +29,7 @@ public class MyFrame extends JFrame {
 
     public MyFrame() {
         super("Ну чё, мы сдали?");
-        this.setBounds(300, 300, 500, 500);
+        this.setBounds(500, 500, 500, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
         compose();

@@ -40,11 +40,19 @@ public class MyTableModel extends AbstractTableModel {
 
 
     @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException{
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
         if (columnIndex == X_COLUMN_NUMBER) {
-            xValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            try {
+                xValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            } catch (Exception e) {
+                xValues.set(rowIndex, 0.0);
+            }
         } else if (columnIndex == Y_COLUMN_NUMBER) {
-            yValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            try {
+                yValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            } catch (Exception e) {
+                yValues.set(rowIndex, 0.0);
+            }
         }
     }
 
