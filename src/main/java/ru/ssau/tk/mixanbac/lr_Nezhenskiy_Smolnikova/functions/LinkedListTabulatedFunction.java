@@ -19,7 +19,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         public double y;
     }
     public LinkedListTabulatedFunction() {
-
     }
 
     @Override

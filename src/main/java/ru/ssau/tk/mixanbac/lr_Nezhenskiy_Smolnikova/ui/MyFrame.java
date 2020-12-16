@@ -36,6 +36,8 @@ public class MyFrame extends JFrame {
         commitButton.setEnabled(false);
 
     }
+    public MyFrame(JFrame parent) {
+    }
 
     void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
