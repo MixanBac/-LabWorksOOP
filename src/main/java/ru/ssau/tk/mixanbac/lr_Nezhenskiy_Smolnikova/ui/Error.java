@@ -6,11 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Error {
-
+    Error(Component parent, Exception e) {
+        showError(parent, e);
+    }
 
     public void showError(Component parent, Exception e) {
         String head = generateMessageForException(e);
-        JOptionPane.showMessageDialog(parent, e.getStackTrace(), head, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parent, "Error!", head, JOptionPane.ERROR_MESSAGE);
     }
 
     private String generateMessageForException(Exception e) {

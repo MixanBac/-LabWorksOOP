@@ -67,8 +67,7 @@ public class MyFrame extends JFrame {
                 int count = Integer.parseInt(countField.getText());
                 table = new JTable(new MyTableModel(new ArrayList<>(count), new ArrayList<>(count)));
             } catch (Exception e) {
-                Error errorWindow = new Error();
-                errorWindow.showError(this, e);
+                Error error = new Error(this, e);
             }
         });
 
