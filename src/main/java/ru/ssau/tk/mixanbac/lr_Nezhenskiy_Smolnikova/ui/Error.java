@@ -4,6 +4,7 @@ import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedE
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Error {
     Error(Component parent, Exception e) {
@@ -16,6 +17,9 @@ public class Error {
     }
 
     private String generateMessageForException(Exception e) {
+        if (e instanceof IOException){
+            return "File is corrupted";
+        }
         if (e instanceof NumberFormatException) {
             return "Expected: Number, Found: String";
         }
