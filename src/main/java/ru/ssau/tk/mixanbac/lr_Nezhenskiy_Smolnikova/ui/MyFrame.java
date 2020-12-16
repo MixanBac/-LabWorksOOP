@@ -12,7 +12,6 @@ import java.util.List;
 
 public class MyFrame extends JFrame {
     private static final int SPACING_SIZE = 10;
-    private JFrame jFrame = new JFrame("This is frame");
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
     AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
@@ -20,7 +19,7 @@ public class MyFrame extends JFrame {
     private JLabel label = new JLabel("Input number of points:");
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Input");
-
+    private JButton commitButton = new JButton("Commit");
 
     public static void main(String[] args) {
         MyFrame app = new MyFrame();
@@ -34,6 +33,7 @@ public class MyFrame extends JFrame {
         addButtonListeners();
         compose();
         inputButton.setEnabled(false);
+        commitButton.setEnabled(false);
 
     }
 
@@ -49,6 +49,7 @@ public class MyFrame extends JFrame {
                         .addComponent(countField)
                         .addComponent(inputButton))
                 .addComponent(tableScrollPane)
+                .addComponent(commitButton)
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -56,22 +57,68 @@ public class MyFrame extends JFrame {
                         .addComponent(countField)
                         .addComponent(inputButton))
                 .addComponent(tableScrollPane)
-
+                .addComponent(commitButton)
         );
     }
 
     public void addButtonListeners() {
+        addListenerForInputButton();
+        addListenerForCommitButton();
+        addListenerForCountButton();
+    }
 
+    public void clearTable(int n) {
+        for (int i = 0; i < n; i++) {
+            xValues.remove(n - i - 1);
+            yValues.remove(n - i - 1);
+            tableModel.fireTableDataChanged();
+        }
+    }
+
+    public void addListenerForInputButton() {
         inputButton.addActionListener(event -> {
             try {
+                commitButton.setEnabled(false);
                 int count = Integer.parseInt(countField.getText());
-                table = new JTable(new MyTableModel(new ArrayList<>(count), new ArrayList<>(count)));
+                clearTable(tableModel.getRowCount());
+                for (int i = 0; i < count; i++) {
+                    xValues.add(0.);
+                    yValues.add(0.);
+                    tableModel.fireTableDataChanged();
+                }
+                if (tableModel.getRowCount() > 1) {
+                    commitButton.setEnabled(true);
+                }
             } catch (Exception e) {
-                Error error = new Error(this, e);
+                new Error(this, e);
             }
         });
 
 
+    }
+
+    public void addListenerForCommitButton() {
+        commitButton.addActionListener(event -> {
+            try {
+                double[] x = new double[xValues.size()];
+                double[] y = new double[xValues.size()];
+                x[0] = xValues.get(0);
+                y[0] = yValues.get(0);
+                for (int i = 1; i < xValues.size(); i++) {
+                    if (xValues.get(i - 1) > xValues.get(i)) {
+                        throw new ArrayIsNotSortedException();
+                    }
+                    x[i] = xValues.get(i);
+                    y[i] = yValues.get(i);
+                }
+                LinkedListTabulatedFunction myFunction = new LinkedListTabulatedFunction(x, y);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+
+    public void addListenerForCountButton() {
         countField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -91,6 +138,7 @@ public class MyFrame extends JFrame {
             private void onChanged() {
                 inputButton.setEnabled(!countField.getText().isEmpty());
             }
+
         });
     }
 }

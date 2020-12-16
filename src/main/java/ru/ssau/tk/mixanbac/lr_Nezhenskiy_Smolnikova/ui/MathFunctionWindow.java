@@ -15,7 +15,7 @@ public class MathFunctionWindow extends JFrame {
     private JTextField countField = new JTextField();
     private JTextField fromField = new JTextField();
     private JTextField toField = new JTextField();
-    private JButton okButton = new JButton("OK");
+    private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
     private TabulatedFunction factory;
 
@@ -64,7 +64,7 @@ public class MathFunctionWindow extends JFrame {
                         .addComponent(countLabel)
                         .addComponent(countField))
                 .addComponent(functionComboBox)
-                .addComponent(okButton)
+                .addComponent(buttonOk)
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -75,19 +75,24 @@ public class MathFunctionWindow extends JFrame {
                         .addComponent(countLabel)
                         .addComponent(countField))
                 .addComponent(functionComboBox)
-                .addComponent(okButton)
+                .addComponent(buttonOk)
         );
 
     }
 
     public void addButtonListeners() {
-        okButton.addActionListener(event -> {
-            String myFunction = (String) functionComboBox.getSelectedItem();
-            MathFunction selectedFunction = nameFuncMap.get(myFunction );
-            double from = Double.parseDouble(fromField.getText());
-            double to = Double.parseDouble(toField.getText());
-            int count = Integer.parseInt(countField.getText());
-            TabulatedFunction result = new ArrayTabulatedFunction(selectedFunction, from, to, count);
+        buttonOk.addActionListener(event -> {
+            try {
+                String myFunction = (String) functionComboBox.getSelectedItem();
+                MathFunction selectedFunction = nameFuncMap.get(myFunction);
+                double from = Double.parseDouble(fromField.getText());
+                double to = Double.parseDouble(toField.getText());
+                int count = Integer.parseInt(countField.getText());
+                TabulatedFunction result = new ArrayTabulatedFunction(selectedFunction, from, to, count);
+            } catch (Exception e) {
+                Error myError = new Error(this, e);
+                myError.showError(this, e);
+            }
         });
     }
 }
