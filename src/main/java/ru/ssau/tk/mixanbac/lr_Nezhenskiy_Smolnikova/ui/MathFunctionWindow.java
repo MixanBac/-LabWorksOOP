@@ -26,7 +26,7 @@ public class MathFunctionWindow extends JFrame {
 
     public MathFunctionWindow() {
         super("Window");
-        this.setBounds(300, 200, 500, 200);
+        this.setBounds(500, 200, 500, 200);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fillMap();
         compose();
@@ -34,11 +34,11 @@ public class MathFunctionWindow extends JFrame {
     }
 
     public void fillMap() {
-        nameFuncMap.put("reverse", new ReverseFunction());
         nameFuncMap.put("cosh", new CoshFunction ());
+        nameFuncMap.put("reverse", new ReverseFunction());
         nameFuncMap.put("sqr", new SqrFunction());
-        nameFuncMap.put("zero", new ZeroFunction());
         nameFuncMap.put("unit", new UnitFunction());
+        nameFuncMap.put("zero", new ZeroFunction());
         String[] functions = new String[5];
         int i = 0;
         for (String string : nameFuncMap.keySet()) {

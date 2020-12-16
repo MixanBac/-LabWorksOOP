@@ -1,15 +1,14 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.AbstractTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.io.FunctionsIO;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 
 public class FileChooserTest extends JFrame {
     private JTextField filename = new JTextField();
@@ -50,8 +49,8 @@ public class FileChooserTest extends JFrame {
                 dir.setText(fileChooser.getCurrentDirectory().toString());
                 File file = fileChooser.getSelectedFile();
                 if (file != null) {
-                    try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
-                        var func1 = FunctionsIO.readTabulatedFunction(inputStream, factory);
+                    try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+                        FunctionsIO.writeTabulatedFunction(outputStream, myFunction);
                     } catch (Exception e) {
                         new Error(this, e);
                     }
@@ -77,6 +76,7 @@ public class FileChooserTest extends JFrame {
                 filename.setText(fileChooser.getSelectedFile().getName());
                 dir.setText(fileChooser.getCurrentDirectory().toString());
                 File file = fileChooser.getSelectedFile();
+                factory=new ArrayTabulatedFunctionFactory();
                 if (file != null) {
                     try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
                         var func1 = FunctionsIO.readTabulatedFunction(inputStream, factory);
