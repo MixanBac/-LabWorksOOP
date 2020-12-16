@@ -1,6 +1,7 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -11,18 +12,15 @@ import java.util.List;
 
 public class MyFrame extends JFrame {
     private static final int SPACING_SIZE = 10;
-    private JFrame jFrame = new JFrame("This is frame");
-    List<String> xValues = new ArrayList<>();
-    List<String> yValues = new ArrayList<>();
+    List<Double> xValues = new ArrayList<>();
+    List<Double> yValues = new ArrayList<>();
     AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
     JTable table = new JTable(tableModel);
     private JLabel label = new JLabel("Input number of points:");
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Input");
     private JButton commitButton = new JButton("Commit");
-    //private LinkedHashMap<Double, Double> map = new LinkedHashMap<>();
-    List<Double> xValuesDouble = new ArrayList<>();
-    List<Double> yValuesDouble = new ArrayList<>();
+
 
     public static void main(String[] args) {
         MyFrame app = new MyFrame();
@@ -36,6 +34,7 @@ public class MyFrame extends JFrame {
         addButtonListeners();
         compose();
         inputButton.setEnabled(false);
+        commitButton.setEnabled(false);
     }
 
     void compose() {
@@ -63,28 +62,59 @@ public class MyFrame extends JFrame {
     }
 
     public void addButtonListeners() {
+        addListenerForInputButton();
+        addListenerForCommitButton();
+        addListenerForCountButton();
+    }
+
+    public void clearTable(int n) {
+        for (int i = 0; i < n; i++) {
+            xValues.remove(n - i - 1);
+            yValues.remove(n - i - 1);
+            tableModel.fireTableDataChanged();
+        }
+    }
+    public void addListenerForInputButton() {
         inputButton.addActionListener(event -> {
             try {
+                commitButton.setEnabled(false);
                 int count = Integer.parseInt(countField.getText());
-                if (tableModel.getRowCount() > 0) {
-                    int n = tableModel.getRowCount();
-                    for (int i = 0; i < n; i++) {
-                        xValues.remove(n - i - 1);
-                        yValues.remove(n - i - 1);
-                        tableModel.fireTableDataChanged();
-                    }
-                }
-                //table = new JTable(new MyTableModel(new ArrayList<>(count), new ArrayList<>(count)));
+                clearTable(tableModel.getRowCount());
+
                 for (int i = 0; i < count; i++) {
-                    xValues.add("");
-                    yValues.add("");
+                    xValues.add(0.);
+                    yValues.add(0.);
                     tableModel.fireTableDataChanged();
                 }
+                if (tableModel.getRowCount() > 1) {
+                    commitButton.setEnabled(true);
+                }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getStackTrace());
+                new Error(this, e);
             }
         });
-
+    }
+    public void addListenerForCommitButton() {
+        commitButton.addActionListener(event -> {
+            try {
+                double[] x = new double[xValues.size()];
+                double[] y = new double[xValues.size()];
+                x[0] = xValues.get(0);
+                y[0] = yValues.get(0);
+                for (int i = 1; i < xValues.size(); i++) {
+                    if (xValues.get(i - 1) > xValues.get(i)) {
+                        throw new ArrayIsNotSortedException();
+                    }
+                    x[i] = xValues.get(i);
+                    y[i] = yValues.get(i);
+                }
+                LinkedListTabulatedFunction func = new LinkedListTabulatedFunction(x, y);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+    public void addListenerForCountButton() {
         countField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -103,29 +133,6 @@ public class MyFrame extends JFrame {
 
             private void onChanged() {
                 inputButton.setEnabled(!countField.getText().isEmpty());
-            }
-        });
-
-        commitButton.addActionListener(event -> {
-            try {
-                if (xValuesDouble.size() > 0) {
-                    xValuesDouble.clear();
-                    yValuesDouble.clear();
-                }
-                int n = tableModel.getRowCount();
-                //map = new LinkedHashMap<Double, Double>(n);
-                for (int i = 0; i < n; i++) {
-                    xValuesDouble.add(Double.parseDouble(tableModel.getValueAt(i, 1).toString()));
-                    yValuesDouble.add(Double.parseDouble(tableModel.getValueAt(i, 2).toString()));
-                    //map.put(Double.parseDouble(tableModel.getValueAt(i, 1).toString()), Double.parseDouble(tableModel.getValueAt(i, 2).toString()));
-                }
-                for (int i = 1; i < xValuesDouble.size(); i++) {
-                    if (xValuesDouble.get(i - 1) > xValuesDouble.get(i)) {
-                        throw new ArrayIsNotSortedException();
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getStackTrace());
             }
         });
     }
