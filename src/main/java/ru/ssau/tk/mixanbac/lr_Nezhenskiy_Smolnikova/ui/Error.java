@@ -1,6 +1,7 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.InconsistentFunctionsException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,9 @@ public class Error {
         }
         if (e instanceof NumberFormatException) {
             return "Expected: Number, Found: String";
+        }
+        if (e instanceof InconsistentFunctionsException) {
+            return "xValues are different";
         }
         if (e instanceof ArrayIsNotSortedException) {
             return "Array is not sorted";

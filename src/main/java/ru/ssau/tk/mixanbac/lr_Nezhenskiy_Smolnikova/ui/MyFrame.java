@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFrame extends JDialog {
+public class MyFrame extends JFrame {
     private static final int SPACING_SIZE = 10;
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
@@ -22,18 +22,13 @@ public class MyFrame extends JDialog {
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Input");
     private JButton commitButton = new JButton("Commit");
-    TabulatedFunctionFactory factory;
-    TabulatedFunction function;
-
-    public static void main(TabulatedFunctionFactory factory) {
-        MyFrame app = new MyFrame(factory);
+    public static void main(String[] args) {
+        MyFrame app = new MyFrame();
         app.setVisible(true);
     }
-
-    public MyFrame(TabulatedFunctionFactory factory) {
-        setModal(true);
+    public MyFrame() {
+        super("Ну чё, мы сдали?");
         this.setBounds(500, 500, 500, 500);
-        this.factory = factory;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
         compose();
@@ -41,7 +36,6 @@ public class MyFrame extends JDialog {
         commitButton.setEnabled(false);
 
     }
-
     public MyFrame(JFrame parent) {
     }
 
@@ -68,13 +62,11 @@ public class MyFrame extends JDialog {
                 .addComponent(commitButton)
         );
     }
-
     public void addButtonListeners() {
         addListenerForInputButton();
         addListenerForCommitButton();
         addListenerForCountButton();
     }
-
     public void clearTable(int n) {
         for (int i = 0; i < n; i++) {
             xValues.remove(n - i - 1);
@@ -82,7 +74,6 @@ public class MyFrame extends JDialog {
             tableModel.fireTableDataChanged();
         }
     }
-
     public void addListenerForInputButton() {
         inputButton.addActionListener(event -> {
             try {
@@ -101,10 +92,7 @@ public class MyFrame extends JDialog {
                 new Error(this, e);
             }
         });
-
-
     }
-
     public void addListenerForCommitButton() {
         commitButton.addActionListener(event -> {
             try {
@@ -125,28 +113,24 @@ public class MyFrame extends JDialog {
             }
         });
     }
-
     public void addListenerForCountButton() {
         countField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 onChanged();
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
                 onChanged();
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
                 onChanged();
             }
-
             private void onChanged() {
                 inputButton.setEnabled(!countField.getText().isEmpty());
             }
-
         });
     }
 }
+

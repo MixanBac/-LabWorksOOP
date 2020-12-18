@@ -1,6 +1,7 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.AbstractTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.io.FunctionsIO;
@@ -43,11 +44,12 @@ public class FileChooserTest extends JFrame {
             fileChooser.addChoosableFileFilter(
                     new FileNameExtensionFilter("Text files", "txt"));
             fileChooser.setAcceptAllFileFilterUsed(false);
-            int showsaveDialog = fileChooser.showSaveDialog(FileChooserTest.this);
-            if (showsaveDialog == JFileChooser.APPROVE_OPTION) {
+            int showSaveDialog = fileChooser.showSaveDialog(FileChooserTest.this);
+            if (showSaveDialog == JFileChooser.APPROVE_OPTION) {
                 filename.setText(fileChooser.getSelectedFile().getName());
                 dir.setText(fileChooser.getCurrentDirectory().toString());
                 File file = fileChooser.getSelectedFile();
+                myFunction = new ArrayTabulatedFunction(new double[]{1, 2}, new double[]{2, 3});
                 if (file != null) {
                     try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
                         FunctionsIO.writeTabulatedFunction(outputStream, myFunction);
@@ -56,7 +58,7 @@ public class FileChooserTest extends JFrame {
                     }
                 }
             }
-            if (showsaveDialog == JFileChooser.CANCEL_OPTION) {
+            if (showSaveDialog == JFileChooser.CANCEL_OPTION) {
                 filename.setText("You pressed cancel");
                 dir.setText("");
             }
@@ -71,8 +73,8 @@ public class FileChooserTest extends JFrame {
             fileChooser.addChoosableFileFilter(
                     new FileNameExtensionFilter("Text files", "txt"));
             fileChooser.setAcceptAllFileFilterUsed(false);
-            int showsaveDialog = fileChooser.showOpenDialog(FileChooserTest.this);
-            if (showsaveDialog == JFileChooser.APPROVE_OPTION) {
+            int showSaveDialog = fileChooser.showOpenDialog(FileChooserTest.this);
+            if (showSaveDialog == JFileChooser.APPROVE_OPTION) {
                 filename.setText(fileChooser.getSelectedFile().getName());
                 dir.setText(fileChooser.getCurrentDirectory().toString());
                 File file = fileChooser.getSelectedFile();
@@ -85,7 +87,7 @@ public class FileChooserTest extends JFrame {
                     }
                 }
             }
-            if (showsaveDialog == JFileChooser.CANCEL_OPTION) {
+            if (showSaveDialog == JFileChooser.CANCEL_OPTION) {
                 filename.setText("You pressed cancel");
                 dir.setText("");
             }
