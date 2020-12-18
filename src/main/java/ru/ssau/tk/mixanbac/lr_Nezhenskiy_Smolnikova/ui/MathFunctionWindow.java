@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MathFunctionWindow extends JDialog {
+public class MathFunctionWindow extends JFrame {
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JLabel fromLabel = new JLabel("from:");
     private JLabel toLabel = new JLabel("to:");
@@ -19,19 +19,17 @@ public class MathFunctionWindow extends JDialog {
     private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
     TabulatedFunctionFactory factory;
-
-    public MathFunctionWindow(TabulatedFunctionFactory factory) {
-        setModal(true);
-        this.factory = factory;
-        this.setBounds(300, 200, 500, 150);
+    public static void main(JFrame args) {
+        MathFunctionWindow app = new MathFunctionWindow();
+        app.setVisible(true);
+    }
+    public MathFunctionWindow() {
+        super("Window");
+        this.setBounds(300, 200, 500, 200);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fillMap();
         compose();
         addButtonListeners();
-    }
-
-    public static void main(TabulatedFunctionFactory factory) {
-        MathFunctionWindow app = new MathFunctionWindow(factory);
-        app.setVisible(true);
     }
 
     public void fillMap() {

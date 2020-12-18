@@ -3,6 +3,7 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyFrame extends JFrame {
-    private static final int SPACING_SIZE = 10;
+
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
     AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
@@ -22,12 +23,19 @@ public class MyFrame extends JFrame {
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Input");
     private JButton commitButton = new JButton("Commit");
-    public static void main(String[] args) {
+    TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+    TabulatedFunction myFunction;
+    public static void main(JFrame args) {
         MyFrame app = new MyFrame();
+        app.setVisible(true);
+
+    }
+    public static void main(TabulatedFunction myFunction) {
+        MyFrame app = new MyFrame(myFunction);
         app.setVisible(true);
     }
     public MyFrame() {
-        super("Ну чё, мы сдали?");
+        super("Мы молодцы");
         this.setBounds(500, 500, 500, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
@@ -36,6 +44,17 @@ public class MyFrame extends JFrame {
         commitButton.setEnabled(false);
 
     }
+    public MyFrame(TabulatedFunction myFunction) {
+        super("Create with table");
+        this.myFunction = myFunction;
+        this.setBounds(300, 300, 500, 500);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addButtonListeners();
+        compose();
+        inputButton.setEnabled(false);
+        commitButton.setEnabled(false);
+    }
+
     public MyFrame(JFrame parent) {
     }
 
@@ -107,7 +126,7 @@ public class MyFrame extends JFrame {
                     x[i] = xValues.get(i);
                     y[i] = yValues.get(i);
                 }
-                LinkedListTabulatedFunction myFunction = new LinkedListTabulatedFunction(x, y);
+                myFunction = factory.create(x, y);
             } catch (Exception e) {
                 new Error(this, e);
             }

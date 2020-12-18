@@ -24,27 +24,42 @@ public class Menu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
         compose();
-
-    }
-
-    public static void main(String[] args) {
-        Menu window = new Menu();
-        window.setVisible(true);
     }
 
 
     public void actionPerformed() {
         inputButton.addActionListener(event -> {
             try {
-                MyFrame mainWindow = new MyFrame(frame);
-                mainWindow.setVisible(true);
-                frame.setVisible(false);
+                MyFrame.main(frame);
+
             } catch (Exception e) {
                 new Error(this, e);
             }
                 }
         );
+
+        inputButtonFactory.addActionListener(event ->
+
+        {
+            try {
+                SettingWindow.main(frame);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+
+        inputButtonMath.addActionListener(event ->
+
+        {
+            try {
+                MathFunctionWindow.main(frame);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
     }
+
+
 
     void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -53,12 +68,20 @@ public class Menu extends JFrame {
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(inputButton))
+                        .addComponent(inputButton)
+                        .addComponent(inputButtonMath)
+                        .addComponent(inputButtonFactory))
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(inputButton))
+                        .addComponent(inputButton)
+                        .addComponent(inputButtonMath)
+                        .addComponent(inputButtonFactory))
         );
+    }
+    public static void main(String[] args) {
+        Menu window = new Menu();
+        window.setVisible(true);
     }
 }
 

@@ -2,6 +2,8 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.AbstractTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.io.FunctionsIO;
@@ -14,12 +16,13 @@ import java.io.*;
 public class FileChooserTest extends JFrame {
     private JTextField filename = new JTextField();
     private JTextField dir = new JTextField();
-    private JButton open = new JButton("Open");
-    private JButton save = new JButton("Save");
-    private AbstractTabulatedFunction myFunction;
+    private JButton open = new JButton("Открыть");
+    private JButton save = new JButton("Сохранить");
+    private TabulatedFunction myFunction;
     private TabulatedFunctionFactory factory;
 
-    public FileChooserTest() {
+    public FileChooserTest(TabulatedFunction func) {
+        this.myFunction = myFunction;
         JPanel panel = new JPanel();
         addListenerForOpenButton();
         panel.add(open);
@@ -59,7 +62,7 @@ public class FileChooserTest extends JFrame {
                 }
             }
             if (showSaveDialog == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
+                filename.setText("Вы нажали отменить");
                 dir.setText("");
             }
         });
@@ -88,14 +91,14 @@ public class FileChooserTest extends JFrame {
                 }
             }
             if (showSaveDialog == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
+                filename.setText("Вы нажали отменить");
                 dir.setText("");
             }
         });
     }
 
-    public static void main(String[] args) {
-        run(new FileChooserTest(), 250, 110);
+    public static void main(TabulatedFunction myFunction) {
+        run(new FileChooserTest(myFunction), 250, 110);
     }
 
     public static void run(JFrame frame, int width, int height) {
