@@ -18,15 +18,32 @@ public class MathFunctionWindow extends JFrame {
     private JTextField toField = new JTextField();
     private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
-    TabulatedFunctionFactory factory;
+    TabulatedFunction function;
+
     public static void main(JFrame args) {
         MathFunctionWindow app = new MathFunctionWindow();
         app.setVisible(true);
     }
-    public MathFunctionWindow() {
-        super("Window");
+
+    public static void main(TabulatedFunction myFunction) {
+        MathFunctionWindow app = new MathFunctionWindow(myFunction);
+        app.setVisible(true);
+    }
+
+    public MathFunctionWindow(TabulatedFunction function) {
+        super("CreateFunc");
+        this.function = function;
         this.setBounds(300, 200, 500, 200);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fillMap();
+        compose();
+        addButtonListeners();
+    }
+
+    public MathFunctionWindow() {
+        super("CreateFunc");
+        this.setBounds(300, 200, 500, 200);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fillMap();
         compose();
         addButtonListeners();
@@ -87,7 +104,8 @@ public class MathFunctionWindow extends JFrame {
                 double from = Double.parseDouble(fromField.getText());
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
-                TabulatedFunction result = factory.create(selectedFunction, from, to, count);
+                function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
+                int k=1;
             } catch (Exception e) {
                 Error myError = new Error(this, e);
                 myError.showError(this, e);

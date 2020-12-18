@@ -37,7 +37,7 @@ public class MyFrame extends JFrame {
     public MyFrame() {
         super("Мы молодцы");
         this.setBounds(500, 500, 500, 500);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
         compose();
         inputButton.setEnabled(false);
@@ -48,7 +48,7 @@ public class MyFrame extends JFrame {
         super("Create with table");
         this.myFunction = myFunction;
         this.setBounds(300, 300, 500, 500);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
         compose();
         inputButton.setEnabled(false);

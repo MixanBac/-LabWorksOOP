@@ -17,6 +17,7 @@ public class Menu extends JFrame {
     private JButton inputButton = new JButton("Create the table");
     private JButton inputButtonFactory = new JButton("Choose factory");
     private JButton inputButtonMath = new JButton("Choose Math function");
+    private JButton inputButtonCalc = new JButton("Calculation");
 
     public Menu() {
         setTitle("Menu");
@@ -57,6 +58,14 @@ public class Menu extends JFrame {
                 new Error(this, e);
             }
         });
+        inputButtonCalc.addActionListener(event ->
+        {
+            try {
+                CalculationWindow.main(frame);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
     }
 
 
@@ -70,12 +79,14 @@ public class Menu extends JFrame {
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(inputButton)
                         .addComponent(inputButtonMath)
+                        .addComponent(inputButtonCalc)
                         .addComponent(inputButtonFactory))
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(inputButton)
                         .addComponent(inputButtonMath)
+                        .addComponent(inputButtonCalc)
                         .addComponent(inputButtonFactory))
         );
     }

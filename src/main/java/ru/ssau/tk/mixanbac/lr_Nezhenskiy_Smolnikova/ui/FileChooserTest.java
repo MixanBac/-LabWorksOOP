@@ -81,10 +81,10 @@ public class FileChooserTest extends JFrame {
                 filename.setText(fileChooser.getSelectedFile().getName());
                 dir.setText(fileChooser.getCurrentDirectory().toString());
                 File file = fileChooser.getSelectedFile();
-                factory=new ArrayTabulatedFunctionFactory();
+                factory = new ArrayTabulatedFunctionFactory();
                 if (file != null) {
                     try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
-                        var func1 = FunctionsIO.readTabulatedFunction(inputStream, factory);
+                        myFunction = FunctionsIO.readTabulatedFunction(inputStream, factory);
                     } catch (Exception e) {
                         new Error(this, e);
                     }

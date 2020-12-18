@@ -42,8 +42,8 @@ public class SettingWindow extends JFrame {
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(functionComboBox)
-                        .addComponent(okButton)
-                ));
+                        .addComponent(okButton))
+        );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(functionComboBox)

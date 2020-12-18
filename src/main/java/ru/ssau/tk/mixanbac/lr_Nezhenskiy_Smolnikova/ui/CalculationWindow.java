@@ -1,7 +1,9 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.operations.TabulatedFunctionOperationService;
 
@@ -24,7 +26,9 @@ public class CalculationWindow extends JFrame {
     private Map<String, Integer> nameFunctionMap = new LinkedHashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
     JButton calculate = new JButton("Calculate");
-    TabulatedFunctionFactory factoryResult;
+    TabulatedFunctionFactory factoryResult=new ArrayTabulatedFunctionFactory();
+    TabulatedFunctionFactory factoryOne;
+    TabulatedFunctionFactory factoryTwo;
     TabulatedFunction result;
     TabulatedFunction one;
     TabulatedFunction two;
@@ -80,9 +84,12 @@ public class CalculationWindow extends JFrame {
         panel.add(label);
         panel.add(tableScrollPane);
         panel.add(createByArray);
+        //addListenerCreateByTable(createByArray, one);
+        addListenerCreateByTable(createByArray, 1);
         panel.add(createByFunc);
+        addListenerCreateByFunc(createByFunc, tableModel);
         panel.add(saveOrOpen);
-        addListenerForSaveOrOpen(saveOrOpen, one);
+        addListenerForSaveOrOpen(saveOrOpen);
         //panel.add(open);
         panel.setPreferredSize(new Dimension(50, 75));
         return panel;
@@ -129,7 +136,10 @@ public class CalculationWindow extends JFrame {
         panel.add(label);
         panel.add(tableScrollPane);
         panel.add(createByArray);
+        //addListenerCreateByTable(createByArray, two);
+        addListenerCreateByTable(createByArray);
         panel.add(createByFunc);
+        addListenerCreateByFunc(createByFunc, tableModel, 1);
         panel.add(saveOrOpen);
         addListenerForSaveOrOpen(saveOrOpen, two);
         //panel.add(save);
@@ -171,7 +181,7 @@ public class CalculationWindow extends JFrame {
         panel.add(createByArray);
         panel.add(createByFunc);
         panel.add(save);
-        addListenerForSaveOrOpen(save, result);
+        addListenerForSaveOrOpen(save, 1);
         panel.setPreferredSize(new Dimension(50, 75));
         return panel;
     }
@@ -179,7 +189,12 @@ public class CalculationWindow extends JFrame {
     public CalculationWindow() {
         super("Калькулятор");
         this.setBounds(0, 100, 800, 600);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (factoryOne instanceof LinkedListTabulatedFunction) {
+            one = new LinkedListTabulatedFunction();
+        } else {
+            one = new ArrayTabulatedFunction();
+        }
         fillMap();
         compose();
         addButtonListeners();
@@ -216,8 +231,12 @@ public class CalculationWindow extends JFrame {
         app.setVisible(true);
     }
 
-    public void addButtonListeners() {
+    public static void main(JFrame args) {
+        CalculationWindow app = new CalculationWindow();
+        app.setVisible(true);
+    }
 
+    public void addButtonListeners() {
         addListenerForCalculate();
     }
 
@@ -250,27 +269,86 @@ public class CalculationWindow extends JFrame {
     public void addListenerForSaveOrOpen(JButton save, TabulatedFunction myFunction) {
         save.addActionListener(event -> {
             try {
-                FileChooserTest.main(myFunction);
-
+                FileChooserTest.main(f -> two = f);
+                int k = 1;
             } catch (Exception e) {
                 new Error(this, e);
             }
         });
     }
-    public void addListenerCreateByTable(JButton button, TabulatedFunction func) {
+
+    public void addListenerForSaveOrOpen(JButton save, int k) {
+        save.addActionListener(event -> {
+            try {
+                FileChooserTest.main(f -> result = f);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+
+    public void addListenerForSaveOrOpen(JButton save) {
+        save.addActionListener(event -> {
+            try {
+                FileChooserTest.main(f -> one = f);
+                int k = 1;
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+
+    public void addListenerCreateByTable(JButton button, TabulatedFunction myFunction) {
         button.addActionListener(event -> {
             try {
-                //MyFrame.main(func);
+                MyFrame.main(myFunction);
             } catch (Exception e) {
                 new Error(this, e);
             }
         });
-        //обращаемся к MyFrame;
+    }
+
+    public void addListenerCreateByTable(JButton button, int k) {
+        button.addActionListener(event -> {
+            try {
+                MyFrame.main(f -> first = f);
+            } catch (Exception e) {
+                new ErrorWindow(this, e);
+            }
+        });
+    }
+
+    public void addListenerCreateByTable(JButton button) {
+        button.addActionListener(event -> {
+            try {
+                MyFrame.main(f -> two = f);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
     }
 
 
-    public void addListenerCreateByFnc() {
-        //обращаемся к MathFunctionWindow;
+    public void addListenerCreateByFnc(JButton button, AbstractTableModel tableModel) {
+        button.addActionListener(event -> {
+            try {
+                MathFunctionWindow.main(f -> one = f);
+                tableModel.fireTableDataChanged();
+                int z=1;
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+    public void addListenerCreateByFnc(JButton button, AbstractTableModel tableModel, int k) {
+        button.addActionListener(event -> {
+            try {
+                MathFunctionWindow.main(f -> two = f);
+                tableModel.fireTableDataChanged();
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
     }
 }
 
