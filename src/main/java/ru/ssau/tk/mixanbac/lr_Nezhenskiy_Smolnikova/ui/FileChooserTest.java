@@ -38,6 +38,7 @@ public class FileChooserTest extends JFrame {
         panel.add(dir);
         contentPan.add(panel, BorderLayout.NORTH);
     }
+
     public FileChooserTest(TabulatedFunction result, Consumer<? super TabulatedFunction> callback) {
         JPanel panel = new JPanel();
         addListenerForOpenButton(callback);
@@ -60,14 +61,13 @@ public class FileChooserTest extends JFrame {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.addChoosableFileFilter(
-                    new FileNameExtensionFilter("Text files", "txt"));
+                    new FileNameExtensionFilter("Текстовые файлы", "txt"));
             fileChooser.setAcceptAllFileFilterUsed(false);
             int showSaveDialog = fileChooser.showSaveDialog(FileChooserTest.this);
             if (showSaveDialog == JFileChooser.APPROVE_OPTION) {
                 filename.setText(fileChooser.getSelectedFile().getName());
                 dir.setText(fileChooser.getCurrentDirectory().toString());
                 File file = fileChooser.getSelectedFile();
-
                 if (file != null) {
                     try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
                         FunctionsIO.writeTabulatedFunction(outputStream, result);
@@ -88,7 +88,7 @@ public class FileChooserTest extends JFrame {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.addChoosableFileFilter(
-                    new FileNameExtensionFilter("Text files", "txt"));
+                    new FileNameExtensionFilter("Текстовые файлы", "txt"));
             fileChooser.setAcceptAllFileFilterUsed(false);
             int showSaveDialog = fileChooser.showOpenDialog(FileChooserTest.this);
             if (showSaveDialog == JFileChooser.APPROVE_OPTION) {
@@ -110,12 +110,13 @@ public class FileChooserTest extends JFrame {
             }
         });
     }
+
     public void addListenerForOpenButton(Consumer<? super TabulatedFunction> callback) {
         open.addActionListener(event -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.addChoosableFileFilter(
-                    new FileNameExtensionFilter("Text files", "txt"));
+                    new FileNameExtensionFilter("Текстовые файлы", "txt"));
             fileChooser.setAcceptAllFileFilterUsed(false);
             int rVal = fileChooser.showOpenDialog(FileChooserTest.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
@@ -133,17 +134,18 @@ public class FileChooserTest extends JFrame {
                 }
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("You pressed cancel");
+                filename.setText("Вы нажали отменить");
                 dir.setText("");
             }
         });
     }
 
     public static void main(TabulatedFunction result, Consumer<? super TabulatedFunction> callback) {
-        run(new FileChooserTest(result, callback), 250, 110);
+        run(new FileChooserTest(result, callback), 250, 100);
     }
+
     public static void main(TabulatedFunction myFunction) {
-        run(new FileChooserTest(myFunction), 250, 110);
+        run(new FileChooserTest(myFunction), 250, 100);
     }
 
     public static void run(JFrame frame, int width, int height) {

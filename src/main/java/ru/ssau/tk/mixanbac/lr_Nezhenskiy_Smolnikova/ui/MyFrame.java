@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MyFrame extends JFrame {
+public class MyFrame extends JDialog {
 
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
@@ -47,7 +47,8 @@ public class MyFrame extends JFrame {
     }
 
     public MyFrame(Consumer<? super TabulatedFunction> callback) {
-        super("Мы молодцы");
+        setModal(true);
+        setTitle("Мы молодцы");
         this.setBounds(500, 500, 500, 500);
         addButtonListeners();
         compose();
@@ -57,7 +58,8 @@ public class MyFrame extends JFrame {
     }
 
     public MyFrame(TabulatedFunction myFunction) {
-        super("Create with table");
+        setModal(true);
+        setTitle("Create with table");
         this.myFunction = myFunction;
         this.setBounds(300, 300, 500, 500);
         addButtonListeners();

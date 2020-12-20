@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CalculationWindow extends JFrame {
+public class CalculationWindow extends JDialog {
     List<Double> xOne = new ArrayList<>();
     List<Double> yOne = new ArrayList<>();
     List<Double> xTwo = new ArrayList<>();
@@ -25,16 +25,16 @@ public class CalculationWindow extends JFrame {
     List<Double> yThree = new ArrayList<>();
     private Map<String, Integer> nameFunctionMap = new LinkedHashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
-    JButton calculate = new JButton("Calculate");
+    JButton calculate = new JButton("Калькулятор");
     TabulatedFunctionFactory factoryResult = new ArrayTabulatedFunctionFactory();
     TabulatedFunctionFactory factoryOne;
-    TabulatedFunctionFactory factoryTwo;
+
     TabulatedFunction result = new ArrayTabulatedFunction();
     TabulatedFunction one = new ArrayTabulatedFunction();
     TabulatedFunction two = new ArrayTabulatedFunction();
-    AbstractTableModel tablemodel;
-    AbstractTableModel tablemodel1;
-    AbstractTableModel tablemodel2;
+    AbstractTableModel tableModel;
+    AbstractTableModel tableModel1;
+    AbstractTableModel tableModel2;
 
     public void fillMap() {
         nameFunctionMap.put("Сумма(+)", 1);
@@ -76,7 +76,7 @@ public class CalculationWindow extends JFrame {
                 this.setValueAt(aValue, row, 2);
             }
         };
-        this.tablemodel1 = tableModel;
+        this.tableModel1 = tableModel;
         JLabel label = new JLabel("Первая");
         JTable table1 = new JTable(tableModel);
         JButton saveOrOpen = new JButton("Сохранить или открыть");
@@ -86,11 +86,11 @@ public class CalculationWindow extends JFrame {
         panel.add(label);
         panel.add(tableScrollPane);
         panel.add(createByArray);
-        addListenerCreateByTable(createByArray, tablemodel);
+        addListenerCreateByTable(createByArray, tableModel);
         panel.add(createByFunc);
         addListenerCreateByFunc(createByFunc, tableModel);
         panel.add(saveOrOpen);
-        addListenerForSaveOrOpen(saveOrOpen,tableModel);
+        addListenerForSaveOrOpen(saveOrOpen, tableModel);
         panel.setPreferredSize(new Dimension(50, 75));
         return panel;
     }
@@ -125,7 +125,7 @@ public class CalculationWindow extends JFrame {
                 this.setValueAt(aValue, row, 2);
             }
         };
-        this.tablemodel2 = tableModel;
+        this.tableModel2 = tableModel;
         JLabel label = new JLabel("Второй");
         JTable table1 = new JTable(tableModel);
 
@@ -139,11 +139,11 @@ public class CalculationWindow extends JFrame {
 
         addListenerCreateByTable(createByArray, tableModel, 1);
         panel.add(createByFunc);
-        addListenerCreateByFunc(createByFunc, tablemodel1, 1);
+        addListenerCreateByFunc(createByFunc, tableModel1, 1);
         panel.add(saveOrOpen);
-        addListenerForSaveOrOpen(1,saveOrOpen, tableModel);
+        addListenerForSaveOrOpen(1, saveOrOpen, tableModel);
 
-        panel.setPreferredSize(new Dimension(50, 75));
+        panel.setPreferredSize(new Dimension(500, 750));
         return panel;
     }
 
@@ -166,7 +166,7 @@ public class CalculationWindow extends JFrame {
             }
 
         };
-        this.tablemodel = tableModel;
+        this.tableModel = tableModel;
         JLabel label = new JLabel("Результат");
         JTable table1 = new JTable(tableModel);
         JButton save = new JButton("Сохранить");
@@ -178,14 +178,15 @@ public class CalculationWindow extends JFrame {
         panel.add(createByArray);
         panel.add(createByFunc);
         panel.add(save);
-        addListenerForSaveOrOpen(save,tableModel, 1);
+        addListenerForSaveOrOpen(save, tableModel, 1);
         panel.setPreferredSize(new Dimension(50, 75));
         return panel;
     }
 
     public CalculationWindow() {
-        super("Калькулятор");
-        this.setBounds(0, 100, 800, 600);
+        setModal(true);
+        setTitle("Калькулятор");
+        this.setBounds(0, 100, 500, 600);
         if (factoryOne instanceof LinkedListTabulatedFunction) {
             one = new LinkedListTabulatedFunction();
         } else {
@@ -240,8 +241,8 @@ public class CalculationWindow extends JFrame {
         calculate.addActionListener(event -> {
             try {
                 TabulatedFunctionOperationService operate = new TabulatedFunctionOperationService(factoryResult);
-                String func = (String) functionComboBox.getSelectedItem();
-                int selectedFunction = nameFunctionMap.get(func);
+                String myFunction = (String) functionComboBox.getSelectedItem();
+                int selectedFunction = nameFunctionMap.get(myFunction);
                 switch (selectedFunction) {
                     case 1:
                         result = operate.sum(one, two);
@@ -256,7 +257,7 @@ public class CalculationWindow extends JFrame {
                         result = operate.divide(one, two);
                         break;
                 }
-                refreshFirst(result, tablemodel, 3);
+                refreshFirst(result, tableModel, 3);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -287,7 +288,7 @@ public class CalculationWindow extends JFrame {
         });
     }
 
-    public void addListenerForSaveOrOpen(JButton save,AbstractTableModel tableModel) {
+    public void addListenerForSaveOrOpen(JButton save, AbstractTableModel tableModel) {
         save.addActionListener(event -> {
             try {
                 FileChooserTest.main(one, f -> {
@@ -326,32 +327,6 @@ public class CalculationWindow extends JFrame {
             }
         });
     }
-
-    public void addListenerCreateByTable(JButton button, int k) {
-        button.addActionListener(event -> {
-            try {
-                MyFrame.main(f -> {
-                    one = f;
-                });
-            } catch (Exception e) {
-                new Error(this, e);
-            }
-        });
-    }
-
-    public void addListenerCreateByTable(JButton button) {
-        button.addActionListener(event -> {
-            try {
-                MyFrame.main(f -> {
-                    two = f;
-                    //refreshFirst(first, tablemodel2, 2);
-                });
-            } catch (Exception e) {
-                new Error(this, e);
-            }
-        });
-    }
-
 
     public void addListenerCreateByFunc(JButton button, AbstractTableModel tableModel) {
         button.addActionListener(event -> {

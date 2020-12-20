@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class MathFunctionWindow extends JFrame {
+public class MathFunctionWindow extends JDialog {
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JLabel fromLabel = new JLabel("from:");
     private JLabel toLabel = new JLabel("to:");
@@ -23,10 +23,9 @@ public class MathFunctionWindow extends JFrame {
     private JTextField toField = new JTextField();
     private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
-    TabulatedFunctionFactory factory;
     TabulatedFunction function;
 
-    public static void main(String[]  args) {
+    public static void main(String[] args) {
         MathFunctionWindow app = new MathFunctionWindow();
         app.setVisible(true);
     }
@@ -40,9 +39,11 @@ public class MathFunctionWindow extends JFrame {
         MathFunctionWindow app = new MathFunctionWindow(callback);
         app.setVisible(true);
     }
+
     public MathFunctionWindow(Consumer<? super TabulatedFunction> callback) {
-        super("CreateFunc");
-        this.setBounds(300, 200, 500, 200);
+        setModal(true);
+        setTitle("Создать функцию");
+        this.setBounds(400, 300, 500, 200);
         fillMap();
         compose();
         addButtonListeners(callback);
@@ -50,19 +51,19 @@ public class MathFunctionWindow extends JFrame {
 
 
     public MathFunctionWindow(TabulatedFunction function) {
-        super("CreateFunc");
+        setModal(true);
+        setTitle("Создать функцию");
         this.function = function;
-        this.setBounds(300, 200, 500, 200);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBounds(400, 300, 500, 200);
         fillMap();
         compose();
         addButtonListeners();
     }
 
     public MathFunctionWindow() {
-        super("CreateFunc");
-        this.setBounds(300, 200, 500, 200);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setModal(true);
+        setTitle("Создать функцию");
+        this.setBounds(400, 300, 500, 200);
         fillMap();
         compose();
         addButtonListeners();

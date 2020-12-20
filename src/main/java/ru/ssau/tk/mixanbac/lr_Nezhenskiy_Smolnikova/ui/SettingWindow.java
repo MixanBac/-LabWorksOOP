@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SettingWindow extends JFrame {
+public class SettingWindow extends JDialog {
     JLabel fontLabel = new JLabel("Which factory do you want to use?");
     private Map<String, AbstractTabulatedFunction> nameFunctionMap = new HashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
@@ -27,6 +27,7 @@ public class SettingWindow extends JFrame {
     TabulatedFunctionFactory factory;
 
     public SettingWindow(TabulatedFunctionFactory factory) {
+        setModal(true);
         setTitle("Settings");
         this.factory = factory;
         setSize(500, 500);
@@ -34,6 +35,7 @@ public class SettingWindow extends JFrame {
         compose();
     }
     public SettingWindow() {
+        setModal(true);
         setTitle("Settings");
         factory = new ArrayTabulatedFunctionFactory();
         setSize(300, 200);
@@ -72,12 +74,12 @@ public class SettingWindow extends JFrame {
     }
 
     public static void main(TabulatedFunctionFactory factory) {
-        JFrame frame = new SettingWindow(factory);
-        frame.setVisible(true);
+        SettingWindow dialog = new SettingWindow(factory);
+        dialog.setVisible(true);
     }
         public static void main( String[] args) {
-            JFrame frame = new SettingWindow();
-            frame.setVisible(true);
+            SettingWindow dialog = new SettingWindow();
+            dialog.setVisible(true);
         }
 
 }

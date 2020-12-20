@@ -14,22 +14,25 @@ public class Error {
 
     public void showError(Component parent, Exception e) {
         String head = generateMessageForException(e);
-        JOptionPane.showMessageDialog(parent, "Error!", head, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parent, "Ошибка!", head, JOptionPane.ERROR_MESSAGE);
     }
 
     private String generateMessageForException(Exception e) {
-        if (e instanceof IOException){
-            return "File is corrupted";
+        if (e instanceof IllegalArgumentException) {
+            return "Методу был передан недопустимый или несоответствующий аргумент.";
+        }
+        if (e instanceof IOException) {
+            return "Исключение ввода-вывода.";
         }
         if (e instanceof NumberFormatException) {
-            return "Expected: Number, Found: String";
+            return "Приложение попыталось преобразовать строку в один из числовых типов, но строка не имеет подходящего формата.";
         }
         if (e instanceof InconsistentFunctionsException) {
-            return "xValues are different";
+            return "xValues различны.";
         }
         if (e instanceof ArrayIsNotSortedException) {
-            return "Array is not sorted";
+            return "Массив не сортирован.";
         }
-        return "Unknown error";
+        return "Неизвестная ошибка.";
     }
 }
