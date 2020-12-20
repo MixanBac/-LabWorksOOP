@@ -58,7 +58,6 @@ public class FileChooserTest extends JFrame {
     public void addListenerForSaveButton(TabulatedFunction result) {
         save.addActionListener(event -> {
             JFileChooser fileChooser = new JFileChooser();
-            // Demonstrate "Save" dialog:
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.addChoosableFileFilter(
                     new FileNameExtensionFilter("Text files", "txt"));
@@ -87,7 +86,6 @@ public class FileChooserTest extends JFrame {
     public void addListenerForOpenButton() {
         open.addActionListener(event -> {
             JFileChooser fileChooser = new JFileChooser();
-            // Demonstrate "Open" dialog:
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.addChoosableFileFilter(
                     new FileNameExtensionFilter("Text files", "txt"));
@@ -115,7 +113,6 @@ public class FileChooserTest extends JFrame {
     public void addListenerForOpenButton(Consumer<? super TabulatedFunction> callback) {
         open.addActionListener(event -> {
             JFileChooser fileChooser = new JFileChooser();
-            // Demonstrate "Open" dialog:
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.addChoosableFileFilter(
                     new FileNameExtensionFilter("Text files", "txt"));
@@ -150,7 +147,6 @@ public class FileChooserTest extends JFrame {
     }
 
     public static void run(JFrame frame, int width, int height) {
-       // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(width, height);
         frame.setVisible(true);
     }

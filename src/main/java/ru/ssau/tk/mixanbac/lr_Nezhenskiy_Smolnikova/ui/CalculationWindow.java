@@ -50,7 +50,6 @@ public class CalculationWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        //AbstractTableModel tableModel = new MyTableModel(xOne, yOne) {
         AbstractTableModel tableModel = new MyTableModel1(one) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -81,21 +80,17 @@ public class CalculationWindow extends JFrame {
         JLabel label = new JLabel("Первая");
         JTable table1 = new JTable(tableModel);
         JButton saveOrOpen = new JButton("Сохранить или открыть");
-        //JButton save = new JButton("Save");
-        //JButton open = new JButton("Open");
         JButton createByArray = new JButton("Создать таблицу");
         JButton createByFunc = new JButton("Создать функцию");
         JScrollPane tableScrollPane = new JScrollPane(table1);
         panel.add(label);
         panel.add(tableScrollPane);
         panel.add(createByArray);
-        //addListenerCreateByTable(createByArray, one);
         addListenerCreateByTable(createByArray, tablemodel);
         panel.add(createByFunc);
         addListenerCreateByFunc(createByFunc, tableModel);
         panel.add(saveOrOpen);
         addListenerForSaveOrOpen(saveOrOpen,tableModel);
-        //panel.add(open);
         panel.setPreferredSize(new Dimension(50, 75));
         return panel;
     }
@@ -133,8 +128,7 @@ public class CalculationWindow extends JFrame {
         this.tablemodel2 = tableModel;
         JLabel label = new JLabel("Второй");
         JTable table1 = new JTable(tableModel);
-        //JButton save = new JButton("Save");
-        //JButton open = new JButton("Open");
+
         JButton saveOrOpen = new JButton("Сохранить или открыть");
         JButton createByArray = new JButton("Создать таблицу");
         JButton createByFunc = new JButton("Создать функцию");
@@ -142,14 +136,13 @@ public class CalculationWindow extends JFrame {
         panel.add(label);
         panel.add(tableScrollPane);
         panel.add(createByArray);
-        //addListenerCreateByTable(createByArray, two);
+
         addListenerCreateByTable(createByArray, tableModel, 1);
         panel.add(createByFunc);
         addListenerCreateByFunc(createByFunc, tablemodel1, 1);
         panel.add(saveOrOpen);
         addListenerForSaveOrOpen(1,saveOrOpen, tableModel);
-        //panel.add(save);
-        //panel.add(open);
+
         panel.setPreferredSize(new Dimension(50, 75));
         return panel;
     }
@@ -158,7 +151,6 @@ public class CalculationWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        //AbstractTableModel tableModel = new MyTableModel(xThree, yThree) {
         AbstractTableModel tableModel = new MyTableModel1(result) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -173,9 +165,6 @@ public class CalculationWindow extends JFrame {
                 return (double) this.getValueAt(row, 2);
             }
 
-        /*    public void setY(double aValue, int row) {
-                this.setValueAt(aValue, row, 2);
-            }*/
         };
         this.tablemodel = tableModel;
         JLabel label = new JLabel("Результат");
@@ -197,7 +186,6 @@ public class CalculationWindow extends JFrame {
     public CalculationWindow() {
         super("Калькулятор");
         this.setBounds(0, 100, 800, 600);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         if (factoryOne instanceof LinkedListTabulatedFunction) {
             one = new LinkedListTabulatedFunction();
         } else {
@@ -344,7 +332,6 @@ public class CalculationWindow extends JFrame {
             try {
                 MyFrame.main(f -> {
                     one = f;
-                    // refreshFirst(first, tablemodel1, 1);
                 });
             } catch (Exception e) {
                 new Error(this, e);
@@ -393,28 +380,7 @@ public class CalculationWindow extends JFrame {
     }
 
     public void refreshFirst(TabulatedFunction myFunction, AbstractTableModel tableModel, int k) {
-        //Point[] massValues = TabulatedFunctionOperationService.asPoints(myFunction);
-        /*if (k == 1) {
-            for (int i = 0; i < massValues.length; i++) {
-                //clearTable(tableModel.getRowCount(), tableModel, 1);
-                xFirst.add(massValues[i].x);
-                yFirst.add(massValues[i].y);
-            }
-        }
-        if (k == 2) {
-            //clearTable(tableModel.getRowCount(), tableModel, 2);
-            for (int i = 0; i < massValues.length; i++) {
-                xSecond.add(massValues[i].x);
-                ySecond.add(massValues[i].y);
-            }
-        }
-        if (k == 3) {
-            clearTable(tableModel.getRowCount(), tableModel, 3);
-            for (int i = 0; i < massValues.length; i++) {
-                xThird.add(massValues[i].x);
-                yThird.add(massValues[i].y);
-            }
-        }*/
+
         ((MyTableModel1) tableModel).myFunction = myFunction;
         tableModel.fireTableDataChanged();
     }

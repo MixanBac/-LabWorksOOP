@@ -26,7 +26,7 @@ public class MathFunctionWindow extends JFrame {
     TabulatedFunctionFactory factory;
     TabulatedFunction function;
 
-    public static void main(JFrame args) {
+    public static void main(String[]  args) {
         MathFunctionWindow app = new MathFunctionWindow();
         app.setVisible(true);
     }
@@ -43,7 +43,6 @@ public class MathFunctionWindow extends JFrame {
     public MathFunctionWindow(Consumer<? super TabulatedFunction> callback) {
         super("CreateFunc");
         this.setBounds(300, 200, 500, 200);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fillMap();
         compose();
         addButtonListeners(callback);

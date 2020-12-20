@@ -30,16 +30,16 @@ public class SettingWindow extends JFrame {
         setTitle("Settings");
         this.factory = factory;
         setSize(500, 500);
-        this.factory = factory;
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
         fillMap();
         compose();
     }
-
+    public SettingWindow() {
+        setTitle("Settings");
+        factory = new ArrayTabulatedFunctionFactory();
+        setSize(300, 200);
+        fillMap();
+        compose();
+    }
     public void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,6 +75,11 @@ public class SettingWindow extends JFrame {
         JFrame frame = new SettingWindow(factory);
         frame.setVisible(true);
     }
+        public static void main( String[] args) {
+            JFrame frame = new SettingWindow();
+            frame.setVisible(true);
+        }
+
 }
 
 

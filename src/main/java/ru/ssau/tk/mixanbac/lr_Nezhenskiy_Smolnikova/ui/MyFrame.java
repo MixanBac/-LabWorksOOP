@@ -31,7 +31,7 @@ public class MyFrame extends JFrame {
     TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
     TabulatedFunction myFunction;
 
-    public static void main(JFrame args) {
+    public static void main(String[] args) {
         MyFrame app = new MyFrame();
         app.setVisible(true);
     }
@@ -49,7 +49,6 @@ public class MyFrame extends JFrame {
     public MyFrame(Consumer<? super TabulatedFunction> callback) {
         super("Мы молодцы");
         this.setBounds(500, 500, 500, 500);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
         compose();
         inputButton.setEnabled(false);
@@ -61,7 +60,6 @@ public class MyFrame extends JFrame {
         super("Create with table");
         this.myFunction = myFunction;
         this.setBounds(300, 300, 500, 500);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addButtonListeners();
         compose();
         inputButton.setEnabled(false);

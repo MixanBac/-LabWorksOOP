@@ -25,6 +25,7 @@ public class Menu extends JFrame {
     private JButton inputButtonCalc = new JButton("Calculation");
     private TableModel tableModel = new MyTableModel();
     private TabulatedFunctionFactory factory;
+    TabulatedFunction myFunction;
 
     public Menu() throws IOException {
         setTitle("Menu");
@@ -39,7 +40,7 @@ public class Menu extends JFrame {
     public void actionPerformed() {
         inputButton.addActionListener(event -> {
                     try {
-                        MyFrame.main((JFrame) factory);
+                        MyFrame.main( new String[]{});
 
                     } catch (Exception e) {
                         new Error(this, e);
@@ -61,7 +62,7 @@ public class Menu extends JFrame {
 
         {
             try {
-                MathFunctionWindow.main((JFrame) factory);
+                MathFunctionWindow.main(new String[]{});
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -113,7 +114,8 @@ class BgPanel extends JPanel {
         }
         g.drawImage(im, 0, 0, null);
     }
-}
+        }
+
 
 
 
