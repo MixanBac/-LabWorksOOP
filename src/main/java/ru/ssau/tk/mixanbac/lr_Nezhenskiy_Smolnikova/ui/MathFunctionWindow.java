@@ -3,10 +3,15 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.*;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class MathFunctionWindow extends JFrame {
     private JComboBox<String> functionComboBox = new JComboBox<>();
@@ -28,6 +33,20 @@ public class MathFunctionWindow extends JFrame {
     public static void main(TabulatedFunction myFunction) {
         MathFunctionWindow app = new MathFunctionWindow(myFunction);
         app.setVisible(true);
+    }
+
+    public static void main(Consumer<? super TabulatedFunction> callback) {
+        MathFunctionWindow app = new MathFunctionWindow(callback);
+        app.setVisible(true);
+    }
+
+    public MathFunctionWindow(Consumer<? super TabulatedFunction> callback) {
+        super("CreateFunc");
+        this.setBounds(300, 200, 500, 200);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fillMap();
+        compose();
+        addButtonListeners(callback);
     }
 
     public MathFunctionWindow(TabulatedFunction function) {
@@ -67,6 +86,7 @@ public class MathFunctionWindow extends JFrame {
     }
 
     public void compose() {
+        setContentPane(new BgPanelFive());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -112,5 +132,42 @@ public class MathFunctionWindow extends JFrame {
             }
         });
     }
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
+        buttonOk.addActionListener(event -> {
+            try {
+                String myFunction = (String) functionComboBox.getSelectedItem();
+                MathFunction selectedFunction = nameFunctionMap.get(myFunction);
+                double from = Double.parseDouble(fromField.getText());
+                double to = Double.parseDouble(toField.getText());
+                int count = Integer.parseInt(countField.getText());
+                function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
+                callback.accept(function);
+                int k = 1;
+            } catch (Exception e) {
+                Error myError = new Error(this, e);
+                myError.showError(this, e);
+            }
+        });
+    }
 }
+class BgPanelFive extends JPanel {
+    public void paintComponent(Graphics g) {
+        Image im = null;
+        try {
+            im = ImageIO.read(new File()class BgPanelFive extends JPanel {
+                public void paintComponent(Graphics g) {
+                    Image im = null;
+                    try {
+                        im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
+                    } catch (IOException ignored) {
+                    }
+                    g.drawImage(im, 0, 0, null);
+                }
+            } ;
+        } catch (IOException ignored) {
+        }
+        g.drawImage(im, 0, 0, null);
+    }
+}
+
 

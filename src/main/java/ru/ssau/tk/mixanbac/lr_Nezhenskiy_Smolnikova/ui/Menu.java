@@ -1,12 +1,17 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,20 +23,23 @@ public class Menu extends JFrame {
     private JButton inputButtonFactory = new JButton("Choose factory");
     private JButton inputButtonMath = new JButton("Choose Math function");
     private JButton inputButtonCalc = new JButton("Calculation");
+    private TabulatedFunction factory;
 
-    public Menu() {
+    public Menu() throws IOException {
         setTitle("Menu");
         setBounds(500, 500, 500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
         compose();
+        actionPerformed();
+        this.factory = new ArrayTabulatedFunction();
     }
 
 
     public void actionPerformed() {
         inputButton.addActionListener(event -> {
             try {
-                MyFrame.main(frame);
+                MyFrame.main(factory);
 
             } catch (Exception e) {
                 new Error(this, e);
@@ -43,7 +51,7 @@ public class Menu extends JFrame {
 
         {
             try {
-                SettingWindow.main(frame);
+                SettingWindow.main(factory);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -53,7 +61,7 @@ public class Menu extends JFrame {
 
         {
             try {
-                MathFunctionWindow.main(frame);
+                MathFunctionWindow.main(factory);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -71,6 +79,7 @@ public class Menu extends JFrame {
 
 
     void compose() {
+        setContentPane(new BgPanel());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -90,10 +99,20 @@ public class Menu extends JFrame {
                         .addComponent(inputButtonFactory))
         );
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Menu window = new Menu();
         window.setVisible(true);
     }
+    }
+    class BgPanel extends JPanel {
+        public void paintComponent(Graphics g) {
+            Image im = null;
+            try {
+                im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
+            } catch (IOException ignored) {
+            }
+            g.drawImage(im, 0, 0, null);
+        }
 }
 
 

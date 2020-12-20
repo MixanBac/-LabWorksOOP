@@ -3,13 +3,18 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.AbstractTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.LinkedListTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +26,12 @@ public class SettingWindow extends JFrame {
 
     private JButton okButton = new JButton("OK");
     private JComboBox fontComboBox;
+    TabulatedFunction factory;
 
-    public SettingWindow() {
+    public SettingWindow(TabulatedFunction factory) {
         setTitle("Settings");
         setSize(500, 500);
+        this.factory = factory;
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -35,6 +42,7 @@ public class SettingWindow extends JFrame {
     }
 
     public void compose() {
+        setContentPane(new BgPanelNew());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -64,9 +72,36 @@ public class SettingWindow extends JFrame {
             functionComboBox.addItem(string);
         }
     }
-    public static void main(JFrame args) {
-        JFrame frame = new SettingWindow();
+    public void addButtonListeners() {
+        okButton.addActionListener(event -> {
+            try {
+                String func = (String) functionComboBox.getSelectedItem();
+                this.factory = nameFunctionMap.get(func);
+                this.dispose();
+
+            } catch (Exception e) {
+                Error errorWindow = new Error(this, e);
+                errorWindow.showError(this, e);
+            }
+        });
+    }
+
+    public static void main(TabulatedFunction factory) {
+        JFrame frame = new SettingWindow(factory);
         frame.setVisible(true);
     }
 }
+
+class BgPanelNew extends JPanel {
+    public void paintComponent(Graphics g) {
+        Image im = null;
+        try {
+            im = ImageIO.read(new File("u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
+        } catch (IOException ignored) {
+        }
+        g.drawImage(im, 0, 0, null);
+    }
+}
+
+
 

@@ -6,12 +6,17 @@ import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MyFrame extends JFrame {
 
@@ -25,15 +30,23 @@ public class MyFrame extends JFrame {
     private JButton commitButton = new JButton("Commit");
     TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
     TabulatedFunction myFunction;
+
     public static void main(JFrame args) {
         MyFrame app = new MyFrame();
         app.setVisible(true);
 
     }
+
+    public static void main(Consumer<? super TabulatedFunction> callback) {
+        MyFrame app = new MyFrame(callback);
+        app.setVisible(true);
+    }
+
     public static void main(TabulatedFunction myFunction) {
         MyFrame app = new MyFrame(myFunction);
         app.setVisible(true);
     }
+
     public MyFrame() {
         super("Мы молодцы");
         this.setBounds(500, 500, 500, 500);
@@ -44,6 +57,17 @@ public class MyFrame extends JFrame {
         commitButton.setEnabled(false);
 
     }
+
+    public MyFrame(Consumer<? super TabulatedFunction> callback) {
+        super("Create with table");
+        this.setBounds(300, 300, 500, 500);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addButtonListeners(callback);
+        compose();
+        inputButton.setEnabled(false);
+        commitButton.setEnabled(false);
+    }
+
     public MyFrame(TabulatedFunction myFunction) {
         super("Create with table");
         this.myFunction = myFunction;
@@ -59,6 +83,7 @@ public class MyFrame extends JFrame {
     }
 
     void compose() {
+        setContentPane(new BgPanelOne());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -81,11 +106,19 @@ public class MyFrame extends JFrame {
                 .addComponent(commitButton)
         );
     }
+
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
+        addListenerForInputButton();
+        addListenerForCommitButton(callback);
+        addListenerForCountButton();
+    }
+
     public void addButtonListeners() {
         addListenerForInputButton();
         addListenerForCommitButton();
         addListenerForCountButton();
     }
+
     public void clearTable(int n) {
         for (int i = 0; i < n; i++) {
             xValues.remove(n - i - 1);
@@ -93,6 +126,7 @@ public class MyFrame extends JFrame {
             tableModel.fireTableDataChanged();
         }
     }
+
     public void addListenerForInputButton() {
         inputButton.addActionListener(event -> {
             try {
@@ -112,6 +146,29 @@ public class MyFrame extends JFrame {
             }
         });
     }
+
+    public void addListenerForCommitButton(Consumer<? super TabulatedFunction> callback) {
+        commitButton.addActionListener(event -> {
+            try {
+                double[] x = new double[xValues.size()];
+                double[] y = new double[xValues.size()];
+                x[0] = xValues.get(0);
+                y[0] = yValues.get(0);
+                for (int i = 1; i < xValues.size(); i++) {
+                    if (xValues.get(i - 1) > xValues.get(i)) {
+                        throw new ArrayIsNotSortedException();
+                    }
+                    x[i] = xValues.get(i);
+                    y[i] = yValues.get(i);
+                }
+                myFunction = factory.create(x, y);
+                callback.accept(myFunction);
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+
     public void addListenerForCommitButton() {
         commitButton.addActionListener(event -> {
             try {
@@ -132,24 +189,39 @@ public class MyFrame extends JFrame {
             }
         });
     }
+
     public void addListenerForCountButton() {
         countField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 onChanged();
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 onChanged();
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 onChanged();
             }
+
             private void onChanged() {
                 inputButton.setEnabled(!countField.getText().isEmpty());
             }
         });
+    }
+
+    class BgPanelOne extends JPanel {
+        public void paintComponent(Graphics g) {
+            Image im = null;
+            try {
+                im = ImageIO.read(new File("u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
+            } catch (IOException ignored) {
+            }
+            g.drawImage(im, 0, 0, null);
+        }
     }
 }
 

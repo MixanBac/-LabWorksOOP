@@ -29,9 +29,12 @@ public class CalculationWindow extends JFrame {
     TabulatedFunctionFactory factoryResult=new ArrayTabulatedFunctionFactory();
     TabulatedFunctionFactory factoryOne;
     TabulatedFunctionFactory factoryTwo;
-    TabulatedFunction result;
-    TabulatedFunction one;
-    TabulatedFunction two;
+    TabulatedFunction result = new ArrayTabulatedFunction();
+    TabulatedFunction one = new ArrayTabulatedFunction();
+    TabulatedFunction two = new ArrayTabulatedFunction();
+    AbstractTableModel tablemodel;
+    AbstractTableModel tablemodel1;
+    AbstractTableModel tablemodel2;
 
     public void fillMap() {
         nameFunctionMap.put("Сумма(+)", 1);
@@ -47,7 +50,9 @@ public class CalculationWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        AbstractTableModel tableModel = new MyTableModel(xOne, yOne) {
+        //AbstractTableModel tableModel = new MyTableModel(xFirst, yFirst) {
+        AbstractTableModel tableModel = new MyTabelModel1(one) {
+
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
@@ -73,6 +78,7 @@ public class CalculationWindow extends JFrame {
                 this.setValueAt(aValue, row, 2);
             }
         };
+        this.tablemodel1 = tableModel;
         JLabel label = new JLabel("Первая");
         JTable table1 = new JTable(tableModel);
         JButton saveOrOpen = new JButton("Сохранить или открыть");
@@ -99,7 +105,7 @@ public class CalculationWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        AbstractTableModel tableModel = new MyTableModel(xTwo, yTwo) {
+        AbstractTableModel tableModel = new MyTableModel(two) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
@@ -125,6 +131,7 @@ public class CalculationWindow extends JFrame {
                 this.setValueAt(aValue, row, 2);
             }
         };
+        this.tablemodel2 = tableModel;
         JLabel label = new JLabel("Второй");
         JTable table1 = new JTable(tableModel);
         //JButton save = new JButton("Save");
@@ -152,8 +159,11 @@ public class CalculationWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        AbstractTableModel tableModel = new MyTableModel(xThree, yThree) {
+        //AbstractTableModel tableModel = new MyTableModel(xThree, yThree) {
+        AbstractTableModel tableModel = new MyTabelModel1(result) {
+
             @Override
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
@@ -166,10 +176,11 @@ public class CalculationWindow extends JFrame {
                 return (double) this.getValueAt(row, 2);
             }
 
-            public void setY(double aValue, int row) {
+        /*    public void setY(double aValue, int row) {
                 this.setValueAt(aValue, row, 2);
-            }
+            }*/
         };
+        this.tablemodel = tableModel;
         JLabel label = new JLabel("Результат");
         JTable table1 = new JTable(tableModel);
         JButton save = new JButton("Сохранить");
@@ -260,6 +271,7 @@ public class CalculationWindow extends JFrame {
                         result = operate.divide(one, two);
                         break;
                 }
+                refreshFirst(result, tablemodel, 3);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -298,22 +310,15 @@ public class CalculationWindow extends JFrame {
         });
     }
 
-    public void addListenerCreateByTable(JButton button, TabulatedFunction myFunction) {
-        button.addActionListener(event -> {
-            try {
-                MyFrame.main(myFunction);
-            } catch (Exception e) {
-                new Error(this, e);
-            }
-        });
-    }
-
     public void addListenerCreateByTable(JButton button, int k) {
         button.addActionListener(event -> {
             try {
-                MyFrame.main(f -> first = f);
+                MyFrame.main(f -> {
+                    one = f;
+                    // refreshFirst(first, tablemodel1, 1);
+                });
             } catch (Exception e) {
-                new ErrorWindow(this, e);
+                new Error(this, e);
             }
         });
     }
@@ -321,7 +326,10 @@ public class CalculationWindow extends JFrame {
     public void addListenerCreateByTable(JButton button) {
         button.addActionListener(event -> {
             try {
-                MyFrame.main(f -> two = f);
+                MyFrame.main(f -> {
+                    two = f;
+                    //refreshFirst(first, tablemodel2, 2);
+                });
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -329,26 +337,79 @@ public class CalculationWindow extends JFrame {
     }
 
 
-    public void addListenerCreateByFnc(JButton button, AbstractTableModel tableModel) {
+    public void addListenerCreateByFunc(JButton button, AbstractTableModel tableModel) {
         button.addActionListener(event -> {
             try {
-                MathFunctionWindow.main(f -> one = f);
-                tableModel.fireTableDataChanged();
-                int z=1;
+                MathFunctionWindow.main(f -> {
+                    one = f;
+                    refreshFirst(one, tableModel, 1);
+                });
             } catch (Exception e) {
                 new Error(this, e);
             }
         });
     }
-    public void addListenerCreateByFnc(JButton button, AbstractTableModel tableModel, int k) {
+    public void addListenerCreateByFunc(JButton button, AbstractTableModel tableModel, int k) {
         button.addActionListener(event -> {
             try {
-                MathFunctionWindow.main(f -> two = f);
-                tableModel.fireTableDataChanged();
+                MathFunctionWindow.main(f -> {
+                    two = f;
+                    refreshFirst(two, tableModel, 2);
+                });
             } catch (Exception e) {
                 new Error(this, e);
             }
         });
+    }
+    public void refreshFirst(TabulatedFunction myFunction, AbstractTableModel tableModel, int k) {
+        Point[] massValues = TabulatedFunctionOperationService.asPoints(myFunction);
+        /*if (k == 1) {
+            for (int i = 0; i < massValues.length; i++) {
+                //clearTable(tableModel.getRowCount(), tableModel, 1);
+                xFirst.add(massValues[i].x);
+                yFirst.add(massValues[i].y);
+            }
+        }
+        if (k == 2) {
+            //clearTable(tableModel.getRowCount(), tableModel, 2);
+            for (int i = 0; i < massValues.length; i++) {
+                xSecond.add(massValues[i].x);
+                ySecond.add(massValues[i].y);
+            }
+        }
+        if (k == 3) {
+            clearTable(tableModel.getRowCount(), tableModel, 3);
+            for (int i = 0; i < massValues.length; i++) {
+                xThird.add(massValues[i].x);
+                yThird.add(massValues[i].y);
+            }
+        }*/
+        ((MyTabelModel1) tableModel).myFunction = myFunction;
+        tableModel.fireTableDataChanged();
+    }
+
+    public void clearTable(int n, AbstractTableModel tableModel, int k) {
+        if (k == 1) {
+            for (int i = 0; i < n; i++) {
+                xOne.remove(n - i - 1);
+                yOne.remove(n - i - 1);
+                tableModel.fireTableDataChanged();
+            }
+        }
+        if (k == 2) {
+            for (int i = 0; i < n; i++) {
+                xTwo.remove(n - i - 1);
+                yTwo.remove(n - i - 1);
+                tableModel.fireTableDataChanged();
+            }
+        }
+        if (k == 3) {
+            for (int i = 0; i < n; i++) {
+                xThree.remove(n - i - 1);
+                yThree.remove(n - i - 1);
+                tableModel.fireTableDataChanged();
+            }
+        }
     }
 }
 
