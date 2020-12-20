@@ -25,21 +25,21 @@ public class Menu extends JFrame {
     private JButton inputButtonCalc = new JButton("Calculation");
     private TabulatedFunction factory;
 
-    public Menu() throws IOException {
+    public Menu()  {
         setTitle("Menu");
         setBounds(500, 500, 500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
-        compose();
+
         actionPerformed();
-        this.factory = new ArrayTabulatedFunction();
+        compose();
     }
 
 
     public void actionPerformed() {
         inputButton.addActionListener(event -> {
             try {
-                MyFrame.main(factory);
+                MyFrame.main(frame);
 
             } catch (Exception e) {
                 new Error(this, e);
@@ -51,7 +51,7 @@ public class Menu extends JFrame {
 
         {
             try {
-                SettingWindow.main(factory);
+                SettingWindow.main(frame);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -61,7 +61,7 @@ public class Menu extends JFrame {
 
         {
             try {
-                MathFunctionWindow.main(factory);
+                MathFunctionWindow.main(frame);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -79,7 +79,6 @@ public class Menu extends JFrame {
 
 
     void compose() {
-        setContentPane(new BgPanel());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -99,20 +98,12 @@ public class Menu extends JFrame {
                         .addComponent(inputButtonFactory))
         );
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         Menu window = new Menu();
         window.setVisible(true);
     }
     }
-    class BgPanel extends JPanel {
-        public void paintComponent(Graphics g) {
-            Image im = null;
-            try {
-                im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
-            } catch (IOException ignored) {
-            }
-            g.drawImage(im, 0, 0, null);
-        }
-}
+
+
 
 

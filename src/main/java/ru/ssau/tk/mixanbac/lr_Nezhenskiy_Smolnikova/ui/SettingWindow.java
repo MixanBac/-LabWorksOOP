@@ -28,7 +28,7 @@ public class SettingWindow extends JFrame {
     private JComboBox fontComboBox;
     TabulatedFunction factory;
 
-    public SettingWindow(TabulatedFunction factory) {
+    public SettingWindow() {
         setTitle("Settings");
         setSize(500, 500);
         this.factory = factory;
@@ -42,7 +42,6 @@ public class SettingWindow extends JFrame {
     }
 
     public void compose() {
-        setContentPane(new BgPanelNew());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -72,36 +71,14 @@ public class SettingWindow extends JFrame {
             functionComboBox.addItem(string);
         }
     }
-    public void addButtonListeners() {
-        okButton.addActionListener(event -> {
-            try {
-                String func = (String) functionComboBox.getSelectedItem();
-                this.factory = nameFunctionMap.get(func);
-                this.dispose();
 
-            } catch (Exception e) {
-                Error errorWindow = new Error(this, e);
-                errorWindow.showError(this, e);
-            }
-        });
-    }
-
-    public static void main(TabulatedFunction factory) {
-        JFrame frame = new SettingWindow(factory);
+    public static void main(JFrame args) {
+        JFrame frame = new SettingWindow();
         frame.setVisible(true);
     }
 }
 
-class BgPanelNew extends JPanel {
-    public void paintComponent(Graphics g) {
-        Image im = null;
-        try {
-            im = ImageIO.read(new File("u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
-        } catch (IOException ignored) {
-        }
-        g.drawImage(im, 0, 0, null);
-    }
-}
+
 
 
 

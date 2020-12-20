@@ -34,6 +34,19 @@ public class MathFunctionWindow extends JFrame {
         MathFunctionWindow app = new MathFunctionWindow(myFunction);
         app.setVisible(true);
     }
+    public static void main(Consumer<? super TabulatedFunction> callback) {
+        MathFunctionWindow app = new MathFunctionWindow(callback);
+        app.setVisible(true);
+    }
+    public MathFunctionWindow(Consumer<? super TabulatedFunction> callback) {
+        super("CreateFunc");
+        this.setBounds(300, 200, 500, 200);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fillMap();
+        compose();
+        addButtonListeners(callback);
+    }
+
 
     public MathFunctionWindow(TabulatedFunction function) {
         super("CreateFunc");
@@ -72,7 +85,7 @@ public class MathFunctionWindow extends JFrame {
     }
 
     public void compose() {
-        setContentPane(new BgPanelFive());
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -118,18 +131,37 @@ public class MathFunctionWindow extends JFrame {
             }
         });
     }
-}
 
-class BgPanelFive extends JPanel {
-    public void paintComponent(Graphics g) {
-        Image im = null;
-        try {
-            im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
-        } catch (IOException ignored) {
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
+        buttonOk.addActionListener(event -> {
+            try {
+                String func = (String) functionComboBox.getSelectedItem();
+                MathFunction selectedFunction = nameFuncMap.get(func);
+                double from = Double.parseDouble(fromField.getText());
+                double to = Double.parseDouble(toField.getText());
+                int count = Integer.parseInt(countField.getText());
+                function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
+                callback.accept(function);
+                int k = 1;
+            } catch (Exception e) {
+                Error errorWindow = new Error(this, e);
+                errorWindow.showError(this, e);
+            }
+        });
+
+
+        class BgPanelFive extends JPanel {
+            public void paintComponent(Graphics g) {
+                Image im = null;
+                try {
+                    im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
+                } catch (IOException ignored) {
+                }
+                g.drawImage(im, 0, 0, null);
+            }
         }
-        g.drawImage(im, 0, 0, null);
+        ;
     }
-};
-
+}
 
 

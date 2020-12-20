@@ -41,8 +41,11 @@ public class MyFrame extends JFrame {
         MyFrame app = new MyFrame(myFunction);
         app.setVisible(true);
     }
-
-    public MyFrame() {
+    public static void main(Consumer<? super TabulatedFunction> callback) {
+        MyFrame app = new MyFrame(callback);
+        app.setVisible(true);
+    }
+    public MyFrame(Consumer<? super TabulatedFunction> callback) {
         super("Мы молодцы");
         this.setBounds(500, 500, 500, 500);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,6 +93,11 @@ public class MyFrame extends JFrame {
                 .addComponent(tableScrollPane)
                 .addComponent(commitButton)
         );
+    }
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
+        addListenerForInputButton();
+        addListenerForCommitButton(callback);
+        addListenerForCountButton();
     }
 
     public void addButtonListeners() {
