@@ -15,6 +15,9 @@ public class MyTableModel extends AbstractTableModel {
         this.yValues = yValues;
     }
 
+    public MyTableModel() {
+    }
+
     @Override
     public int getRowCount() {
         return xValues.size();

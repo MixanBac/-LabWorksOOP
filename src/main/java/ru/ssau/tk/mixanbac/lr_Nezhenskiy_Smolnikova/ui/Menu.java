@@ -23,27 +23,27 @@ public class Menu extends JFrame {
     private JButton inputButtonFactory = new JButton("Choose factory");
     private JButton inputButtonMath = new JButton("Choose Math function");
     private JButton inputButtonCalc = new JButton("Calculation");
-    private TabulatedFunction factory;
+    private TableModel tableModel = new MyTableModel();
+    private TabulatedFunctionFactory factory;
 
-    public Menu()  {
+    public Menu() throws IOException {
         setTitle("Menu");
         setBounds(500, 500, 500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actionPerformed();
-
-        actionPerformed();
         compose();
+        this.factory = new ArrayTabulatedFunctionFactory();
     }
 
 
     public void actionPerformed() {
         inputButton.addActionListener(event -> {
-            try {
-                MyFrame.main(frame);
+                    try {
+                        MyFrame.main((JFrame) factory);
 
-            } catch (Exception e) {
-                new Error(this, e);
-            }
+                    } catch (Exception e) {
+                        new Error(this, e);
+                    }
                 }
         );
 
@@ -51,7 +51,7 @@ public class Menu extends JFrame {
 
         {
             try {
-                SettingWindow.main(frame);
+                SettingWindow.main(factory);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -61,7 +61,7 @@ public class Menu extends JFrame {
 
         {
             try {
-                MathFunctionWindow.main(frame);
+                MathFunctionWindow.main((JFrame) factory);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -77,8 +77,8 @@ public class Menu extends JFrame {
     }
 
 
-
     void compose() {
+        setContentPane(new BgPanel());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -98,11 +98,22 @@ public class Menu extends JFrame {
                         .addComponent(inputButtonFactory))
         );
     }
-    public static void main(String[] args)  {
+
+    public static void main(String[] args) throws IOException {
         Menu window = new Menu();
         window.setVisible(true);
     }
+}
+class BgPanel extends JPanel {
+    public void paintComponent(Graphics g) {
+        Image im = null;
+        try {
+            im = ImageIO.read(new File("C:\\Users\\1\\Desktop\\games-4952694_960_720.jpg"));
+        } catch (IOException ignored) {
+        }
+        g.drawImage(im, 0, 0, null);
     }
+}
 
 
 

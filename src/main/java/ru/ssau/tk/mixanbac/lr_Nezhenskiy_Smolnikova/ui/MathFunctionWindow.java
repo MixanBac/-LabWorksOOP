@@ -23,6 +23,7 @@ public class MathFunctionWindow extends JFrame {
     private JTextField toField = new JTextField();
     private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
+    TabulatedFunctionFactory factory;
     TabulatedFunction function;
 
     public static void main(JFrame args) {
@@ -30,10 +31,11 @@ public class MathFunctionWindow extends JFrame {
         app.setVisible(true);
     }
 
-    public static void main(TabulatedFunction myFunction) {
-        MathFunctionWindow app = new MathFunctionWindow(myFunction);
+    public static void main(TabulatedFunction function) {
+        MathFunctionWindow app = new MathFunctionWindow(function);
         app.setVisible(true);
     }
+
     public static void main(Consumer<? super TabulatedFunction> callback) {
         MathFunctionWindow app = new MathFunctionWindow(callback);
         app.setVisible(true);

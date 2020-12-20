@@ -90,7 +90,7 @@ public class CalculationWindow extends JFrame {
         panel.add(tableScrollPane);
         panel.add(createByArray);
         //addListenerCreateByTable(createByArray, one);
-        addListenerCreateByTable(createByArray, 1);
+        addListenerCreateByTable(createByArray, tablemodel);
         panel.add(createByFunc);
         addListenerCreateByFunc(createByFunc, tableModel);
         panel.add(saveOrOpen);
@@ -143,7 +143,7 @@ public class CalculationWindow extends JFrame {
         panel.add(tableScrollPane);
         panel.add(createByArray);
         //addListenerCreateByTable(createByArray, two);
-        addListenerCreateByTable(createByArray);
+        addListenerCreateByTable(createByArray, tableModel, 1);
         panel.add(createByFunc);
         addListenerCreateByFunc(createByFunc, tablemodel1, 1);
         panel.add(saveOrOpen);
@@ -307,6 +307,32 @@ public class CalculationWindow extends JFrame {
                     refreshFirst(one, tableModel, 1);
                 });
                 int k = 1;
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+
+    public void addListenerCreateByTable(JButton button, AbstractTableModel tableModel) {
+        button.addActionListener(event -> {
+            try {
+                MyFrame.main(f -> {
+                    one = f;
+                    refreshFirst(one, tableModel, 1);
+                });
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+
+    public void addListenerCreateByTable(JButton button, AbstractTableModel tableModel, int k) {
+        button.addActionListener(event -> {
+            try {
+                MyFrame.main(f -> {
+                    two = f;
+                    refreshFirst(two, tableModel, 1);
+                });
             } catch (Exception e) {
                 new Error(this, e);
             }

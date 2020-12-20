@@ -34,17 +34,18 @@ public class MyFrame extends JFrame {
     public static void main(JFrame args) {
         MyFrame app = new MyFrame();
         app.setVisible(true);
-
     }
 
     public static void main(TabulatedFunction myFunction) {
         MyFrame app = new MyFrame(myFunction);
         app.setVisible(true);
     }
+
     public static void main(Consumer<? super TabulatedFunction> callback) {
         MyFrame app = new MyFrame(callback);
         app.setVisible(true);
     }
+
     public MyFrame(Consumer<? super TabulatedFunction> callback) {
         super("Мы молодцы");
         this.setBounds(500, 500, 500, 500);
@@ -67,11 +68,10 @@ public class MyFrame extends JFrame {
         commitButton.setEnabled(false);
     }
 
-    public MyFrame(JFrame parent) {
+    public MyFrame() {
     }
 
     void compose() {
-        setContentPane(new BgPanelOne());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -94,6 +94,7 @@ public class MyFrame extends JFrame {
                 .addComponent(commitButton)
         );
     }
+
     public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         addListenerForInputButton();
         addListenerForCommitButton(callback);
@@ -128,6 +129,28 @@ public class MyFrame extends JFrame {
                 if (tableModel.getRowCount() > 1) {
                     commitButton.setEnabled(true);
                 }
+            } catch (Exception e) {
+                new Error(this, e);
+            }
+        });
+    }
+
+    public void addListenerForCommitButton(Consumer<? super TabulatedFunction> callback) {
+        commitButton.addActionListener(event -> {
+            try {
+                double[] x = new double[xValues.size()];
+                double[] y = new double[xValues.size()];
+                x[0] = xValues.get(0);
+                y[0] = yValues.get(0);
+                for (int i = 1; i < xValues.size(); i++) {
+                    if (xValues.get(i - 1) > xValues.get(i)) {
+                        throw new ArrayIsNotSortedException();
+                    }
+                    x[i] = xValues.get(i);
+                    y[i] = yValues.get(i);
+                }
+                myFunction = factory.create(x, y);
+                callback.accept(myFunction);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -176,17 +199,6 @@ public class MyFrame extends JFrame {
                 inputButton.setEnabled(!countField.getText().isEmpty());
             }
         });
-    }
-
-    class BgPanelOne extends JPanel {
-        public void paintComponent(Graphics g) {
-            Image im = null;
-            try {
-                im = ImageIO.read(new File("u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
-            } catch (IOException ignored) {
-            }
-            g.drawImage(im, 0, 0, null);
-        }
     }
 }
 

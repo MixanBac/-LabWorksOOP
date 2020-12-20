@@ -23,13 +23,12 @@ public class SettingWindow extends JFrame {
     JLabel fontLabel = new JLabel("Which factory do you want to use?");
     private Map<String, AbstractTabulatedFunction> nameFunctionMap = new HashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
-
     private JButton okButton = new JButton("OK");
-    private JComboBox fontComboBox;
-    TabulatedFunction factory;
+    TabulatedFunctionFactory factory;
 
-    public SettingWindow() {
+    public SettingWindow(TabulatedFunctionFactory factory) {
         setTitle("Settings");
+        this.factory = factory;
         setSize(500, 500);
         this.factory = factory;
         addWindowListener(new WindowAdapter() {
@@ -72,8 +71,8 @@ public class SettingWindow extends JFrame {
         }
     }
 
-    public static void main(JFrame args) {
-        JFrame frame = new SettingWindow();
+    public static void main(TabulatedFunctionFactory factory) {
+        JFrame frame = new SettingWindow(factory);
         frame.setVisible(true);
     }
 }
