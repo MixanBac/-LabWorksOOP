@@ -26,7 +26,7 @@ public class CalculationWindow extends JFrame {
     private Map<String, Integer> nameFunctionMap = new LinkedHashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
     JButton calculate = new JButton("Calculate");
-    TabulatedFunctionFactory factoryResult=new ArrayTabulatedFunctionFactory();
+    TabulatedFunctionFactory factoryResult = new ArrayTabulatedFunctionFactory();
     TabulatedFunctionFactory factoryOne;
     TabulatedFunctionFactory factoryTwo;
     TabulatedFunction result = new ArrayTabulatedFunction();
@@ -50,9 +50,8 @@ public class CalculationWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        //AbstractTableModel tableModel = new MyTableModel(xFirst, yFirst) {
-        AbstractTableModel tableModel = new MyTabelModel1(one) {
-
+        //AbstractTableModel tableModel = new MyTableModel(xOne, yOne) {
+        AbstractTableModel tableModel = new MyTableModel1(one) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
@@ -105,7 +104,7 @@ public class CalculationWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        AbstractTableModel tableModel = new MyTableModel(two) {
+        AbstractTableModel tableModel = new MyTableModel1(two) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
@@ -146,7 +145,7 @@ public class CalculationWindow extends JFrame {
         //addListenerCreateByTable(createByArray, two);
         addListenerCreateByTable(createByArray);
         panel.add(createByFunc);
-        addListenerCreateByFunc(createByFunc, tableModel, 1);
+        addListenerCreateByFunc(createByFunc, tablemodel1, 1);
         panel.add(saveOrOpen);
         addListenerForSaveOrOpen(saveOrOpen, two);
         //panel.add(save);
@@ -160,10 +159,8 @@ public class CalculationWindow extends JFrame {
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
         //AbstractTableModel tableModel = new MyTableModel(xThree, yThree) {
-        AbstractTableModel tableModel = new MyTabelModel1(result) {
-
+        AbstractTableModel tableModel = new MyTableModel1(result) {
             @Override
-
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
@@ -349,6 +346,7 @@ public class CalculationWindow extends JFrame {
             }
         });
     }
+
     public void addListenerCreateByFunc(JButton button, AbstractTableModel tableModel, int k) {
         button.addActionListener(event -> {
             try {
@@ -361,8 +359,9 @@ public class CalculationWindow extends JFrame {
             }
         });
     }
+
     public void refreshFirst(TabulatedFunction myFunction, AbstractTableModel tableModel, int k) {
-        Point[] massValues = TabulatedFunctionOperationService.asPoints(myFunction);
+        //Point[] massValues = TabulatedFunctionOperationService.asPoints(myFunction);
         /*if (k == 1) {
             for (int i = 0; i < massValues.length; i++) {
                 //clearTable(tableModel.getRowCount(), tableModel, 1);
@@ -384,7 +383,7 @@ public class CalculationWindow extends JFrame {
                 yThird.add(massValues[i].y);
             }
         }*/
-        ((MyTabelModel1) tableModel).myFunction = myFunction;
+        ((MyTableModel1) tableModel).myFunction = myFunction;
         tableModel.fireTableDataChanged();
     }
 

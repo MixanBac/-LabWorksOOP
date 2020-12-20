@@ -37,11 +37,6 @@ public class MyFrame extends JFrame {
 
     }
 
-    public static void main(Consumer<? super TabulatedFunction> callback) {
-        MyFrame app = new MyFrame(callback);
-        app.setVisible(true);
-    }
-
     public static void main(TabulatedFunction myFunction) {
         MyFrame app = new MyFrame(myFunction);
         app.setVisible(true);
@@ -56,16 +51,6 @@ public class MyFrame extends JFrame {
         inputButton.setEnabled(false);
         commitButton.setEnabled(false);
 
-    }
-
-    public MyFrame(Consumer<? super TabulatedFunction> callback) {
-        super("Create with table");
-        this.setBounds(300, 300, 500, 500);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addButtonListeners(callback);
-        compose();
-        inputButton.setEnabled(false);
-        commitButton.setEnabled(false);
     }
 
     public MyFrame(TabulatedFunction myFunction) {
@@ -107,12 +92,6 @@ public class MyFrame extends JFrame {
         );
     }
 
-    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
-        addListenerForInputButton();
-        addListenerForCommitButton(callback);
-        addListenerForCountButton();
-    }
-
     public void addButtonListeners() {
         addListenerForInputButton();
         addListenerForCommitButton();
@@ -141,28 +120,6 @@ public class MyFrame extends JFrame {
                 if (tableModel.getRowCount() > 1) {
                     commitButton.setEnabled(true);
                 }
-            } catch (Exception e) {
-                new Error(this, e);
-            }
-        });
-    }
-
-    public void addListenerForCommitButton(Consumer<? super TabulatedFunction> callback) {
-        commitButton.addActionListener(event -> {
-            try {
-                double[] x = new double[xValues.size()];
-                double[] y = new double[xValues.size()];
-                x[0] = xValues.get(0);
-                y[0] = yValues.get(0);
-                for (int i = 1; i < xValues.size(); i++) {
-                    if (xValues.get(i - 1) > xValues.get(i)) {
-                        throw new ArrayIsNotSortedException();
-                    }
-                    x[i] = xValues.get(i);
-                    y[i] = yValues.get(i);
-                }
-                myFunction = factory.create(x, y);
-                callback.accept(myFunction);
             } catch (Exception e) {
                 new Error(this, e);
             }

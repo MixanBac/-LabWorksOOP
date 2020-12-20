@@ -35,20 +35,6 @@ public class MathFunctionWindow extends JFrame {
         app.setVisible(true);
     }
 
-    public static void main(Consumer<? super TabulatedFunction> callback) {
-        MathFunctionWindow app = new MathFunctionWindow(callback);
-        app.setVisible(true);
-    }
-
-    public MathFunctionWindow(Consumer<? super TabulatedFunction> callback) {
-        super("CreateFunc");
-        this.setBounds(300, 200, 500, 200);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fillMap();
-        compose();
-        addButtonListeners(callback);
-    }
-
     public MathFunctionWindow(TabulatedFunction function) {
         super("CreateFunc");
         this.function = function;
@@ -125,23 +111,6 @@ public class MathFunctionWindow extends JFrame {
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
                 function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
-                int k=1;
-            } catch (Exception e) {
-                Error myError = new Error(this, e);
-                myError.showError(this, e);
-            }
-        });
-    }
-    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
-        buttonOk.addActionListener(event -> {
-            try {
-                String myFunction = (String) functionComboBox.getSelectedItem();
-                MathFunction selectedFunction = nameFunctionMap.get(myFunction);
-                double from = Double.parseDouble(fromField.getText());
-                double to = Double.parseDouble(toField.getText());
-                int count = Integer.parseInt(countField.getText());
-                function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
-                callback.accept(function);
                 int k = 1;
             } catch (Exception e) {
                 Error myError = new Error(this, e);
@@ -150,24 +119,17 @@ public class MathFunctionWindow extends JFrame {
         });
     }
 }
+
 class BgPanelFive extends JPanel {
     public void paintComponent(Graphics g) {
         Image im = null;
         try {
-            im = ImageIO.read(new File()class BgPanelFive extends JPanel {
-                public void paintComponent(Graphics g) {
-                    Image im = null;
-                    try {
-                        im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
-                    } catch (IOException ignored) {
-                    }
-                    g.drawImage(im, 0, 0, null);
-                }
-            } ;
+            im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
         } catch (IOException ignored) {
         }
         g.drawImage(im, 0, 0, null);
     }
-}
+};
+
 
 
