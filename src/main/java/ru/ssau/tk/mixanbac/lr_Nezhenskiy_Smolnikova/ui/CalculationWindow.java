@@ -28,7 +28,6 @@ public class CalculationWindow extends JDialog {
     JButton calculate = new JButton("Калькулятор");
     TabulatedFunctionFactory factoryResult = new ArrayTabulatedFunctionFactory();
     TabulatedFunctionFactory factoryOne;
-
     TabulatedFunction result = new ArrayTabulatedFunction();
     TabulatedFunction one = new ArrayTabulatedFunction();
     TabulatedFunction two = new ArrayTabulatedFunction();
@@ -46,16 +45,18 @@ public class CalculationWindow extends JDialog {
         }
     }
 
+
+
     public JPanel firstFunc() {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        AbstractTableModel tableModel = new MyTableModel1(one) {
+        AbstractTableModel tableModel = new MyTableModel2(one) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return false;
+
                     case 1:
                         return false;
                     case 2:
@@ -99,12 +100,12 @@ public class CalculationWindow extends JDialog {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        AbstractTableModel tableModel = new MyTableModel1(two) {
+        AbstractTableModel tableModel = new MyTableModel2(two) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return false;
+
                     case 1:
                         return false;
                     case 2:
@@ -137,9 +138,9 @@ public class CalculationWindow extends JDialog {
         panel.add(tableScrollPane);
         panel.add(createByArray);
 
-        addListenerCreateByTable(createByArray, tableModel, 1);
+        addListenerCreateByTable(createByArray, tableModel1, 1);
         panel.add(createByFunc);
-        addListenerCreateByFunc(createByFunc, tableModel1, 1);
+        addListenerCreateByFunc(createByFunc, tableModel, 1);
         panel.add(saveOrOpen);
         addListenerForSaveOrOpen(1, saveOrOpen, tableModel);
 
@@ -151,7 +152,7 @@ public class CalculationWindow extends JDialog {
         JPanel panel = new JPanel();
         panel.setBorder(new
                 BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
-        AbstractTableModel tableModel = new MyTableModel1(result) {
+        AbstractTableModel tableModel = new MyTableModel2(result) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
@@ -295,7 +296,7 @@ public class CalculationWindow extends JDialog {
                     one = f;
                     refreshFirst(one, tableModel, 1);
                 });
-                int k = 1;
+
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -384,6 +385,3 @@ public class CalculationWindow extends JDialog {
         }
     }
 }
-
-
-

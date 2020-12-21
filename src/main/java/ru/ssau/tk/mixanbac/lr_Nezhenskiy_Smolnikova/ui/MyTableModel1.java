@@ -10,13 +10,12 @@ public class MyTableModel1 extends AbstractTableModel {
     private static final int Y_COLUMN_NUMBER = 2;
     TabulatedFunction myFunction;
 
-    public MyTableModel1(TabulatedFunction myFunction) {
-        this.myFunction = myFunction;
+    public MyTableModel1() {
     }
 
     @Override
     public int getRowCount() {
-        return myFunction.getCount();
+        return (myFunction == null) ? 0 : myFunction.getCount();
     }
 
     @Override
@@ -56,12 +55,22 @@ public class MyTableModel1 extends AbstractTableModel {
     }*/
 
     @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
+        if (columnIndex == Y_COLUMN_NUMBER) {
+            try {
+                myFunction.setY(rowIndex, Double.parseDouble(aValue.toString()));
+            } catch (Exception e) {
+                myFunction.setY(rowIndex, 0.0);
+            }
+        }
+    }
+
+    @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case INDEX_COLUMN_NUMBER:
-                return false;
             case X_COLUMN_NUMBER:
-                return true;
+                return false;
             case Y_COLUMN_NUMBER:
                 return true;
         }
@@ -79,6 +88,14 @@ public class MyTableModel1 extends AbstractTableModel {
                 return "yValues";
         }
         return super.getColumnName(column);
+    }
+
+    public TabulatedFunction getFunction() {
+        return myFunction;
+    }
+
+    public void setFunction(TabulatedFunction function) {
+        this.myFunction = function;
     }
 
 }

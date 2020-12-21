@@ -1,74 +1,43 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedException;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MyFrame extends JDialog {
 
-    List<Double> xValues = new ArrayList<>();
-    List<Double> yValues = new ArrayList<>();
-    AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
-    JTable table = new JTable(tableModel);
-    private JLabel label = new JLabel("Input number of points:");
+public class MyFunctionWindow extends JDialog {
+    private List<Double> xValues = new ArrayList<>();
+    private List<Double> yValues = new ArrayList<>();
+    private AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
+    private JTable table = new JTable(tableModel);
+    private JLabel label = new JLabel("Введите количество точек:");
     private JTextField countField = new JTextField();
-    private JButton inputButton = new JButton("Input");
-    private JButton commitButton = new JButton("Commit");
-    TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
-    TabulatedFunction myFunction;
+    private JButton inputButton = new JButton("Ввести");
+    private JButton createButton = new JButton("Создать");
+    private TabulatedFunctionFactory factory;
+    private TabulatedFunction function;
 
-    public static void main(String[] args) {
-        MyFrame app = new MyFrame();
+    public static void main(TabulatedFunctionFactory factory,  Consumer<? super TabulatedFunction> callback) {
+        MyFunctionWindow app = new MyFunctionWindow(factory, callback);
         app.setVisible(true);
     }
 
-    public static void main(TabulatedFunction myFunction) {
-        MyFrame app = new MyFrame(myFunction);
-        app.setVisible(true);
-    }
-
-    public static void main(Consumer<? super TabulatedFunction> callback) {
-        MyFrame app = new MyFrame(callback);
-        app.setVisible(true);
-    }
-
-    public MyFrame(Consumer<? super TabulatedFunction> callback) {
+    public MyFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
-        setTitle("Мы молодцы");
-        this.setBounds(500, 500, 500, 500);
-        addButtonListeners();
-        compose();
-        inputButton.setEnabled(false);
-        commitButton.setEnabled(false);
-
-    }
-
-    public MyFrame(TabulatedFunction myFunction) {
-        setModal(true);
-        setTitle("Create with table");
-        this.myFunction = myFunction;
         this.setBounds(300, 300, 500, 500);
-        addButtonListeners();
+        this.factory = factory;
+        addButtonListeners(callback);
         compose();
         inputButton.setEnabled(false);
-        commitButton.setEnabled(false);
-    }
-
-    public MyFrame() {
+        createButton.setEnabled(false);
     }
 
     void compose() {
@@ -83,7 +52,7 @@ public class MyFrame extends JDialog {
                         .addComponent(countField)
                         .addComponent(inputButton))
                 .addComponent(tableScrollPane)
-                .addComponent(commitButton)
+                .addComponent(createButton)
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -91,19 +60,13 @@ public class MyFrame extends JDialog {
                         .addComponent(countField)
                         .addComponent(inputButton))
                 .addComponent(tableScrollPane)
-                .addComponent(commitButton)
+                .addComponent(createButton)
         );
     }
 
     public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         addListenerForInputButton();
-        addListenerForCommitButton(callback);
-        addListenerForCountButton();
-    }
-
-    public void addButtonListeners() {
-        addListenerForInputButton();
-        addListenerForCommitButton();
+        addListenerForCreateButton(callback);
         addListenerForCountButton();
     }
 
@@ -118,7 +81,7 @@ public class MyFrame extends JDialog {
     public void addListenerForInputButton() {
         inputButton.addActionListener(event -> {
             try {
-                commitButton.setEnabled(false);
+                createButton.setEnabled(false);
                 int count = Integer.parseInt(countField.getText());
                 clearTable(tableModel.getRowCount());
                 for (int i = 0; i < count; i++) {
@@ -127,7 +90,7 @@ public class MyFrame extends JDialog {
                     tableModel.fireTableDataChanged();
                 }
                 if (tableModel.getRowCount() > 1) {
-                    commitButton.setEnabled(true);
+                    createButton.setEnabled(true);
                 }
             } catch (Exception e) {
                 new Error(this, e);
@@ -135,8 +98,8 @@ public class MyFrame extends JDialog {
         });
     }
 
-    public void addListenerForCommitButton(Consumer<? super TabulatedFunction> callback) {
-        commitButton.addActionListener(event -> {
+    public void addListenerForCreateButton(Consumer<? super TabulatedFunction> callback) {
+        createButton.addActionListener(event -> {
             try {
                 double[] x = new double[xValues.size()];
                 double[] y = new double[xValues.size()];
@@ -149,29 +112,9 @@ public class MyFrame extends JDialog {
                     x[i] = xValues.get(i);
                     y[i] = yValues.get(i);
                 }
-                myFunction = factory.create(x, y);
-                callback.accept(myFunction);
-            } catch (Exception e) {
-                new Error(this, e);
-            }
-        });
-    }
-
-    public void addListenerForCommitButton() {
-        commitButton.addActionListener(event -> {
-            try {
-                double[] x = new double[xValues.size()];
-                double[] y = new double[xValues.size()];
-                x[0] = xValues.get(0);
-                y[0] = yValues.get(0);
-                for (int i = 1; i < xValues.size(); i++) {
-                    if (xValues.get(i - 1) > xValues.get(i)) {
-                        throw new ArrayIsNotSortedException();
-                    }
-                    x[i] = xValues.get(i);
-                    y[i] = yValues.get(i);
-                }
-                myFunction = factory.create(x, y);
+                function = factory.create(x, y);
+                callback.accept(function);
+                this.dispose();
             } catch (Exception e) {
                 new Error(this, e);
             }

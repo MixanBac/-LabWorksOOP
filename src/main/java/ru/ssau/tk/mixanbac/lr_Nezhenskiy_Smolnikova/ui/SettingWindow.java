@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class SettingWindow extends JDialog {
     JLabel fontLabel = new JLabel("Which factory do you want to use?");
-    private Map<String, AbstractTabulatedFunction> nameFunctionMap = new HashMap<>();
+    private Map<String, AbstractTabulatedFunction> nameFuncMap = new HashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JButton okButton = new JButton("OK");
     TabulatedFunctionFactory factory;
@@ -33,7 +33,14 @@ public class SettingWindow extends JDialog {
         setSize(500, 500);
         fillMap();
         compose();
+        addButtonListeners();
     }
+
+    public static void main(TabulatedFunctionFactory factory) {
+        SettingWindow frame = new SettingWindow(factory);
+        frame.setVisible(true);
+    }
+
     public SettingWindow() {
         setModal(true);
         setTitle("Settings");
@@ -53,6 +60,7 @@ public class SettingWindow extends JDialog {
                         .addComponent(okButton))
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
+                .addComponent(fontLabel)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(functionComboBox)
                         .addComponent(okButton)
@@ -60,11 +68,11 @@ public class SettingWindow extends JDialog {
     }
 
     public void fillMap() {
-        nameFunctionMap.put("List", new LinkedListTabulatedFunction());
-        nameFunctionMap.put("Array", new ArrayTabulatedFunction());
+        nameFuncMap.put("List", new LinkedListTabulatedFunction());
+        nameFuncMap.put("Array", new ArrayTabulatedFunction());
         String[] functions = new String[2];
         int i = 0;
-        for (String string : nameFunctionMap.keySet()) {
+        for (String string : nameFuncMap.keySet()) {
             functions[i++] = string;
         }
         Arrays.sort(functions);
@@ -73,18 +81,22 @@ public class SettingWindow extends JDialog {
         }
     }
 
-    public static void main(TabulatedFunctionFactory factory) {
-        SettingWindow dialog = new SettingWindow(factory);
+    public void addButtonListeners() {
+        okButton.addActionListener(event -> {
+            try {
+                String myFunction = (String) functionComboBox.getSelectedItem();
+                this.factory = (TabulatedFunctionFactory) nameFuncMap.get(myFunction);
+                this.dispose();
+            } catch (Exception e) {
+                Error errorWindow = new Error(this, e);
+                errorWindow.showError(this, e);
+            }
+        });
+    }
+
+    public static void main( String[] args) {
+        SettingWindow dialog = new SettingWindow();
         dialog.setVisible(true);
     }
-        public static void main( String[] args) {
-            SettingWindow dialog = new SettingWindow();
-            dialog.setVisible(true);
-        }
 
 }
-
-
-
-
-

@@ -28,11 +28,12 @@ public class Error {
             return "Приложение попыталось преобразовать строку в один из числовых типов, но строка не имеет подходящего формата.";
         }
         if (e instanceof InconsistentFunctionsException) {
-            return "xValues различны.";
+            return "Разная длина массивов";
         }
         if (e instanceof ArrayIsNotSortedException) {
             return "Массив не сортирован.";
         }
+        e.printStackTrace();
         return "Неизвестная ошибка.";
     }
 }

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+
 public class MathFunctionWindow extends JDialog {
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JLabel fromLabel = new JLabel("from:");
@@ -23,17 +24,32 @@ public class MathFunctionWindow extends JDialog {
     private JTextField toField = new JTextField();
     private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
-    TabulatedFunction function;
+    TabulatedFunction myFunction;
+    TabulatedFunctionFactory factory;
 
-    public static void main(String[] args) {
+    public MathFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        setModal(true);
+        this.factory = factory;
+        this.setBounds(300, 200, 500, 150);
+        fillMap();
+        compose();
+        addButtonListeners(callback);
+    }
+
+    public static void main(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        MathFunctionWindow app = new MathFunctionWindow(factory, callback);
+        app.setVisible(true);
+    }
+
+    /*public static void main(String[] args) {
         MathFunctionWindow app = new MathFunctionWindow();
         app.setVisible(true);
-    }
+    }8/
 
-    public static void main(TabulatedFunction function) {
-        MathFunctionWindow app = new MathFunctionWindow(function);
+    /*public static void main(TabulatedFunction myFunction) {
+        MathFunctionWindow app = new MathFunctionWindow(myFunction);
         app.setVisible(true);
-    }
+    }*/
 
     public static void main(Consumer<? super TabulatedFunction> callback) {
         MathFunctionWindow app = new MathFunctionWindow(callback);
@@ -50,7 +66,7 @@ public class MathFunctionWindow extends JDialog {
     }
 
 
-    public MathFunctionWindow(TabulatedFunction function) {
+    /* MathFunctionWindow(TabulatedFunction function) {
         setModal(true);
         setTitle("Создать функцию");
         this.function = function;
@@ -67,7 +83,7 @@ public class MathFunctionWindow extends JDialog {
         fillMap();
         compose();
         addButtonListeners();
-    }
+    }*/
 
     public void fillMap() {
         nameFuncMap.put("cosh", new CoshFunction());
@@ -87,7 +103,6 @@ public class MathFunctionWindow extends JDialog {
     }
 
     public void compose() {
-
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -117,7 +132,7 @@ public class MathFunctionWindow extends JDialog {
 
     }
 
-    public void addButtonListeners() {
+    /*public void addButtonListeners() {
         buttonOk.addActionListener(event -> {
             try {
                 String myFunction = (String) functionComboBox.getSelectedItem();
@@ -132,7 +147,7 @@ public class MathFunctionWindow extends JDialog {
                 myError.showError(this, e);
             }
         });
-    }
+    }*/
 
     public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         buttonOk.addActionListener(event -> {
@@ -142,28 +157,27 @@ public class MathFunctionWindow extends JDialog {
                 double from = Double.parseDouble(fromField.getText());
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
-                function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
-                callback.accept(function);
-                int k = 1;
+                myFunction = factory.create(selectedFunction, from, to, count);
+                callback.accept(myFunction);
+                this.dispose();
             } catch (Exception e) {
                 Error errorWindow = new Error(this, e);
                 errorWindow.showError(this, e);
             }
         });
-
-
-        class BgPanelFive extends JPanel {
-            public void paintComponent(Graphics g) {
-                Image im = null;
-                try {
-                    im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
-                } catch (IOException ignored) {
-                }
-                g.drawImage(im, 0, 0, null);
-            }
-        }
-        ;
     }
+
+    /*class BgPanelFive extends JPanel {
+        public void paintComponent(Graphics g) {
+            Image im = null;
+            try {
+                im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
+            } catch (IOException ignored) {
+            }
+            g.drawImage(im, 0, 0, null);
+        }
+    };*/
 }
+
 
 

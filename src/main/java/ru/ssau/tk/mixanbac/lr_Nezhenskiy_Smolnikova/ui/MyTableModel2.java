@@ -1,23 +1,22 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.List;
+import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 
-public class MyTableModel extends AbstractTableModel {
+import javax.swing.table.AbstractTableModel;
+
+public class MyTableModel2 extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN_NUMBER = 1;
     private static final int Y_COLUMN_NUMBER = 2;
-    private List<Double> xValues;
-    private List<Double> yValues;
+    TabulatedFunction myFunction;
 
-    public MyTableModel(List<Double> xValues, List<Double> yValues) {
-        this.xValues = xValues;
-        this.yValues = yValues;
+    public MyTableModel2(TabulatedFunction myFunction) {
+        this.myFunction = myFunction;
     }
 
     @Override
     public int getRowCount() {
-        return xValues.size();
+        return myFunction.getCount();
     }
 
     @Override
@@ -31,29 +30,11 @@ public class MyTableModel extends AbstractTableModel {
             case INDEX_COLUMN_NUMBER:
                 return rowIndex;
             case X_COLUMN_NUMBER:
-                return xValues.get(rowIndex);
+                return myFunction.getX(rowIndex);
             case Y_COLUMN_NUMBER:
-                return yValues.get(rowIndex);
+                return myFunction.getY(rowIndex);
         }
         throw new UnsupportedOperationException();
-    }
-
-
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
-        if (columnIndex == X_COLUMN_NUMBER) {
-            try {
-                xValues.set(rowIndex, Double.valueOf(aValue.toString()));
-            } catch (Exception e) {
-                xValues.set(rowIndex, 0.0);
-            }
-        } else if (columnIndex == Y_COLUMN_NUMBER) {
-            try {
-                yValues.set(rowIndex, Double.valueOf(aValue.toString()));
-            } catch (Exception e) {
-                yValues.set(rowIndex, 0.0);
-            }
-        }
     }
 
     @Override
@@ -62,6 +43,7 @@ public class MyTableModel extends AbstractTableModel {
             case INDEX_COLUMN_NUMBER:
                 return false;
             case X_COLUMN_NUMBER:
+
             case Y_COLUMN_NUMBER:
                 return true;
         }
@@ -80,5 +62,4 @@ public class MyTableModel extends AbstractTableModel {
         }
         return super.getColumnName(column);
     }
-
 }
