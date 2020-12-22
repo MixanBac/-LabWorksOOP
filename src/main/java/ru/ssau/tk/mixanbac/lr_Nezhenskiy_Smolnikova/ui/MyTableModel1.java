@@ -3,19 +3,24 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.List;
 
 public class MyTableModel1 extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN_NUMBER = 1;
     private static final int Y_COLUMN_NUMBER = 2;
-    TabulatedFunction myFunction;
+    private List<Double> xValues;
+    private List<Double> yValues;
+    private TabulatedFunction myFunction;
 
-    public MyTableModel1() {
+    public MyTableModel1(List<Double> xValues, List<Double> yValues) {
+        this.xValues = xValues;
+        this.yValues = yValues;
     }
 
     @Override
     public int getRowCount() {
-        return (myFunction == null) ? 0 : myFunction.getCount();
+        return xValues.size();
     }
 
     @Override
@@ -29,9 +34,9 @@ public class MyTableModel1 extends AbstractTableModel {
             case INDEX_COLUMN_NUMBER:
                 return rowIndex;
             case X_COLUMN_NUMBER:
-                return myFunction.getX(rowIndex);
+                return xValues.get(rowIndex);
             case Y_COLUMN_NUMBER:
-                return myFunction.getY(rowIndex);
+                return yValues.get(rowIndex);
         }
         throw new UnsupportedOperationException();
     }
@@ -58,9 +63,9 @@ public class MyTableModel1 extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
         if (columnIndex == Y_COLUMN_NUMBER) {
             try {
-                myFunction.setY(rowIndex, Double.parseDouble(aValue.toString()));
+                yValues.set(rowIndex, Double.valueOf(aValue.toString()));
             } catch (Exception e) {
-                myFunction.setY(rowIndex, 0.0);
+                yValues.set(rowIndex, 0.0);
             }
         }
     }

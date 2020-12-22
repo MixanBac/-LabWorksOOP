@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SettingWindow extends JDialog {
-    JLabel fontLabel = new JLabel("Which factory do you want to use?");
+    JLabel fontLabel = new JLabel("Выберите тип фабрики");
     private Map<String, AbstractTabulatedFunction> nameFuncMap = new HashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JButton okButton = new JButton("OK");
@@ -28,8 +28,8 @@ public class SettingWindow extends JDialog {
 
     public SettingWindow(TabulatedFunctionFactory factory) {
         setModal(true);
-        setTitle("Settings");
         this.factory = factory;
+        setTitle("Settings");
         setSize(500, 500);
         fillMap();
         compose();
@@ -41,14 +41,6 @@ public class SettingWindow extends JDialog {
         frame.setVisible(true);
     }
 
-    public SettingWindow() {
-        setModal(true);
-        setTitle("Settings");
-        factory = new ArrayTabulatedFunctionFactory();
-        setSize(300, 200);
-        fillMap();
-        compose();
-    }
     public void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,11 +84,6 @@ public class SettingWindow extends JDialog {
                 errorWindow.showError(this, e);
             }
         });
-    }
-
-    public static void main( String[] args) {
-        SettingWindow dialog = new SettingWindow();
-        dialog.setVisible(true);
     }
 
 }

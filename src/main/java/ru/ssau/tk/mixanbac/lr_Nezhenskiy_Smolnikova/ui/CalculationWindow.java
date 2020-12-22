@@ -357,7 +357,7 @@ public class CalculationWindow extends JDialog {
 
     public void refreshFirst(TabulatedFunction myFunction, AbstractTableModel tableModel, int k) {
 
-        ((MyTableModel1) tableModel).myFunction = myFunction;
+        ((MyTableModel2) tableModel).myFunction = myFunction;
         tableModel.fireTableDataChanged();
     }
 
