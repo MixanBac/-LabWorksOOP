@@ -30,6 +30,11 @@ public class CalculationWindow extends JDialog {
     AbstractTableModel tablemodel;
     AbstractTableModel tablemodel1;
     AbstractTableModel tablemodel2;
+    private TabulatedFunctionFactory factory;
+    private MyTableModel1 tableModell = new MyTableModel1();
+    private List<Double> xValues = new ArrayList<>();
+    private List<Double> yValues = new ArrayList<>();
+
 
     public static void main(JFrame args) {
         CalculationWindow app = new CalculationWindow();
@@ -49,7 +54,7 @@ public class CalculationWindow extends JDialog {
     public JPanel firstFunc() {
         JPanel panel = new JPanel();
         panel.setBorder(new
-                BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
+                BorderUIResource.LineBorderUIResource(Color.PINK, 5));
         //AbstractTableModel tableModel = new MyTableModel(xFirst, yFirst) {
         AbstractTableModel tableModel = new MyTableModel2(first) {
             @Override
@@ -80,26 +85,30 @@ public class CalculationWindow extends JDialog {
         this.tablemodel1 = tableModel;
         JLabel label = new JLabel("first");
         JTable table1 = new JTable(tableModel);
-        JButton saveOrOpen = new JButton("Save or open");
+        JButton saveButton = new JButton("Сохранить");
+        JButton openButton = new JButton("Открыть");
         JButton createByArray = new JButton("Create by Table");
         JButton createByFunc = new JButton("Create by Func");
         JScrollPane tableScrollPane = new JScrollPane(table1);
         panel.add(label);
+        table1.setPreferredSize(new Dimension(5, 5));
         panel.add(tableScrollPane);
         panel.add(createByArray);
-        addListenerCreateByTable(createByArray, tableModel);
+        addListenerCreateByTable(createByArray, tableModell);
         panel.add(createByFunc);
-        //addListenerCreateByFnc(createByFunc, tableModel);
-        panel.add(saveOrOpen);
-        addListenerForSaveOrOpen(saveOrOpen, tableModel);
-        panel.setPreferredSize(new Dimension(50, 50));
+        //addListenerCreateByFnc(createByFunc, tableModell);
+        panel.add(saveButton);
+        addListenerForSave(saveButton, tableModell);
+        panel.add(openButton);
+        addListenerForOpen(openButton, tableModell);
+
         return panel;
     }
 
     public JPanel secondFunc() {
         JPanel panel = new JPanel();
         panel.setBorder(new
-                BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
+                BorderUIResource.LineBorderUIResource(Color.PINK, 5));
         //AbstractTableModel tableModel = new MyTableModel(xSecond, ySecond) {
         AbstractTableModel tableModel = new MyTableModel2(second) {
             @Override
@@ -141,7 +150,7 @@ public class CalculationWindow extends JDialog {
         panel.add(createByFunc);
         //addListenerCreateByFnc(createByFunc, tableModel, 1);
         panel.add(saveOrOpen);
-        addListenerForSaveOrOpen(1, saveOrOpen, tableModel);
+        //addListenerForSaveOrOpen(1, saveOrOpen, tableModel);
         panel.setPreferredSize(new Dimension(100, 150));
         return panel;
     }
@@ -149,7 +158,7 @@ public class CalculationWindow extends JDialog {
     public JPanel resultFunc() {
         JPanel panel = new JPanel();
         panel.setBorder(new
-                BorderUIResource.LineBorderUIResource(Color.BLACK, 1));
+                BorderUIResource.LineBorderUIResource(Color.PINK, 5));
         //AbstractTableModel tableModel = new MyTableModel(xThird, yThird) {
         AbstractTableModel tableModel = new MyTableModel2(result) {
             @Override
@@ -168,7 +177,7 @@ public class CalculationWindow extends JDialog {
         this.tablemodel = tableModel;
         JLabel label = new JLabel("result");
         JTable table1 = new JTable(tableModel);
-        JButton save = new JButton("Save");
+        JButton save = new JButton("                                            Save                                              ");
         JScrollPane tableScrollPane = new JScrollPane(table1);
         panel.add(label);
         panel.add(tableScrollPane);
@@ -181,7 +190,7 @@ public class CalculationWindow extends JDialog {
     public CalculationWindow() {
         setModal(true);
         setTitle("Calculation");
-        this.setBounds(0, 100, 800, 600);
+        this.setBounds(0, 100, 1600, 600);
         if (factoryFirst instanceof LinkedListTabulatedFunction) {
             first = new LinkedListTabulatedFunction();
         } else {
@@ -224,7 +233,6 @@ public class CalculationWindow extends JDialog {
     }
 
     public void addButtonListeners() {
-
         addListenerForCalculate();
     }
 
@@ -265,29 +273,31 @@ public class CalculationWindow extends JDialog {
         });
     }
 
-    public void addListenerForSaveOrOpen(int k, JButton save, AbstractTableModel tableModel) {
-        save.addActionListener(event -> {
+    public void addListenerForOpen(JButton openButton, MyTableModel1 tableModell) {
+        openButton.addActionListener(event -> {
             try {
-                FileChooserTest.main(second, f -> {
-                    second = f;
-                    refreshFirst(second, tableModel, 1);
-                });
+                int countOld = xValues.size();
+                FileReader.main(data -> tableModell.setFunction(data));
+                int countNew = tableModell.getFunction().getCount();
+                wrapper(countOld, countNew);
             } catch (Exception e) {
-                new Error(this, e);
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new Error(this, e);
             }
         });
     }
 
-    public void addListenerForSaveOrOpen(JButton save, AbstractTableModel tableModel) {
-        save.addActionListener(event -> {
+    public void addListenerForSave(JButton saveButton, MyTableModel1 tableModell) {
+        saveButton.addActionListener(event -> {
             try {
-                FileChooserTest.main(first, f -> {
-                    first = f;
-                    refreshFirst(first, tableModel, 1);
-                });
-                int k = 1;
+                FileWriter.main(tableModell.getFunction());
             } catch (Exception e) {
-                new Error(this, e);
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new Error(this, e);
             }
         });
     }
@@ -349,4 +359,16 @@ public class CalculationWindow extends JDialog {
         tableModel.fireTableDataChanged();
     }
 
+    public void wrapper(int countOld, int countNew) {
+        tableModell.fireTableDataChanged();
+        for (int i = 0; i < countOld; i++) {
+            if (xValues.size() != 0) xValues.remove(countOld - i - 1);
+            if (yValues.size() != 0) yValues.remove(countOld - i - 1);
+        }
+        for (int i = 0; i < countNew; i++) {
+            xValues.add(tableModell.getFunction().getX(i));
+            yValues.add(tableModell.getFunction().getY(i));
+        }
+    }
 }
+

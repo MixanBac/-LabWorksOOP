@@ -17,7 +17,7 @@ public class FileWriter extends JDialog {
     private JButton save = new JButton("Сохранить");
     private TabulatedFunction function;
 
-    public FileWriter(TabulatedFunction func) {
+    public FileWriter(TabulatedFunction function) {
         setModal(true);
         this.function = function;
         JPanel panel = new JPanel();

@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-
 public class MathFunctionWindow extends JDialog {
     private JComboBox<String> functionComboBox = new JComboBox<>();
     private JLabel fromLabel = new JLabel("От:");
@@ -29,6 +28,7 @@ public class MathFunctionWindow extends JDialog {
 
     public MathFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
+        setTitle("Создание математической функции");
         this.factory = factory;
         this.setBounds(300, 200, 500, 150);
         fillMap();
