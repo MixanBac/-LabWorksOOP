@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class Error {
+
     Error(Component parent, Exception e) {
         showError(parent, e);
     }

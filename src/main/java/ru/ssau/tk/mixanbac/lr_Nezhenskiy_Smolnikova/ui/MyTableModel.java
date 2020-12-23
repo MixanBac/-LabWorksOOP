@@ -38,7 +38,6 @@ public class MyTableModel extends AbstractTableModel {
         throw new UnsupportedOperationException();
     }
 
-
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
         if (columnIndex == X_COLUMN_NUMBER) {
@@ -72,13 +71,12 @@ public class MyTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case INDEX_COLUMN_NUMBER:
-                return "Index";
+                return "Индекс";
             case X_COLUMN_NUMBER:
-                return "xValues";
+                return "Значение X";
             case Y_COLUMN_NUMBER:
-                return "yValues";
+                return "Значение Y";
         }
         return super.getColumnName(column);
     }
-
 }

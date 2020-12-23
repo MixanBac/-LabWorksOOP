@@ -20,17 +20,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SettingWindow extends JDialog {
-    JLabel fontLabel = new JLabel("Выберите тип фабрики");
-    private Map<String, AbstractTabulatedFunction> nameFuncMap = new HashMap<>();
+    private JLabel fontLabel = new JLabel("Выберите тип фабрики функции:");
+    private Map<String, TabulatedFunctionFactory> nameFuncMap = new HashMap<>();
     private JComboBox<String> functionComboBox = new JComboBox<>();
-    private JButton okButton = new JButton("OK");
+    private JButton buttonOk = new JButton("OK");
     TabulatedFunctionFactory factory;
 
     public SettingWindow(TabulatedFunctionFactory factory) {
         setModal(true);
         this.factory = factory;
-        setTitle("Settings");
-        setSize(500, 500);
+        setTitle("Настройка");
+        setSize(300, 100);
         fillMap();
         compose();
         addButtonListeners();
@@ -42,26 +42,28 @@ public class SettingWindow extends JDialog {
     }
 
     public void compose() {
+        setContentPane(new BgPanel());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(fontLabel)
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(functionComboBox)
-                        .addComponent(okButton))
+                        .addComponent(buttonOk))
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addComponent(fontLabel)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(functionComboBox)
-                        .addComponent(okButton)
+                        .addComponent(buttonOk)
                 ));
     }
 
     public void fillMap() {
-        nameFuncMap.put("List", new LinkedListTabulatedFunction());
-        nameFuncMap.put("Array", new ArrayTabulatedFunction());
+        nameFuncMap.put("Двусвязный список", new LinkedListTabulatedFunctionFactory());
+        nameFuncMap.put("Массив", new ArrayTabulatedFunctionFactory());
         String[] functions = new String[2];
         int i = 0;
         for (String string : nameFuncMap.keySet()) {
@@ -74,10 +76,10 @@ public class SettingWindow extends JDialog {
     }
 
     public void addButtonListeners() {
-        okButton.addActionListener(event -> {
+        buttonOk.addActionListener(event -> {
             try {
-                String myFunction = (String) functionComboBox.getSelectedItem();
-                this.factory = (TabulatedFunctionFactory) nameFuncMap.get(myFunction);
+                String func = (String) functionComboBox.getSelectedItem();
+                this.factory = nameFuncMap.get(func);
                 this.dispose();
             } catch (Exception e) {
                 Error errorWindow = new Error(this, e);
@@ -85,5 +87,4 @@ public class SettingWindow extends JDialog {
             }
         });
     }
-
 }

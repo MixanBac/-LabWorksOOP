@@ -8,15 +8,15 @@ public class MyTableModel2 extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN_NUMBER = 1;
     private static final int Y_COLUMN_NUMBER = 2;
-    TabulatedFunction myFunction;
+    TabulatedFunction func;
 
-    public MyTableModel2(TabulatedFunction myFunction) {
-        this.myFunction = myFunction;
+    public MyTableModel2(TabulatedFunction func) {
+        this.func = func;
     }
 
     @Override
     public int getRowCount() {
-        return myFunction.getCount();
+        return func.getCount();
     }
 
     @Override
@@ -30,9 +30,9 @@ public class MyTableModel2 extends AbstractTableModel {
             case INDEX_COLUMN_NUMBER:
                 return rowIndex;
             case X_COLUMN_NUMBER:
-                return myFunction.getX(rowIndex);
+                return func.getX(rowIndex);
             case Y_COLUMN_NUMBER:
-                return myFunction.getY(rowIndex);
+                return func.getY(rowIndex);
         }
         throw new UnsupportedOperationException();
     }
@@ -43,7 +43,7 @@ public class MyTableModel2 extends AbstractTableModel {
             case INDEX_COLUMN_NUMBER:
                 return false;
             case X_COLUMN_NUMBER:
-
+                return true;
             case Y_COLUMN_NUMBER:
                 return true;
         }

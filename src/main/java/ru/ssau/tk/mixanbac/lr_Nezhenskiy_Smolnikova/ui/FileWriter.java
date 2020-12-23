@@ -10,60 +10,59 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 
-public class Writer extends JDialog {
-    private JTextField filename = new JTextField();
+public class FileWriter extends JDialog {
+    private JTextField fname = new JTextField();
     private JTextField dir = new JTextField();
     private JButton save = new JButton("Сохранить");
-    private TabulatedFunction func;
+    private TabulatedFunction function;
 
-    public Writer(TabulatedFunction func) {
+    public FileWriter(TabulatedFunction func) {
         setModal(true);
-        this.func = func;
+        this.function = function;
         JPanel panel = new JPanel();
         addListenerForSaveButton();
         panel.add(save);
-        Container contentPan = getContentPane();
-        contentPan.add(panel, BorderLayout.SOUTH);
+        Container contentPane = getContentPane();
+        contentPane.add(panel, BorderLayout.SOUTH);
         dir.setEditable(false);
-        filename.setEditable(false);
+        fname.setEditable(false);
         panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1));
-        panel.add(filename);
+        panel.add(fname);
         panel.add(dir);
-        contentPan.add(panel, BorderLayout.NORTH);
+        contentPane.add(panel, BorderLayout.NORTH);
     }
 
     public void addListenerForSaveButton() {
         save.addActionListener(event -> {
-            JFileChooser c = new JFileChooser();
-            c.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            c.addChoosableFileFilter(
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.addChoosableFileFilter(
                     new FileNameExtensionFilter("Текстовые файлы", "txt"));
-            c.setAcceptAllFileFilterUsed(false);
-            int rVal = c.showSaveDialog(Writer.this);
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            int rVal = fileChooser.showSaveDialog(FileWriter.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(c.getSelectedFile().getName());
-                dir.setText(c.getCurrentDirectory().toString());
-                File file = c.getSelectedFile();
+                fname.setText(fileChooser.getSelectedFile().getName());
+                dir.setText(fileChooser.getCurrentDirectory().toString());
+                File file = fileChooser.getSelectedFile();
                 if (file != null) {
                     try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
-                        FunctionsIO.writeTabulatedFunction(outputStream, func);
+                        FunctionsIO.writeTabulatedFunction(outputStream, function);
                     } catch (Exception e) {
                         new Error(this, e);
                     }
                 }
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("Вы нажали отменить");
+                fname.setText("Вы отменили операцию");
                 dir.setText("");
             }
         });
     }
 
     public static void main(TabulatedFunction func) {
-        run(new Writer(func), 250, 110);
+        run(new FileWriter(func), 250, 110);
     }
 
     public static void run(JDialog frame, int width, int height) {

@@ -23,7 +23,7 @@ public class MyFunctionWindow extends JDialog {
     private JButton inputButton = new JButton("Ввести");
     private JButton createButton = new JButton("Создать");
     private TabulatedFunctionFactory factory;
-    private TabulatedFunction function;
+    private TabulatedFunction myFunction;
 
     public static void main(TabulatedFunctionFactory factory,  Consumer<? super TabulatedFunction> callback) {
         MyFunctionWindow app = new MyFunctionWindow(factory, callback);
@@ -32,7 +32,8 @@ public class MyFunctionWindow extends JDialog {
 
     public MyFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
-        this.setBounds(300, 300, 500, 500);
+        setTitle("Создание табулированнной функции");
+        this.setBounds(550, 200, 500, 500);
         this.factory = factory;
         addButtonListeners(callback);
         compose();
@@ -41,6 +42,7 @@ public class MyFunctionWindow extends JDialog {
     }
 
     void compose() {
+        setContentPane(new BgPanel());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -112,8 +114,9 @@ public class MyFunctionWindow extends JDialog {
                     x[i] = xValues.get(i);
                     y[i] = yValues.get(i);
                 }
-                function = factory.create(x, y);
-                callback.accept(function);
+
+                myFunction = factory.create(x, y);
+                callback.accept(myFunction);
                 this.dispose();
             } catch (Exception e) {
                 new Error(this, e);

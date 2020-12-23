@@ -14,10 +14,10 @@ import java.io.FileInputStream;
 import java.util.function.Consumer;
 
 public class FileReader extends JDialog {
-    private JTextField filename = new JTextField();
+    private JTextField fname = new JTextField();
     private JTextField dir = new JTextField();
     private JButton open = new JButton("Открыть");
-    private TabulatedFunction func;
+    private TabulatedFunction function;
     private TabulatedFunctionFactory factory;
 
     public FileReader(Consumer<? super TabulatedFunction> callback) {
@@ -25,15 +25,15 @@ public class FileReader extends JDialog {
         JPanel panel = new JPanel();
         addListenerForOpenButton(callback);
         panel.add(open);
-        Container contentPan = getContentPane();
-        contentPan.add(panel, BorderLayout.SOUTH);
+        Container contentPane = getContentPane();
+        contentPane.add(panel, BorderLayout.SOUTH);
         dir.setEditable(false);
-        filename.setEditable(false);
+        fname.setEditable(false);
         panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1));
-        panel.add(filename);
+        panel.add(fname);
         panel.add(dir);
-        contentPan.add(panel, BorderLayout.NORTH);
+        contentPane.add(panel, BorderLayout.NORTH);
     }
 
     public void addListenerForOpenButton(Consumer<? super TabulatedFunction> callback) {
@@ -45,21 +45,21 @@ public class FileReader extends JDialog {
             fileChooser.setAcceptAllFileFilterUsed(false);
             int rVal = fileChooser.showOpenDialog(FileReader.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(fileChooser.getSelectedFile().getName());
+                fname.setText(fileChooser.getSelectedFile().getName());
                 dir.setText(fileChooser.getCurrentDirectory().toString());
                 File file = fileChooser.getSelectedFile();
                 factory = new ArrayTabulatedFunctionFactory();
                 if (file != null) {
                     try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
-                        func = FunctionsIO.readTabulatedFunction(inputStream, factory);
-                        callback.accept(func);
+                        function = FunctionsIO.readTabulatedFunction(inputStream, factory);
+                        callback.accept(function);
                     } catch (Exception e) {
                         new Error(this, e);
                     }
                 }
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("Вы нажали отменить");
+                fname.setText("Вы нажали отменить");
                 dir.setText("");
             }
         });

@@ -16,16 +16,16 @@ import java.util.function.Consumer;
 
 public class MathFunctionWindow extends JDialog {
     private JComboBox<String> functionComboBox = new JComboBox<>();
-    private JLabel fromLabel = new JLabel("from:");
-    private JLabel toLabel = new JLabel("to:");
-    private JLabel countLabel = new JLabel("count:");
+    private JLabel fromLabel = new JLabel("От:");
+    private JLabel toLabel = new JLabel("До:");
+    private JLabel countLabel = new JLabel("Количество:");
     private JTextField countField = new JTextField();
     private JTextField fromField = new JTextField();
     private JTextField toField = new JTextField();
     private JButton buttonOk = new JButton("OK");
     private Map<String, MathFunction> nameFuncMap = new HashMap<>();
-    TabulatedFunction myFunction;
     TabulatedFunctionFactory factory;
+    TabulatedFunction myFunction;
 
     public MathFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
@@ -41,57 +41,14 @@ public class MathFunctionWindow extends JDialog {
         app.setVisible(true);
     }
 
-    /*public static void main(String[] args) {
-        MathFunctionWindow app = new MathFunctionWindow();
-        app.setVisible(true);
-    }8/
-
-    /*public static void main(TabulatedFunction myFunction) {
-        MathFunctionWindow app = new MathFunctionWindow(myFunction);
-        app.setVisible(true);
-    }*/
-
-    public static void main(Consumer<? super TabulatedFunction> callback) {
-        MathFunctionWindow app = new MathFunctionWindow(callback);
-        app.setVisible(true);
-    }
-
-    public MathFunctionWindow(Consumer<? super TabulatedFunction> callback) {
-        setModal(true);
-        setTitle("Создать функцию");
-        this.setBounds(400, 300, 500, 200);
-        fillMap();
-        compose();
-        addButtonListeners(callback);
-    }
-
-
-    /* MathFunctionWindow(TabulatedFunction function) {
-        setModal(true);
-        setTitle("Создать функцию");
-        this.function = function;
-        this.setBounds(400, 300, 500, 200);
-        fillMap();
-        compose();
-        addButtonListeners();
-    }
-
-    public MathFunctionWindow() {
-        setModal(true);
-        setTitle("Создать функцию");
-        this.setBounds(400, 300, 500, 200);
-        fillMap();
-        compose();
-        addButtonListeners();
-    }*/
-
     public void fillMap() {
-        nameFuncMap.put("cosh", new CoshFunction());
-        nameFuncMap.put("reverse", new ReverseFunction());
-        nameFuncMap.put("sqr", new SqrFunction());
-        nameFuncMap.put("unit", new UnitFunction());
-        nameFuncMap.put("zero", new ZeroFunction());
-        String[] functions = new String[5];
+        nameFuncMap.put("Функция гиперболического косинуса", new CoshFunction());
+        nameFuncMap.put("Тождественная функция", new IdentityFunction());
+        nameFuncMap.put("Обратная функция", new ReverseFunction());
+        nameFuncMap.put("Квадратичная функция", new SqrFunction());
+        nameFuncMap.put("Единичная функция", new UnitFunction());
+        nameFuncMap.put("Нулевая функция", new ZeroFunction());
+        String[] functions = new String[6];
         int i = 0;
         for (String string : nameFuncMap.keySet()) {
             functions[i++] = string;
@@ -103,6 +60,7 @@ public class MathFunctionWindow extends JDialog {
     }
 
     public void compose() {
+        setContentPane(new BgPanel());
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -129,31 +87,13 @@ public class MathFunctionWindow extends JDialog {
                 .addComponent(functionComboBox)
                 .addComponent(buttonOk)
         );
-
     }
-
-    /*public void addButtonListeners() {
-        buttonOk.addActionListener(event -> {
-            try {
-                String myFunction = (String) functionComboBox.getSelectedItem();
-                MathFunction selectedFunction = nameFuncMap.get(myFunction);
-                double from = Double.parseDouble(fromField.getText());
-                double to = Double.parseDouble(toField.getText());
-                int count = Integer.parseInt(countField.getText());
-                function = new ArrayTabulatedFunction(selectedFunction, from, to, count);
-                int k = 1;
-            } catch (Exception e) {
-                Error myError = new Error(this, e);
-                myError.showError(this, e);
-            }
-        });
-    }*/
 
     public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         buttonOk.addActionListener(event -> {
             try {
-                String func = (String) functionComboBox.getSelectedItem();
-                MathFunction selectedFunction = nameFuncMap.get(func);
+                String function = (String) functionComboBox.getSelectedItem();
+                MathFunction selectedFunction = nameFuncMap.get(function);
                 double from = Double.parseDouble(fromField.getText());
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
@@ -166,18 +106,6 @@ public class MathFunctionWindow extends JDialog {
             }
         });
     }
-
-    /*class BgPanelFive extends JPanel {
-        public void paintComponent(Graphics g) {
-            Image im = null;
-            try {
-                im = ImageIO.read(new File("\u202AC:\\Users\\Elen\\Desktop\\iZrPQ87QA9k.jpg"));
-            } catch (IOException ignored) {
-            }
-            g.drawImage(im, 0, 0, null);
-        }
-    };*/
 }
-
 
 

@@ -9,18 +9,14 @@ public class MyTableModel1 extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN_NUMBER = 1;
     private static final int Y_COLUMN_NUMBER = 2;
-    private List<Double> xValues;
-    private List<Double> yValues;
     private TabulatedFunction myFunction;
 
-    public MyTableModel1(List<Double> xValues, List<Double> yValues) {
-        this.xValues = xValues;
-        this.yValues = yValues;
+    public MyTableModel1() {
     }
 
     @Override
     public int getRowCount() {
-        return xValues.size();
+        return (myFunction == null) ? 0 : myFunction.getCount();
     }
 
     @Override
@@ -34,38 +30,21 @@ public class MyTableModel1 extends AbstractTableModel {
             case INDEX_COLUMN_NUMBER:
                 return rowIndex;
             case X_COLUMN_NUMBER:
-                return xValues.get(rowIndex);
+                return myFunction.getX(rowIndex);
             case Y_COLUMN_NUMBER:
-                return yValues.get(rowIndex);
+                return myFunction.getY(rowIndex);
         }
         throw new UnsupportedOperationException();
     }
 
 
-    /*@Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
-        if (columnIndex == X_COLUMN_NUMBER) {
-            try {
-                func.set(rowIndex, Double.valueOf(aValue.toString()));
-            } catch (Exception e) {
-                xValues.set(rowIndex, 0.0);
-            }
-        } else if (columnIndex == Y_COLUMN_NUMBER) {
-            try {
-                yValues.set(rowIndex, Double.valueOf(aValue.toString()));
-            } catch (Exception e) {
-                yValues.set(rowIndex, 0.0);
-            }
-        }
-    }*/
-
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
         if (columnIndex == Y_COLUMN_NUMBER) {
             try {
-                yValues.set(rowIndex, Double.valueOf(aValue.toString()));
+                myFunction.setY(rowIndex, Double.parseDouble(aValue.toString()));
             } catch (Exception e) {
-                yValues.set(rowIndex, 0.0);
+                myFunction.setY(rowIndex, 0.0);
             }
         }
     }
@@ -86,11 +65,11 @@ public class MyTableModel1 extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case INDEX_COLUMN_NUMBER:
-                return "Index";
+                return "Индекс";
             case X_COLUMN_NUMBER:
-                return "xValues";
+                return "X";
             case Y_COLUMN_NUMBER:
-                return "yValues";
+                return "Y";
         }
         return super.getColumnName(column);
     }
@@ -102,5 +81,4 @@ public class MyTableModel1 extends AbstractTableModel {
     public void setFunction(TabulatedFunction function) {
         this.myFunction = function;
     }
-
 }
