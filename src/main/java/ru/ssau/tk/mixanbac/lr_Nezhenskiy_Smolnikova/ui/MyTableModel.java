@@ -7,8 +7,9 @@ public class MyTableModel extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN_NUMBER = 1;
     private static final int Y_COLUMN_NUMBER = 2;
-    private List<Double> xValues;
-    private List<Double> yValues;
+    private static final long serialVersionUID = 2568198428586030948L;
+    private final List<Double> xValues;
+    private final List<Double> yValues;
 
     public MyTableModel(List<Double> xValues, List<Double> yValues) {
         this.xValues = xValues;

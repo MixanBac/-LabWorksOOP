@@ -12,10 +12,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 public class FileWriter extends JDialog {
-    private JTextField fname = new JTextField();
-    private JTextField dir = new JTextField();
-    private JButton save = new JButton("Сохранить");
-    private TabulatedFunction function;
+    private final JTextField fname = new JTextField();
+    private final JTextField dir = new JTextField();
+    private final JButton save = new JButton("Сохранить");
+    private final TabulatedFunction function;
 
     public FileWriter(TabulatedFunction function) {
         setModal(true);

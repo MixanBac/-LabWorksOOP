@@ -1,14 +1,13 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
-
 import javax.swing.table.AbstractTableModel;
-import java.util.List;
 
 public class MyTableModel1 extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN_NUMBER = 1;
     private static final int Y_COLUMN_NUMBER = 2;
+    private static final long serialVersionUID = -1020008228124128767L;
     private TabulatedFunction myFunction;
 
     public MyTableModel1() {

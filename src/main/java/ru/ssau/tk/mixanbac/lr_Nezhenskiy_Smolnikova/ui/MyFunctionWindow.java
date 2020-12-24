@@ -14,18 +14,18 @@ import java.util.function.Consumer;
 
 
 public class MyFunctionWindow extends JDialog {
-    private List<Double> xValues = new ArrayList<>();
-    private List<Double> yValues = new ArrayList<>();
-    private AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
-    private JTable table = new JTable(tableModel);
-    private JLabel label = new JLabel("Введите количество точек:");
-    private JTextField countField = new JTextField();
-    private JButton inputButton = new JButton("Ввести");
-    private JButton createButton = new JButton("Создать");
-    private TabulatedFunctionFactory factory;
+    private final List<Double> xValues = new ArrayList<>();
+    private final List<Double> yValues = new ArrayList<>();
+    private final AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
+    private final JTable table = new JTable(tableModel);
+    private final JLabel label = new JLabel("Введите количество точек:");
+    private final JTextField countField = new JTextField();
+    private final JButton inputButton = new JButton("Ввести");
+    private final JButton createButton = new JButton("Создать");
+    private final TabulatedFunctionFactory factory;
     private TabulatedFunction myFunction;
 
-    public static void main(TabulatedFunctionFactory factory,  Consumer<? super TabulatedFunction> callback) {
+    public static void main(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         MyFunctionWindow app = new MyFunctionWindow(factory, callback);
         app.setVisible(true);
     }

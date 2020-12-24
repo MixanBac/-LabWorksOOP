@@ -14,9 +14,9 @@ import java.io.FileInputStream;
 import java.util.function.Consumer;
 
 public class FileReader extends JDialog {
-    private JTextField fname = new JTextField();
-    private JTextField dir = new JTextField();
-    private JButton open = new JButton("Открыть");
+    private final JTextField fname = new JTextField();
+    private final JTextField dir = new JTextField();
+    private final JButton open = new JButton("Открыть");
     private TabulatedFunction function;
     private TabulatedFunctionFactory factory;
 

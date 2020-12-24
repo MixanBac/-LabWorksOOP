@@ -25,9 +25,6 @@ public class Error {
         if (e instanceof IOException) {
             return "Исключение ввода-вывода.";
         }
-        if (e instanceof NumberFormatException) {
-            return "Приложение попыталось преобразовать строку в один из числовых типов, но строка не имеет подходящего формата.";
-        }
         if (e instanceof InconsistentFunctionsException) {
             return "Разная длина массивов";
         }

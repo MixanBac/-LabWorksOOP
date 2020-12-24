@@ -2,27 +2,22 @@ package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.*;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
 public class MathFunctionWindow extends JDialog {
-    private JComboBox<String> functionComboBox = new JComboBox<>();
-    private JLabel fromLabel = new JLabel("От:");
-    private JLabel toLabel = new JLabel("До:");
-    private JLabel countLabel = new JLabel("Количество:");
-    private JTextField countField = new JTextField();
-    private JTextField fromField = new JTextField();
-    private JTextField toField = new JTextField();
-    private JButton buttonOk = new JButton("OK");
-    private Map<String, MathFunction> nameFuncMap = new HashMap<>();
+    private final JComboBox<String> functionComboBox = new JComboBox<>();
+    private final JLabel fromLabel = new JLabel("От:");
+    private final JLabel toLabel = new JLabel("До:");
+    private final JLabel countLabel = new JLabel("Количество:");
+    private final JTextField countField = new JTextField();
+    private final JTextField fromField = new JTextField();
+    private final JTextField toField = new JTextField();
+    private final JButton buttonOk = new JButton("OK");
+    private final Map<String, MathFunction> nameFuncMap = new HashMap<>();
     TabulatedFunctionFactory factory;
     TabulatedFunction myFunction;
 

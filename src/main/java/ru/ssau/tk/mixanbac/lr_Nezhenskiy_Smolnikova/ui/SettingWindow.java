@@ -1,29 +1,18 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.AbstractTabulatedFunction;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.LinkedListTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SettingWindow extends JDialog {
-    private JLabel fontLabel = new JLabel("Выберите тип фабрики функции:");
-    private Map<String, TabulatedFunctionFactory> nameFuncMap = new HashMap<>();
-    private JComboBox<String> functionComboBox = new JComboBox<>();
-    private JButton buttonOk = new JButton("OK");
+    private final JLabel fontLabel = new JLabel("Выберите тип фабрики функции:");
+    private final Map<String, TabulatedFunctionFactory> nameFuncMap = new HashMap<>();
+    private final JComboBox<String> functionComboBox = new JComboBox<>();
+    private final JButton buttonOk = new JButton("OK");
     TabulatedFunctionFactory factory;
 
     public SettingWindow(TabulatedFunctionFactory factory) {

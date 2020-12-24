@@ -1,30 +1,24 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Menu extends JFrame {
-    private JFrame frame = new JFrame();
-    private JButton inputButtonTable = new JButton("Создать табулированную функцию");
-    private JButton inputButtonFactory = new JButton("Выбрать тип фабрики");
-    private JButton inputButtonMath = new JButton("Создать математическую функцию");
-    private JButton inputButtonCalc = new JButton("Калькулятор");
-    private JButton openButton = new JButton("Открыть функцию");
-    private JButton saveButton = new JButton("Сохранить функцию");
-    private List<Double> xValues = new ArrayList<>();
-    private List<Double> yValues = new ArrayList<>();
-    private MyTableModel1 tableModel = new MyTableModel1();
-    private JTable table = new JTable(tableModel);
-    private TabulatedFunctionFactory factory;
+    private final JFrame frame = new JFrame();
+    private final JButton inputButtonTable = new JButton("Создать табулированную функцию");
+    private final JButton inputButtonFactory = new JButton("Выбрать тип фабрики");
+    private final JButton inputButtonMath = new JButton("Создать математическую функцию");
+    private final JButton inputButtonCalc = new JButton("Калькулятор");
+    private final JButton openButton = new JButton("Открыть функцию");
+    private final JButton saveButton = new JButton("Сохранить функцию");
+    private final List<Double> xValues = new ArrayList<>();
+    private final List<Double> yValues = new ArrayList<>();
+    private final MyTableModel1 tableModel = new MyTableModel1();
+    private final JTable table = new JTable(tableModel);
+    private final TabulatedFunctionFactory factory;
 
     public Menu() {
         setTitle("Меню");
@@ -33,6 +27,11 @@ public class Menu extends JFrame {
         actionPerformed();
         compose();
         this.factory = new ArrayTabulatedFunctionFactory();
+    }
+
+    public static void main(JFrame args) {
+        Menu window = new Menu();
+        window.setVisible(true);
     }
 
     public void wrapper(int countOld, int countNew) {
@@ -133,6 +132,7 @@ public class Menu extends JFrame {
                         .addComponent(inputButtonFactory)
                         .addComponent(openButton)
                         .addComponent(saveButton))
+                .addGap(111)
                 .addComponent(tableScrollPane)
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
@@ -143,6 +143,7 @@ public class Menu extends JFrame {
                         .addComponent(inputButtonFactory)
                         .addComponent(openButton)
                         .addComponent(saveButton))
+
                 .addComponent(tableScrollPane)
         );
     }
@@ -151,16 +152,7 @@ public class Menu extends JFrame {
         Menu window = new Menu();
         window.setVisible(true);
     }
-}
-class BgPanel extends JPanel {
-    public void paintComponent(Graphics g) {
-        Image im = null;
-        try {
-            im = ImageIO.read(new File("C:\\Users\\1\\IdeaProjects\\LR_Nezhenskiy_Smolnikova\\Image\\Розовый.png"));
-        } catch (IOException ignored) {
-        }
-        g.drawImage(im, 0, 0, null);
-    }
+
 }
 
 

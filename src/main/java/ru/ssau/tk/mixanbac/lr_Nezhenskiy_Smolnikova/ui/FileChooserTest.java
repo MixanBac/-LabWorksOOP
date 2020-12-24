@@ -1,8 +1,5 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.AbstractTabulatedFunction;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.ArrayTabulatedFunction;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
@@ -15,10 +12,10 @@ import java.io.*;
 import java.util.function.Consumer;
 
 public class FileChooserTest extends JFrame {
-    private JTextField filename = new JTextField();
-    private JTextField dir = new JTextField();
-    private JButton open = new JButton("Открыть");
-    private JButton save = new JButton("Сохранить");
+    private final JTextField filename = new JTextField();
+    private final JTextField dir = new JTextField();
+    private final JButton open = new JButton("Открыть");
+    private final JButton save = new JButton("Сохранить");
     private TabulatedFunction myFunction;
     private TabulatedFunctionFactory factory;
 
@@ -83,7 +80,7 @@ public class FileChooserTest extends JFrame {
         });
     }
 
-    public void addListenerForOpenButton() {
+    /*public void addListenerForOpenButton() {
         open.addActionListener(event -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -109,7 +106,7 @@ public class FileChooserTest extends JFrame {
                 dir.setText("");
             }
         });
-    }
+    }*/
 
     public void addListenerForOpenButton(Consumer<? super TabulatedFunction> callback) {
         open.addActionListener(event -> {

@@ -1,43 +1,32 @@
 package ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.ui;
 
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.exceptions.ArrayIsNotSortedException;
-import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.TabulatedFunction;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.mixanbac.lr_Nezhenskiy_Smolnikova.functions.factory.TabulatedFunctionFactory;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class MyFrame extends JDialog {
 
-    List<Double> xValues = new ArrayList<>();
-    List<Double> yValues = new ArrayList<>();
-    AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
-    JTable table = new JTable(tableModel);
-    private JLabel label = new JLabel("Input number of points:");
-    private JTextField countField = new JTextField();
-    private JButton inputButton = new JButton("Input");
-    private JButton commitButton = new JButton("Commit");
-    TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
-    TabulatedFunction myFunction;
+    private final List<Double> xValues = new ArrayList<>();
+    private final List<Double> yValues = new ArrayList<>();
+    private final AbstractTableModel tableModel = new MyTableModel(xValues, yValues);
+    private final JTable table = new JTable(tableModel);
+    private final JLabel label = new JLabel("Введите количество точек:");
+    private final JTextField countField = new JTextField();
+    private final JButton inputButton = new JButton("Ввести");
+    private final JButton commitButton = new JButton("Сохранить");
+    private final TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+    private TabulatedFunction func;
 
     public static void main(String[] args) {
         MyFrame app = new MyFrame();
-        app.setVisible(true);
-    }
-
-    public static void main(TabulatedFunction myFunction) {
-        MyFrame app = new MyFrame(myFunction);
         app.setVisible(true);
     }
 
@@ -46,21 +35,14 @@ public class MyFrame extends JDialog {
         app.setVisible(true);
     }
 
-    public MyFrame(Consumer<? super TabulatedFunction> callback) {
-        setModal(true);
-        setTitle("Мы молодцы");
-        this.setBounds(500, 500, 500, 500);
-        addButtonListeners();
-        compose();
-        inputButton.setEnabled(false);
-        commitButton.setEnabled(false);
-
+    public static void main(TabulatedFunction func) {
+        MyFrame app = new MyFrame(func);
+        app.setVisible(true);
     }
 
-    public MyFrame(TabulatedFunction myFunction) {
+    public MyFrame() {
         setModal(true);
-        setTitle("Create with table");
-        this.myFunction = myFunction;
+        setTitle("Создание таблицы");
         this.setBounds(300, 300, 500, 500);
         addButtonListeners();
         compose();
@@ -68,8 +50,28 @@ public class MyFrame extends JDialog {
         commitButton.setEnabled(false);
     }
 
-    public MyFrame() {
+    public MyFrame(Consumer<? super TabulatedFunction> callback) {
+        setModal(true);
+        setTitle("Мы не молодцы");
+        this.setBounds(500, 200, 500, 500);
+        addButtonListeners(callback);
+        compose();
+        inputButton.setEnabled(false);
+        commitButton.setEnabled(false);
     }
+
+    public MyFrame(TabulatedFunction func) {
+        setModal(true);
+        setTitle("Мы не молодцы");
+        this.func = func;
+        this.setBounds(300, 300, 500, 500);
+        addButtonListeners();
+        compose();
+        inputButton.setEnabled(false);
+        commitButton.setEnabled(false);
+    }
+
+
 
     void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -149,8 +151,8 @@ public class MyFrame extends JDialog {
                     x[i] = xValues.get(i);
                     y[i] = yValues.get(i);
                 }
-                myFunction = factory.create(x, y);
-                callback.accept(myFunction);
+                func = factory.create(x, y);
+                callback.accept(func);
             } catch (Exception e) {
                 new Error(this, e);
             }
@@ -171,7 +173,7 @@ public class MyFrame extends JDialog {
                     x[i] = xValues.get(i);
                     y[i] = yValues.get(i);
                 }
-                myFunction = factory.create(x, y);
+                func = factory.create(x, y);
             } catch (Exception e) {
                 new Error(this, e);
             }
